@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "353756899661",
+    "project_id": "ieee-y95v7t",
+    "storage_bucket": "ieee-y95v7t.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353756899661:android:e21daeffbca7d871f82f04",
+        "android_client_info": {
+          "package_name": "com.shreesh.foodrescue"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "353756899661-39cruc2vr7md17sbk3dqagajoug6lna5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shreesh.foodrescue",
+            "certificate_hash": "6a5c0890ec4a48839124a47eb13c6f9cc063fa27"
+          }
+        },
+        {
+          "client_id": "353756899661-878iv8otlaoi314m68j421auuipevh9u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shreesh.foodrescue",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "353756899661-35v57af7g16uj2nfiofpdrarg8kvlqpj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALqC5hXt6VN7k5zOBPDmNR2byCLRbFcEk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "353756899661-35v57af7g16uj2nfiofpdrarg8kvlqpj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "353756899661-ufg4r8ig8ckl593loi5oaiprvda13agq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.shreesh.foodrescue"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

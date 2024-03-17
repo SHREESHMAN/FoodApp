@@ -1,0 +1,6 @@
+package com.shreesh.foodrescue
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
