@@ -135,7 +135,6 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'startuppage': const StartuppageWidget(),
-      'oneofthepagesofalltime': const OneofthepagesofalltimeWidget(),
       'profile': const ProfileWidget(),
       'foodcart': const FoodcartWidget(),
     };
@@ -172,11 +171,11 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.home_outlined,
+                  Icons.fiber_new_outlined,
                   color: currentIndex == 0
                       ? FlutterFlowTheme.of(context).primary
                       : const Color(0x8A000000),
-                  size: 24.0,
+                  size: 30.0,
                 ),
                 Text(
                   'Add Item',
@@ -196,13 +195,14 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.account_circle_rounded,
+                  Icons.person_outline,
                   color: currentIndex == 1
                       ? FlutterFlowTheme.of(context).primary
                       : const Color(0x8A000000),
+                  size: 24.0,
                 ),
                 Text(
-                  'home',
+                  'Profile',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 1
@@ -219,32 +219,8 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.person_outline,
-                  color: currentIndex == 2
-                      ? FlutterFlowTheme.of(context).primary
-                      : const Color(0x8A000000),
-                  size: 24.0,
-                ),
-                Text(
-                  'Profile',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 2
-                        ? FlutterFlowTheme.of(context).primary
-                        : const Color(0x8A000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
                   FontAwesomeIcons.shoppingBasket,
-                  color: currentIndex == 3
+                  color: currentIndex == 2
                       ? FlutterFlowTheme.of(context).primary
                       : const Color(0x8A000000),
                   size: 24.0,
@@ -253,7 +229,7 @@ class _NavBarPageState extends State<NavBarPage> {
                   'Basket',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: currentIndex == 3
+                    color: currentIndex == 2
                         ? FlutterFlowTheme.of(context).primary
                         : const Color(0x8A000000),
                     fontSize: 11.0,

@@ -95,14 +95,15 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/startuppage',
           builder: (context, params) => params.isEmpty
               ? const NavBarPage(initialPage: 'startuppage')
-              : const StartuppageWidget(),
+              : const NavBarPage(
+                  initialPage: 'startuppage',
+                  page: StartuppageWidget(),
+                ),
         ),
         FFRoute(
           name: 'oneofthepagesofalltime',
           path: '/oneofthepagesofalltime',
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'oneofthepagesofalltime')
-              : const OneofthepagesofalltimeWidget(),
+          builder: (context, params) => const OneofthepagesofalltimeWidget(),
         ),
         FFRoute(
           name: 'profile',

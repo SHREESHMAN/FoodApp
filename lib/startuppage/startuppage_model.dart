@@ -18,6 +18,9 @@ class StartuppageModel extends FlutterFlowModel<StartuppageWidget> {
   FocusNode? textFieldFocusNode2;
   TextEditingController? textController2;
   String? Function(BuildContext, String?)? textController2Validator;
+  // State field(s) for DropDown widget.
+  String? dropDownValue;
+  FormFieldController<String>? dropDownValueController;
   bool isDataUploading1 = false;
   FFUploadedFile uploadedLocalFile1 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
@@ -44,9 +47,6 @@ class StartuppageModel extends FlutterFlowModel<StartuppageWidget> {
   String? expirydate;
   // State field(s) for Calendar widget.
   DateTimeRange? calendarSelectedDay;
-  // State field(s) for DropDown widget.
-  String? dropDownValue;
-  FormFieldController<String>? dropDownValueController;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode6;
   TextEditingController? textController6;

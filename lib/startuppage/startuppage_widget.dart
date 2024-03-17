@@ -174,7 +174,7 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
-                                  flex: 5,
+                                  flex: 3,
                                   child: Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         8.0, 0.0, 8.0, 0.0),
@@ -236,7 +236,7 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 5,
+                                  flex: 2,
                                   child: Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         8.0, 0.0, 8.0, 0.0),
@@ -302,6 +302,47 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                     ),
                                   ),
                                 ),
+                                Flexible(
+                                  flex: 5,
+                                  child: FlutterFlowDropDown<String>(
+                                    controller:
+                                        _model.dropDownValueController ??=
+                                            FormFieldController<String>(null),
+                                    options: FFAppState().categories,
+                                    onChanged: (val) => setState(
+                                        () => _model.dropDownValue = val),
+                                    width: 300.0,
+                                    height: 56.0,
+                                    searchHintTextStyle:
+                                        FlutterFlowTheme.of(context)
+                                            .labelMedium,
+                                    searchTextStyle:
+                                        FlutterFlowTheme.of(context).bodyMedium,
+                                    textStyle:
+                                        FlutterFlowTheme.of(context).bodyMedium,
+                                    hintText: 'Category*',
+                                    searchHintText: 'Search for categories',
+                                    icon: Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      size: 24.0,
+                                    ),
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    elevation: 2.0,
+                                    borderColor:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    borderWidth: 2.0,
+                                    borderRadius: 8.0,
+                                    margin: const EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 4.0, 16.0, 4.0),
+                                    hidesUnderline: true,
+                                    isOverButton: true,
+                                    isSearchable: true,
+                                    isMultiSelect: false,
+                                  ),
+                                ),
                                 FlutterFlowIconButton(
                                   borderColor:
                                       FlutterFlowTheme.of(context).primary,
@@ -364,7 +405,7 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                     });
                                     await geminiTextFromImage(
                                       context,
-                                      'Classify the image into one of these given categories and return only the category and nothing else : ${functions.combineall(FFAppState().categories.toList())}',
+                                      'Classify the image into one of these given categories and return only the category (CASE SENSITIVE) and nothing else : ${functions.combineall(FFAppState().categories.toList())}',
                                       uploadImageBytes:
                                           _model.uploadedLocalFile1,
                                     ).then((generatedText) {
@@ -382,6 +423,10 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                       setState(() {
                                         FFAppState().helptext = 'Help Text';
                                       });
+                                      setState(() {
+                                        _model.dropDownValueController?.value =
+                                            _model.image!;
+                                      });
                                     }
 
                                     setState(() {});
@@ -397,7 +442,7 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                   Expanded(
                                     flex: 6,
                                     child: Text(
-                                      'Expiry Date: ',
+                                      'Expiry Date*',
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -728,7 +773,7 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
 
                                         await geminiTextFromImage(
                                           context,
-                                          'Analyse the Image, Try to read the text, If you find the expiry date answer in the format \"dd/MM/yyyy\" only and nothing else as output. If you are unable to find the date return \"0\" and nothing else',
+                                          'Analyse the Image, Try to read the text and find the expiry ir the best before date, If you find the expiry date, answer in the format \"dd/MM/yyyy\" only and nothing else as output. If you are unable to find the date return \"0\" and nothing else. Remember do not return the production or manufacture date.',
                                           uploadImageBytes:
                                               _model.uploadedLocalFile2,
                                         ).then((generatedText) {
@@ -763,24 +808,24 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                         setState(() {
                                           _model.textController3?.text =
                                               ((String fullexpiry) {
-                                            return fullexpiry[0] +
-                                                fullexpiry[1];
+                                            return fullexpiry[1] +
+                                                fullexpiry[2];
                                           }(_model.expirydate!));
                                         });
                                         setState(() {
                                           _model.textController4?.text =
                                               ((String fullexpiry) {
-                                            return fullexpiry[3] +
-                                                fullexpiry[4];
+                                            return fullexpiry[4] +
+                                                fullexpiry[5];
                                           }(_model.expirydate!));
                                         });
                                         setState(() {
                                           _model.textController5?.text =
                                               ((String fullexpiry) {
-                                            return fullexpiry[6] +
-                                                fullexpiry[7] +
+                                            return fullexpiry[7] +
                                                 fullexpiry[8] +
-                                                fullexpiry[9];
+                                                fullexpiry[9] +
+                                                fullexpiry[10];
                                           }(_model.expirydate!));
                                         });
                                         if (shouldSetState) setState(() {});
@@ -849,61 +894,20 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                 locale:
                                     FFLocalizations.of(context).languageCode,
                               ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
+                            const Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   16.0, 0.0, 16.0, 0.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                    child: FlutterFlowDropDown<String>(
-                                      controller:
-                                          _model.dropDownValueController ??=
-                                              FormFieldController<String>(null),
-                                      options: FFAppState().categories,
-                                      onChanged: (val) => setState(
-                                          () => _model.dropDownValue = val),
-                                      width: 300.0,
-                                      height: 56.0,
-                                      searchHintTextStyle:
-                                          FlutterFlowTheme.of(context)
-                                              .labelMedium,
-                                      searchTextStyle:
-                                          FlutterFlowTheme.of(context)
-                                              .bodyMedium,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium,
-                                      hintText: 'Category',
-                                      searchHintText: 'Search for categories',
-                                      icon: Icon(
-                                        Icons.keyboard_arrow_down_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        size: 24.0,
-                                      ),
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      elevation: 2.0,
-                                      borderColor: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      borderWidth: 2.0,
-                                      borderRadius: 8.0,
-                                      margin: const EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 4.0, 16.0, 4.0),
-                                      hidesUnderline: true,
-                                      isOverButton: true,
-                                      isSearchable: true,
-                                      isMultiSelect: false,
-                                    ),
-                                  ),
-                                ],
+                                children: [],
                               ),
                             ),
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Expanded(
+                                  flex: 2,
                                   child: Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         8.0, 0.0, 8.0, 0.0),
@@ -969,6 +973,7 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                   ),
                                 ),
                                 Expanded(
+                                  flex: 3,
                                   child: Padding(
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         8.0, 0.0, 8.0, 0.0),
@@ -1039,8 +1044,7 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                           autofocus: true,
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText:
-                                                'Description/Condition (optional)',
+                                            labelText: 'Description/Condition',
                                             labelStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .labelMedium,
