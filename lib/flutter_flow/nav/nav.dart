@@ -302,10 +302,10 @@ class FFRoute {
               : builder(context, ffParams);
           final child = appStateNotifier.loading
               ? Container(
-                  color: Colors.black,
+                  color: Colors.transparent,
                   child: Image.asset(
-                    'assets/images/please-dont-waste-food-designs-600nw-2145504939.webp',
-                    fit: BoxFit.none,
+                    'assets/images/image_2024-03-17_231702477.png',
+                    fit: BoxFit.cover,
                   ),
                 )
               : page;

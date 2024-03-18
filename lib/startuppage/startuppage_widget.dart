@@ -82,16 +82,22 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            print('FloatingActionButton pressed ...');
-          },
-          backgroundColor: FlutterFlowTheme.of(context).primary,
-          elevation: 8.0,
-          child: Icon(
-            Icons.add,
-            color: FlutterFlowTheme.of(context).info,
-            size: 24.0,
+        floatingActionButton: Align(
+          alignment: const AlignmentDirectional(1.0, 1.0),
+          child: Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 6.0),
+            child: FloatingActionButton(
+              onPressed: () {
+                print('FloatingActionButton pressed ...');
+              },
+              backgroundColor: FlutterFlowTheme.of(context).primary,
+              elevation: 8.0,
+              child: Icon(
+                Icons.add,
+                color: FlutterFlowTheme.of(context).info,
+                size: 24.0,
+              ),
+            ),
           ),
         ),
         body: SafeArea(
@@ -106,23 +112,30 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Align(
-                    alignment: const AlignmentDirectional(0.0, 0.0),
-                    child: GradientText(
-                      'Add New Item',
-                      textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                            fontFamily: 'Roboto Condensed',
-                            fontSize: 48.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                      colors: [
-                        FlutterFlowTheme.of(context).primary,
-                        FlutterFlowTheme.of(context).accent3
-                      ],
-                      gradientDirection: GradientDirection.ltr,
-                      gradientType: GradientType.linear,
-                    ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Align(
+                        alignment: const AlignmentDirectional(0.0, 0.0),
+                        child: GradientText(
+                          'Add New Item',
+                          textAlign: TextAlign.center,
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Roboto Condensed',
+                                    fontSize: 48.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                          colors: [
+                            FlutterFlowTheme.of(context).primary,
+                            FlutterFlowTheme.of(context).accent3
+                          ],
+                          gradientDirection: GradientDirection.ltr,
+                          gradientType: GradientType.linear,
+                        ),
+                      ),
+                    ],
                   ),
                   Text(
                     valueOrDefault<String>(
@@ -405,7 +418,7 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                     });
                                     await geminiTextFromImage(
                                       context,
-                                      'Classify the image into one of these given categories and return only the category (CASE SENSITIVE) and nothing else : ${functions.combineall(FFAppState().categories.toList())}',
+                                      'Classify the image into one of these given categories and return only the category (case sensitive, dont change capitalization) and nothing else : ${functions.combineall(FFAppState().categories.toList())}',
                                       uploadImageBytes:
                                           _model.uploadedLocalFile1,
                                     ).then((generatedText) {
@@ -425,7 +438,11 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                       });
                                       setState(() {
                                         _model.dropDownValueController?.value =
-                                            _model.image!;
+                                            FFAppState()
+                                                .categories
+                                                .where((e) => _model.image == e)
+                                                .toList()
+                                                .first;
                                       });
                                     }
 
@@ -905,6 +922,7 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                             ),
                             Row(
                               mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Expanded(
                                   flex: 2,
