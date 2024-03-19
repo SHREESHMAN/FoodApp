@@ -27,6 +27,8 @@ class StartuppageModel extends FlutterFlowModel<StartuppageWidget> {
 
   // Stores action output result for [Gemini - Text From Image] action in IconButton widget.
   String? image;
+  // Stores action output result for [Gemini - Text From Image] action in IconButton widget.
+  String? gemdesc;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode3;
   TextEditingController? textController3;

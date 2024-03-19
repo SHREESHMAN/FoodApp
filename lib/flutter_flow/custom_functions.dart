@@ -16,3 +16,16 @@ import '/auth/firebase_auth/auth_util.dart';
 String combineall(List<String> foo) {
   return '[${foo.join(',')}]';
 }
+
+String getitem(
+  List<String> lis,
+  String img,
+) {
+  String lowercaseVariable1 = img.toLowerCase().trim();
+  for (String item in lis) {
+    if (item.toLowerCase() == lowercaseVariable1) {
+      return item;
+    }
+  }
+  return '0';
+}

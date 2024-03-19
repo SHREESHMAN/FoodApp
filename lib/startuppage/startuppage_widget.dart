@@ -1,4 +1,5 @@
 import '/backend/gemini/gemini.dart';
+import '/flutter_flow/flutter_flow_ad_banner.dart';
 import '/flutter_flow/flutter_flow_autocomplete_options_list.dart';
 import '/flutter_flow/flutter_flow_calendar.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -112,49 +113,88 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  FlutterFlowAdBanner(
+                    width: MediaQuery.sizeOf(context).width * 1.0,
+                    height: 50.0,
+                    showsTestAd: true,
+                  ),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Align(
                         alignment: const AlignmentDirectional(0.0, 0.0),
-                        child: GradientText(
-                          'Add New Item',
-                          textAlign: TextAlign.center,
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Roboto Condensed',
-                                    fontSize: 48.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                          colors: [
-                            FlutterFlowTheme.of(context).primary,
-                            FlutterFlowTheme.of(context).accent3
-                          ],
-                          gradientDirection: GradientDirection.ltr,
-                          gradientType: GradientType.linear,
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            setState(() {
+                              _model.dropDownValueController?.value =
+                                  FFAppState().categories.last;
+                            });
+                            setState(() {
+                              _model.textController1?.text =
+                                  '>${_model.image}<>${(_model.image!).trim()}<>${(_model.image!).substring(1, (_model.image!).length)}<>${functions.getitem(FFAppState().categories.toList(), _model.image!)}<';
+                            });
+                          },
+                          child: GradientText(
+                            'Add New Item',
+                            textAlign: TextAlign.center,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Roboto Condensed',
+                                  fontSize: 48.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                            colors: [
+                              FlutterFlowTheme.of(context).primary,
+                              FlutterFlowTheme.of(context).accent3
+                            ],
+                            gradientDirection: GradientDirection.ltr,
+                            gradientType: GradientType.linear,
+                          ),
                         ),
                       ),
                     ],
                   ),
                   Text(
-                    valueOrDefault<String>(
-                      () {
-                        if (_model.image == null || _model.image == '') {
-                          return 'Image Description';
-                        } else if (_model.image != null && _model.image != '') {
-                          return _model.image;
-                        } else {
-                          return 'Image Description';
-                        }
-                      }(),
-                      'Image Description',
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyMedium,
-                  ),
-                  Text(
                     FFAppState().helptext,
                     style: FlutterFlowTheme.of(context).bodyMedium,
+                  ),
+                  Stack(
+                    alignment: const AlignmentDirectional(0.0, 0.0),
+                    children: [
+                      Align(
+                        alignment: const AlignmentDirectional(0.0, 0.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16.0),
+                          child: Image.network(
+                            'https://cdn.dribbble.com/users/4100772/screenshots/17918257/media/32bcec31f33688639f1dff79fbfe5c7f.jpg',
+                            width: 300.0,
+                            height: 200.0,
+                            fit: BoxFit.cover,
+                            alignment: const Alignment(0.0, 0.0),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: const AlignmentDirectional(0.0, 0.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16.0),
+                          child: Image.memory(
+                            _model.uploadedLocalFile1.bytes ??
+                                Uint8List.fromList([]),
+                            width: 300.0,
+                            height: 200.0,
+                            fit: BoxFit.cover,
+                            alignment: const Alignment(0.0, 0.0),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   Align(
                     alignment: const AlignmentDirectional(0.0, 0.0),
@@ -374,6 +414,7 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                     final selectedMedia =
                                         await selectMediaWithSourceBottomSheet(
                                       context: context,
+                                      imageQuality: 60,
                                       allowPhoto: true,
                                     );
                                     if (selectedMedia != null &&
@@ -418,7 +459,7 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                     });
                                     await geminiTextFromImage(
                                       context,
-                                      'Classify the image into one of these given categories and return only the category (case sensitive, dont change capitalization) and nothing else : ${functions.combineall(FFAppState().categories.toList())}',
+                                      'Classify the image into one of these given categories and return only the category and nothing else as response  (return exact category string, dont change capitalization) if no category matches return only \"0\": ${functions.combineall(FFAppState().categories.toList())}',
                                       uploadImageBytes:
                                           _model.uploadedLocalFile1,
                                     ).then((generatedText) {
@@ -433,17 +474,43 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                             'Try Image Generation Again';
                                       });
                                     } else {
-                                      setState(() {
-                                        FFAppState().helptext = 'Help Text';
-                                      });
-                                      setState(() {
-                                        _model.dropDownValueController?.value =
-                                            FFAppState()
-                                                .categories
-                                                .where((e) => _model.image == e)
-                                                .toList()
-                                                .first;
-                                      });
+                                      if (_model.image == ' 0') {
+                                        setState(() {
+                                          FFAppState().helptext =
+                                              'Try Image Generation Again :(';
+                                        });
+                                      } else {
+                                        setState(() {
+                                          FFAppState().helptext = 'Help Text';
+                                        });
+                                        setState(() {
+                                          _model.dropDownValueController
+                                                  ?.value =
+                                              functions.getitem(
+                                                  FFAppState()
+                                                      .categories
+                                                      .toList(),
+                                                  _model.image!);
+                                        });
+                                        await geminiTextFromImage(
+                                          context,
+                                          'Look at the image and give a description accordingly eg: New Item, Has been stored, In original packing, looks like its about to expire, might have expired, in okay condition etc. dont make the description long.',
+                                          uploadImageBytes:
+                                              _model.uploadedLocalFile1,
+                                        ).then((generatedText) {
+                                          safeSetState(() =>
+                                              _model.gemdesc = generatedText);
+                                        });
+
+                                        setState(() {
+                                          _model.textController7?.text =
+                                              _model.gemdesc!;
+                                        });
+                                        setState(() {
+                                          _model.textController1?.text =
+                                              _model.dropDownValue!;
+                                        });
+                                      }
                                     }
 
                                     setState(() {});
@@ -790,7 +857,7 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
 
                                         await geminiTextFromImage(
                                           context,
-                                          'Analyse the Image, Try to read the text and find the expiry ir the best before date, If you find the expiry date, answer in the format \"dd/MM/yyyy\" only and nothing else as output. If you are unable to find the date return \"0\" and nothing else. Remember do not return the production or manufacture date.',
+                                          'Analyse the Image, Try to read the text and find the expiry ir the best before date, If you find the expiry date, answer in the format \"dd/MM/yyyy\" only and nothing else as output. If you are unable to find the date return \"0\" and nothing else. Remember do not return the production or manufacture date, if you see only month and year then return 01/MM/yyyy if only year is seen 01/01/yyyy.',
                                           uploadImageBytes:
                                               _model.uploadedLocalFile2,
                                         ).then((generatedText) {
@@ -911,15 +978,6 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                 locale:
                                     FFLocalizations.of(context).languageCode,
                               ),
-                            const Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 0.0, 16.0, 0.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [],
-                              ),
-                            ),
                             Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1301,7 +1359,7 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                                           });
                                                           setState(() {
                                                             _model
-                                                                .textController7
+                                                                .textController8
                                                                 ?.clear();
                                                           });
                                                           await _model

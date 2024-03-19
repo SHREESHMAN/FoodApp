@@ -13,12 +13,15 @@ import 'flutter_flow/internationalization.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'index.dart';
 
+import '/flutter_flow/admob_util.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
   await initFirebase();
 
   await FlutterFlowTheme.initialize();
+  requestConsent();
 
   final appState = FFAppState(); // Initialize FFAppState
   await appState.initializePersistedState();
