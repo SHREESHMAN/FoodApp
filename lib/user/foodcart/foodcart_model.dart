@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'foodcart_widget.dart' show FoodcartWidget;
 import 'package:flutter/material.dart';
@@ -6,8 +7,8 @@ class FoodcartModel extends FlutterFlowModel<FoodcartWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-
-  /// Initialization and disposal methods.
+  // Stores action output result for [Backend Call - Create Document] action in menuItem widget.
+  FoodItemsRecord? uploadedentry;
 
   @override
   void initState(BuildContext context) {}
@@ -16,8 +17,4 @@ class FoodcartModel extends FlutterFlowModel<FoodcartWidget> {
   void dispose() {
     unfocusNode.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

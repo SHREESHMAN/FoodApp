@@ -11,12 +11,12 @@ class ProfileModel extends FlutterFlowModel<ProfileWidget> {
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl = '';
 
+  // State field(s) for SwitchListTile widget.
+  bool? switchListTileValue;
   // State field(s) for TabBar widget.
   TabController? tabBarController;
   int get tabBarCurrentIndex =>
       tabBarController != null ? tabBarController!.index : 0;
-
-  /// Initialization and disposal methods.
 
   @override
   void initState(BuildContext context) {}
@@ -26,8 +26,4 @@ class ProfileModel extends FlutterFlowModel<ProfileWidget> {
     unfocusNode.dispose();
     tabBarController?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

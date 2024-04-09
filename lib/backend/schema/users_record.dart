@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/enums/enums.dart';
 
 import 'index.dart';
 
@@ -44,6 +45,41 @@ class UsersRecord extends FirestoreRecord {
   String get phoneNumber => _phoneNumber ?? '';
   bool hasPhoneNumber() => _phoneNumber != null;
 
+  // "type" field.
+  UserType? _type;
+  UserType? get type => _type;
+  bool hasType() => _type != null;
+
+  // "address" field.
+  LatLng? _address;
+  LatLng? get address => _address;
+  bool hasAddress() => _address != null;
+
+  // "shortDescription" field.
+  String? _shortDescription;
+  String get shortDescription => _shortDescription ?? '';
+  bool hasShortDescription() => _shortDescription != null;
+
+  // "last_active_time" field.
+  DateTime? _lastActiveTime;
+  DateTime? get lastActiveTime => _lastActiveTime;
+  bool hasLastActiveTime() => _lastActiveTime != null;
+
+  // "role" field.
+  String? _role;
+  String get role => _role ?? '';
+  bool hasRole() => _role != null;
+
+  // "title" field.
+  String? _title;
+  String get title => _title ?? '';
+  bool hasTitle() => _title != null;
+
+  // "isBank" field.
+  bool? _isBank;
+  bool get isBank => _isBank ?? false;
+  bool hasIsBank() => _isBank != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -51,6 +87,13 @@ class UsersRecord extends FirestoreRecord {
     _uid = snapshotData['uid'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
     _phoneNumber = snapshotData['phone_number'] as String?;
+    _type = deserializeEnum<UserType>(snapshotData['type']);
+    _address = snapshotData['address'] as LatLng?;
+    _shortDescription = snapshotData['shortDescription'] as String?;
+    _lastActiveTime = snapshotData['last_active_time'] as DateTime?;
+    _role = snapshotData['role'] as String?;
+    _title = snapshotData['title'] as String?;
+    _isBank = snapshotData['isBank'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -93,6 +136,13 @@ Map<String, dynamic> createUsersRecordData({
   String? uid,
   DateTime? createdTime,
   String? phoneNumber,
+  UserType? type,
+  LatLng? address,
+  String? shortDescription,
+  DateTime? lastActiveTime,
+  String? role,
+  String? title,
+  bool? isBank,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -102,6 +152,13 @@ Map<String, dynamic> createUsersRecordData({
       'uid': uid,
       'created_time': createdTime,
       'phone_number': phoneNumber,
+      'type': type,
+      'address': address,
+      'shortDescription': shortDescription,
+      'last_active_time': lastActiveTime,
+      'role': role,
+      'title': title,
+      'isBank': isBank,
     }.withoutNulls,
   );
 
@@ -118,7 +175,14 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.photoUrl == e2?.photoUrl &&
         e1?.uid == e2?.uid &&
         e1?.createdTime == e2?.createdTime &&
-        e1?.phoneNumber == e2?.phoneNumber;
+        e1?.phoneNumber == e2?.phoneNumber &&
+        e1?.type == e2?.type &&
+        e1?.address == e2?.address &&
+        e1?.shortDescription == e2?.shortDescription &&
+        e1?.lastActiveTime == e2?.lastActiveTime &&
+        e1?.role == e2?.role &&
+        e1?.title == e2?.title &&
+        e1?.isBank == e2?.isBank;
   }
 
   @override
@@ -128,7 +192,14 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.photoUrl,
         e?.uid,
         e?.createdTime,
-        e?.phoneNumber
+        e?.phoneNumber,
+        e?.type,
+        e?.address,
+        e?.shortDescription,
+        e?.lastActiveTime,
+        e?.role,
+        e?.title,
+        e?.isBank
       ]);
 
   @override

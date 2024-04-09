@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/backend/backend.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
@@ -101,13 +102,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 ),
         ),
         FFRoute(
-          name: 'oneofthepagesofalltime',
-          path: '/oneofthepagesofalltime',
-          builder: (context, params) => const OneofthepagesofalltimeWidget(),
-        ),
-        FFRoute(
           name: 'profile',
           path: '/profile',
+          requireAuth: true,
           builder: (context, params) => params.isEmpty
               ? const NavBarPage(initialPage: 'profile')
               : const NavBarPage(
@@ -118,11 +115,115 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'foodcart',
           path: '/foodcart',
+          asyncParams: {
+            'chatRef': getDoc(['chats'], ChatsRecord.fromSnapshot),
+          },
           builder: (context, params) => params.isEmpty
               ? const NavBarPage(initialPage: 'foodcart')
-              : const FoodcartWidget(),
+              : FoodcartWidget(
+                  sendInChat: params.getParam(
+                    'sendInChat',
+                    ParamType.bool,
+                  ),
+                  chatRef: params.getParam(
+                    'chatRef',
+                    ParamType.Document,
+                  ),
+                ),
+        ),
+        FFRoute(
+          name: 'expenses',
+          path: '/expenses',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'expenses')
+              : const ExpensesWidget(),
+        ),
+        FFRoute(
+          name: 'ItemDetail',
+          path: '/itemDetail',
+          asyncParams: {
+            'currentItem': getDoc(['foodItems'], FoodItemsRecord.fromSnapshot),
+          },
+          builder: (context, params) => ItemDetailWidget(
+            currentItem: params.getParam(
+              'currentItem',
+              ParamType.Document,
+            ),
+            index: params.getParam(
+              'index',
+              ParamType.int,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'inbox',
+          path: '/inbox',
+          asyncParams: {
+            'allbanks': getDocList(['users'], UsersRecord.fromSnapshot),
+          },
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'inbox')
+              : InboxWidget(
+                  allbanks: params.getParam<UsersRecord>(
+                    'allbanks',
+                    ParamType.Document,
+                    true,
+                  ),
+                ),
+        ),
+        FFRoute(
+          name: 'chat_2_Details',
+          path: '/chat2Details',
+          asyncParams: {
+            'chatRef': getDoc(['chats'], ChatsRecord.fromSnapshot),
+          },
+          builder: (context, params) => Chat2DetailsWidget(
+            chatRef: params.getParam(
+              'chatRef',
+              ParamType.Document,
+            ),
+            item: params.getParam(
+              'item',
+              ParamType.int,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'chat_2_main',
+          path: '/chat2Main',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'chat_2_main')
+              : const Chat2MainWidget(),
+        ),
+        FFRoute(
+          name: 'chat_2_InviteUsers',
+          path: '/chat2InviteUsers',
+          asyncParams: {
+            'chatRef': getDoc(['chats'], ChatsRecord.fromSnapshot),
+          },
+          builder: (context, params) => Chat2InviteUsersWidget(
+            chatRef: params.getParam(
+              'chatRef',
+              ParamType.Document,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'image_Details',
+          path: '/imageDetails',
+          asyncParams: {
+            'chatMessage':
+                getDoc(['chat_messages'], ChatMessagesRecord.fromSnapshot),
+          },
+          builder: (context, params) => ImageDetailsWidget(
+            chatMessage: params.getParam(
+              'chatMessage',
+              ParamType.Document,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
+      observers: [routeObserver],
     );
 
 extension NavParamExtensions on Map<String, String?> {
@@ -240,6 +341,7 @@ class FFParameters {
     ParamType type, [
     bool isList = false,
     List<String>? collectionNamePath,
+    StructBuilder<T>? structBuilder,
   ]) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
@@ -253,8 +355,13 @@ class FFParameters {
       return param;
     }
     // Return serialized value.
-    return deserializeParam<T>(param, type, isList,
-        collectionNamePath: collectionNamePath);
+    return deserializeParam<T>(
+      param,
+      type,
+      isList,
+      collectionNamePath: collectionNamePath,
+      structBuilder: structBuilder,
+    );
   }
 }
 

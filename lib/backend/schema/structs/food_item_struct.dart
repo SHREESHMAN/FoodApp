@@ -16,6 +16,8 @@ class FoodItemStruct extends FFFirebaseStruct {
     String? description,
     DateTime? expiry,
     double? quantity,
+    bool? donated,
+    double? price,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _img = img,
         _name = name,
@@ -23,6 +25,8 @@ class FoodItemStruct extends FFFirebaseStruct {
         _description = description,
         _expiry = expiry,
         _quantity = quantity,
+        _donated = donated,
+        _price = price,
         super(firestoreUtilData);
 
   // "img" field.
@@ -62,6 +66,19 @@ class FoodItemStruct extends FFFirebaseStruct {
   void incrementQuantity(double amount) => _quantity = quantity + amount;
   bool hasQuantity() => _quantity != null;
 
+  // "donated" field.
+  bool? _donated;
+  bool get donated => _donated ?? false;
+  set donated(bool? val) => _donated = val;
+  bool hasDonated() => _donated != null;
+
+  // "price" field.
+  double? _price;
+  double get price => _price ?? 0.0;
+  set price(double? val) => _price = val;
+  void incrementPrice(double amount) => _price = price + amount;
+  bool hasPrice() => _price != null;
+
   static FoodItemStruct fromMap(Map<String, dynamic> data) => FoodItemStruct(
         img: data['img'] as String?,
         name: data['name'] as String?,
@@ -69,6 +86,8 @@ class FoodItemStruct extends FFFirebaseStruct {
         description: data['description'] as String?,
         expiry: data['expiry'] as DateTime?,
         quantity: castToType<double>(data['quantity']),
+        donated: data['donated'] as bool?,
+        price: castToType<double>(data['price']),
       );
 
   static FoodItemStruct? maybeFromMap(dynamic data) =>
@@ -81,6 +100,8 @@ class FoodItemStruct extends FFFirebaseStruct {
         'description': _description,
         'expiry': _expiry,
         'quantity': _quantity,
+        'donated': _donated,
+        'price': _price,
       }.withoutNulls;
 
   @override
@@ -107,6 +128,14 @@ class FoodItemStruct extends FFFirebaseStruct {
         ),
         'quantity': serializeParam(
           _quantity,
+          ParamType.double,
+        ),
+        'donated': serializeParam(
+          _donated,
+          ParamType.bool,
+        ),
+        'price': serializeParam(
+          _price,
           ParamType.double,
         ),
       }.withoutNulls;
@@ -143,6 +172,16 @@ class FoodItemStruct extends FFFirebaseStruct {
           ParamType.double,
           false,
         ),
+        donated: deserializeParam(
+          data['donated'],
+          ParamType.bool,
+          false,
+        ),
+        price: deserializeParam(
+          data['price'],
+          ParamType.double,
+          false,
+        ),
       );
 
   @override
@@ -156,12 +195,14 @@ class FoodItemStruct extends FFFirebaseStruct {
         category == other.category &&
         description == other.description &&
         expiry == other.expiry &&
-        quantity == other.quantity;
+        quantity == other.quantity &&
+        donated == other.donated &&
+        price == other.price;
   }
 
   @override
-  int get hashCode => const ListEquality()
-      .hash([img, name, category, description, expiry, quantity]);
+  int get hashCode => const ListEquality().hash(
+      [img, name, category, description, expiry, quantity, donated, price]);
 }
 
 FoodItemStruct createFoodItemStruct({
@@ -171,6 +212,8 @@ FoodItemStruct createFoodItemStruct({
   String? description,
   DateTime? expiry,
   double? quantity,
+  bool? donated,
+  double? price,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -183,6 +226,8 @@ FoodItemStruct createFoodItemStruct({
       description: description,
       expiry: expiry,
       quantity: quantity,
+      donated: donated,
+      price: price,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

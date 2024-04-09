@@ -70,6 +70,8 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                     'Sign Up',
                     style: FlutterFlowTheme.of(context).displayLarge.override(
                           fontFamily: 'Sora',
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          letterSpacing: 0.0,
                           fontWeight: FontWeight.w600,
                         ),
                   ),
@@ -78,7 +80,11 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                         const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                     child: Text(
                       'Create your account',
-                      style: FlutterFlowTheme.of(context).titleMedium,
+                      style: FlutterFlowTheme.of(context).titleMedium.override(
+                            fontFamily: 'Inter',
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                            letterSpacing: 0.0,
+                          ),
                     ),
                   ),
                   Padding(
@@ -87,11 +93,16 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                     child: TextFormField(
                       controller: _model.textController1,
                       focusNode: _model.textFieldFocusNode1,
+                      autofocus: false,
                       obscureText: false,
                       decoration: InputDecoration(
                         labelText: 'Name',
                         hintText: 'Enter your name',
-                        hintStyle: FlutterFlowTheme.of(context).bodyLarge,
+                        hintStyle:
+                            FlutterFlowTheme.of(context).bodyLarge.override(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).secondaryText,
@@ -121,7 +132,11 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      style: FlutterFlowTheme.of(context).bodyLarge,
+                      style: FlutterFlowTheme.of(context).bodyLarge.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
+                      minLines: null,
                       validator:
                           _model.textController1Validator.asValidator(context),
                     ),
@@ -132,11 +147,16 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                     child: TextFormField(
                       controller: _model.emailTextController,
                       focusNode: _model.textFieldFocusNode2,
+                      autofocus: false,
                       obscureText: false,
                       decoration: InputDecoration(
                         labelText: 'Email',
                         hintText: 'Enter your email',
-                        hintStyle: FlutterFlowTheme.of(context).bodyLarge,
+                        hintStyle:
+                            FlutterFlowTheme.of(context).bodyLarge.override(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).secondaryText,
@@ -166,7 +186,11 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      style: FlutterFlowTheme.of(context).bodyLarge,
+                      style: FlutterFlowTheme.of(context).bodyLarge.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
+                      minLines: null,
                       validator: _model.emailTextControllerValidator
                           .asValidator(context),
                     ),
@@ -181,12 +205,18 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                           child: TextFormField(
                             controller: _model.passwordTextController,
                             focusNode: _model.textFieldFocusNode3,
+                            autofocus: false,
                             textInputAction: TextInputAction.done,
                             obscureText: !_model.passwordVisibility1,
                             decoration: InputDecoration(
                               labelText: 'Password',
                               hintText: 'Enter your password',
-                              hintStyle: FlutterFlowTheme.of(context).bodyLarge,
+                              hintStyle: FlutterFlowTheme.of(context)
+                                  .bodyLarge
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: FlutterFlowTheme.of(context)
@@ -232,7 +262,12 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                                 ),
                               ),
                             ),
-                            style: FlutterFlowTheme.of(context).bodyLarge,
+                            style:
+                                FlutterFlowTheme.of(context).bodyLarge.override(
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
+                            minLines: null,
                             validator: _model.passwordTextControllerValidator
                                 .asValidator(context),
                           ),
@@ -246,11 +281,16 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                     child: TextFormField(
                       controller: _model.confirmPasswordTextController,
                       focusNode: _model.textFieldFocusNode4,
+                      autofocus: false,
                       obscureText: !_model.passwordVisibility2,
                       decoration: InputDecoration(
                         labelText: 'Confirm Password',
                         hintText: 'Retype Password',
-                        hintStyle: FlutterFlowTheme.of(context).bodyLarge,
+                        hintStyle:
+                            FlutterFlowTheme.of(context).bodyLarge.override(
+                                  fontFamily: 'Inter',
+                                  letterSpacing: 0.0,
+                                ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).secondaryText,
@@ -295,8 +335,12 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                           ),
                         ),
                       ),
-                      style: FlutterFlowTheme.of(context).bodyLarge,
+                      style: FlutterFlowTheme.of(context).bodyLarge.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
                       textAlign: TextAlign.start,
+                      minLines: null,
                       validator: _model.confirmPasswordTextControllerValidator
                           .asValidator(context),
                     ),
@@ -325,6 +369,7 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
                               color: FlutterFlowTheme.of(context).primary,
+                              letterSpacing: 0.0,
                             ),
                       ),
                     ),
@@ -378,6 +423,7 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                             FlutterFlowTheme.of(context).titleMedium.override(
                                   fontFamily: 'Inter',
                                   color: Colors.white,
+                                  letterSpacing: 0.0,
                                 ),
                         elevation: 3.0,
                         borderRadius: BorderRadius.circular(12.0),
@@ -433,6 +479,7 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Inter',
                                   color: Colors.black,
+                                  letterSpacing: 0.0,
                                   fontWeight: FontWeight.w800,
                                 ),
                         elevation: 3.0,

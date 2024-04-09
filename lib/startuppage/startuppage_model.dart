@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_calendar.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
@@ -26,9 +27,9 @@ class StartuppageModel extends FlutterFlowModel<StartuppageWidget> {
       FFUploadedFile(bytes: Uint8List.fromList([]));
 
   // Stores action output result for [Gemini - Text From Image] action in IconButton widget.
-  String? image;
-  // Stores action output result for [Gemini - Text From Image] action in IconButton widget.
   String? gemdesc;
+  // Stores action output result for [Gemini - Text From Image] action in IconButton widget.
+  String? image;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode3;
   TextEditingController? textController3;
@@ -74,8 +75,12 @@ class StartuppageModel extends FlutterFlowModel<StartuppageWidget> {
   ScrollController? listViewController1;
   // State field(s) for ListView widget.
   ScrollController? listViewController2;
-
-  /// Initialization and disposal methods.
+  // Stores action output result for [Backend Call - Create Document] action in Row widget.
+  FoodItemsRecord? uploadedentry;
+  bool isDataUploading3 = false;
+  FFUploadedFile uploadedLocalFile3 =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+  String uploadedFileUrl3 = '';
 
   @override
   void initState(BuildContext context) {
@@ -121,8 +126,4 @@ class StartuppageModel extends FlutterFlowModel<StartuppageWidget> {
     listViewController1?.dispose();
     listViewController2?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

@@ -1,5 +1,7 @@
+import '/backend/backend.dart';
+import '/backend/firebase_storage/storage.dart';
 import '/backend/gemini/gemini.dart';
-import '/flutter_flow/flutter_flow_ad_banner.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_autocomplete_options_list.dart';
 import '/flutter_flow/flutter_flow_calendar.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
@@ -11,6 +13,8 @@ import '/flutter_flow/upload_data.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'startuppage_model.dart';
@@ -28,6 +32,106 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
   late StartuppageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final animationsMap = {
+    'iconOnActionTriggerAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      applyInitialState: true,
+      effects: [
+        ShimmerEffect(
+          curve: Curves.linear,
+          delay: 0.ms,
+          duration: 1000.ms,
+          color: const Color(0xFF00F4FF),
+          angle: 0.785,
+        ),
+      ],
+    ),
+    'textFieldOnActionTriggerAnimation1': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      applyInitialState: true,
+      effects: [
+        TintEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          color: const Color(0xFF00ACBA),
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'dropDownOnActionTriggerAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      applyInitialState: true,
+      effects: [
+        TintEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          color: const Color(0xFF00ACBA),
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'textFieldOnActionTriggerAnimation2': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      applyInitialState: true,
+      effects: [
+        TintEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          color: const Color(0xFF00ACBA),
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'textFieldOnActionTriggerAnimation3': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      applyInitialState: true,
+      effects: [
+        TintEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          color: Colors.black,
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'textFieldOnActionTriggerAnimation4': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      applyInitialState: true,
+      effects: [
+        TintEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          color: const Color(0xFF00ACBA),
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+    'textFieldOnActionTriggerAnimation5': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      applyInitialState: true,
+      effects: [
+        TintEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          color: const Color(0xFF00ACBA),
+          begin: 0.0,
+          end: 1.0,
+        ),
+      ],
+    ),
+  };
 
   @override
   void initState() {
@@ -62,6 +166,13 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
     _model.textController8 ??= TextEditingController();
     _model.textFieldFocusNode8 ??= FocusNode();
 
+    setupAnimations(
+      animationsMap.values.where((anim) =>
+          anim.trigger == AnimationTrigger.onActionTrigger ||
+          !anim.applyInitialState),
+      this,
+    );
+
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -88,8 +199,125 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
           child: Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 6.0),
             child: FloatingActionButton(
-              onPressed: () {
-                print('FloatingActionButton pressed ...');
+              onPressed: () async {
+                setState(() {
+                  FFAppState().helptext = 'Adding food item please wait';
+                });
+                if ((_model.dropDownValue == null ||
+                        _model.dropDownValue == '') ||
+                    (_model.textController3.text == '') ||
+                    (_model.textController4.text == '') ||
+                    (_model.textController5.text == '') ||
+                    ((_model.uploadedLocalFile1.bytes?.isEmpty ?? true))) {
+                  await showDialog(
+                    context: context,
+                    builder: (alertDialogContext) {
+                      return AlertDialog(
+                        title: const Text('Missing Required Data!'),
+                        content: const Text(
+                            'Please make sure you have proveded the following data required by the food banks: Image, Expiry Date, Condition & Category(manually or AI)'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(alertDialogContext),
+                            child: const Text('Ok'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  {
+                    setState(() => _model.isDataUploading3 = true);
+                    var selectedUploadedFiles = <FFUploadedFile>[];
+                    var selectedMedia = <SelectedFile>[];
+                    var downloadUrls = <String>[];
+                    try {
+                      selectedUploadedFiles =
+                          _model.uploadedLocalFile1.bytes!.isNotEmpty
+                              ? [_model.uploadedLocalFile1]
+                              : <FFUploadedFile>[];
+                      selectedMedia = selectedFilesFromUploadedFiles(
+                        selectedUploadedFiles,
+                      );
+                      downloadUrls = (await Future.wait(
+                        selectedMedia.map(
+                          (m) async => await uploadData(m.storagePath, m.bytes),
+                        ),
+                      ))
+                          .where((u) => u != null)
+                          .map((u) => u!)
+                          .toList();
+                    } finally {
+                      _model.isDataUploading3 = false;
+                    }
+                    if (selectedUploadedFiles.length == selectedMedia.length &&
+                        downloadUrls.length == selectedMedia.length) {
+                      setState(() {
+                        _model.uploadedLocalFile3 = selectedUploadedFiles.first;
+                        _model.uploadedFileUrl3 = downloadUrls.first;
+                      });
+                    } else {
+                      setState(() {});
+                      return;
+                    }
+                  }
+
+                  setState(() {
+                    FFAppState().addToFoodItem(FoodItemStruct(
+                      img: _model.uploadedFileUrl3,
+                      name: _model.textController1.text,
+                      category: _model.dropDownValue,
+                      description: _model.textController7.text,
+                      expiry: functions.getdate(
+                          _model.textController3.text,
+                          _model.textController4.text,
+                          _model.textController5.text),
+                      quantity: double.tryParse(_model.textController6.text),
+                      donated: false,
+                      price: double.tryParse(_model.textController2.text),
+                    ));
+                  });
+                  setState(() {
+                    _model.textController2?.clear();
+                    _model.textController3?.clear();
+                    _model.textController4?.clear();
+                    _model.textController5?.clear();
+                    _model.textController6?.clear();
+                    _model.textController1?.clear();
+                  });
+                  setState(() {
+                    _model.dropDownValueController?.reset();
+                  });
+                  setState(() {
+                    _model.isDataUploading1 = false;
+                    _model.uploadedLocalFile1 =
+                        FFUploadedFile(bytes: Uint8List.fromList([]));
+                  });
+
+                  setState(() {
+                    _model.isDataUploading3 = false;
+                    _model.uploadedLocalFile3 =
+                        FFUploadedFile(bytes: Uint8List.fromList([]));
+                    _model.uploadedFileUrl3 = '';
+                  });
+                }
+
+                setState(() {
+                  _model.tabBarController!.animateTo(
+                    _model.tabBarController!.length - 1,
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.ease,
+                  );
+                });
+
+                await _model.listViewController2?.animateTo(
+                  _model.listViewController2!.position.maxScrollExtent,
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.ease,
+                );
+                setState(() {
+                  FFAppState().helptext = 'Help Text';
+                });
               },
               backgroundColor: FlutterFlowTheme.of(context).primary,
               elevation: 8.0,
@@ -113,56 +341,49 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  FlutterFlowAdBanner(
-                    width: MediaQuery.sizeOf(context).width * 1.0,
-                    height: 50.0,
-                    showsTestAd: true,
-                  ),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Align(
                         alignment: const AlignmentDirectional(0.0, 0.0),
-                        child: InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
-                            setState(() {
-                              _model.dropDownValueController?.value =
-                                  FFAppState().categories.last;
-                            });
-                            setState(() {
-                              _model.textController1?.text =
-                                  '>${_model.image}<>${(_model.image!).trim()}<>${(_model.image!).substring(1, (_model.image!).length)}<>${functions.getitem(FFAppState().categories.toList(), _model.image!)}<';
-                            });
-                          },
-                          child: GradientText(
-                            'Add New Item',
-                            textAlign: TextAlign.center,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Roboto Condensed',
-                                  fontSize: 48.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                            colors: [
-                              FlutterFlowTheme.of(context).primary,
-                              FlutterFlowTheme.of(context).accent3
-                            ],
-                            gradientDirection: GradientDirection.ltr,
-                            gradientType: GradientType.linear,
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 20.0, 0.0, 8.0),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              await FoodItemsRecord.collection
+                                  .doc()
+                                  .set(createFoodItemsRecordData(
+                                    name: '',
+                                  ));
+                            },
+                            child: GradientText(
+                              'Add New Item',
+                              textAlign: TextAlign.center,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Roboto Condensed',
+                                    fontSize: 48.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                              colors: [
+                                FlutterFlowTheme.of(context).primary,
+                                FlutterFlowTheme.of(context).accent3
+                              ],
+                              gradientDirection: GradientDirection.ltr,
+                              gradientType: GradientType.linear,
+                            ),
                           ),
                         ),
                       ),
                     ],
-                  ),
-                  Text(
-                    FFAppState().helptext,
-                    style: FlutterFlowTheme.of(context).bodyMedium,
                   ),
                   Stack(
                     alignment: const AlignmentDirectional(0.0, 0.0),
@@ -171,10 +392,10 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                         alignment: const AlignmentDirectional(0.0, 0.0),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(16.0),
-                          child: Image.network(
-                            'https://cdn.dribbble.com/users/4100772/screenshots/17918257/media/32bcec31f33688639f1dff79fbfe5c7f.jpg',
+                          child: Image.asset(
+                            'assets/images/foodplaceholder.jpg',
                             width: 300.0,
-                            height: 200.0,
+                            height: 250.0,
                             fit: BoxFit.cover,
                             alignment: const Alignment(0.0, 0.0),
                           ),
@@ -182,15 +403,18 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                       ),
                       Align(
                         alignment: const AlignmentDirectional(0.0, 0.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(16.0),
-                          child: Image.memory(
-                            _model.uploadedLocalFile1.bytes ??
-                                Uint8List.fromList([]),
-                            width: 300.0,
-                            height: 200.0,
-                            fit: BoxFit.cover,
-                            alignment: const Alignment(0.0, 0.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(16.0),
+                            child: Image.memory(
+                              _model.uploadedLocalFile1.bytes ??
+                                  Uint8List.fromList([]),
+                              width: 300.0,
+                              height: 250.0,
+                              fit: BoxFit.cover,
+                              alignment: const Alignment(0.0, 0.0),
+                            ),
                           ),
                         ),
                       ),
@@ -207,7 +431,10 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                           BoxShadow(
                             blurRadius: 4.0,
                             color: Color(0x320E151B),
-                            offset: Offset(0.0, -2.0),
+                            offset: Offset(
+                              0.0,
+                              -2.0,
+                            ),
                           )
                         ],
                         borderRadius: const BorderRadius.only(
@@ -223,8 +450,50 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Expanded(
+                                    child: Align(
+                                      alignment: const AlignmentDirectional(0.0, 0.0),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          FFAppState().helptext,
+                                          textAlign: TextAlign.center,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Roboto Mono',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .tertiary,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  FaIcon(
+                                    FontAwesomeIcons.modx,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    size: 24.0,
+                                  ).animateOnActionTrigger(
+                                    animationsMap[
+                                        'iconOnActionTriggerAnimation']!,
+                                  ),
+                                ],
+                              ),
+                            ),
                             Row(
                               mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Expanded(
                                   flex: 3,
@@ -239,9 +508,17 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                       decoration: InputDecoration(
                                         labelText: 'Name',
                                         labelStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium,
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                         hintStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium,
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                         enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
                                             color: FlutterFlowTheme.of(context)
@@ -281,10 +558,19 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                         ),
                                       ),
                                       style: FlutterFlowTheme.of(context)
-                                          .bodyMedium,
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
                                       textAlign: TextAlign.center,
+                                      minLines: null,
+                                      keyboardType: TextInputType.name,
                                       validator: _model.textController1Validator
                                           .asValidator(context),
+                                    ).animateOnActionTrigger(
+                                      animationsMap[
+                                          'textFieldOnActionTriggerAnimation1']!,
                                     ),
                                   ),
                                 ),
@@ -297,14 +583,24 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                       controller: _model.textController2,
                                       focusNode: _model.textFieldFocusNode2,
                                       autofocus: true,
+                                      textCapitalization:
+                                          TextCapitalization.none,
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelText: 'Cost',
                                         labelStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium,
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                         alignLabelWithHint: false,
                                         hintStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium,
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                         enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
                                             color: FlutterFlowTheme.of(context)
@@ -344,8 +640,16 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                         ),
                                       ),
                                       style: FlutterFlowTheme.of(context)
-                                          .bodyMedium,
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
                                       textAlign: TextAlign.center,
+                                      minLines: null,
+                                      keyboardType:
+                                          const TextInputType.numberWithOptions(
+                                              decimal: true),
                                       validator: _model.textController2Validator
                                           .asValidator(context),
                                       inputFormatters: [
@@ -368,11 +672,24 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                     height: 56.0,
                                     searchHintTextStyle:
                                         FlutterFlowTheme.of(context)
-                                            .labelMedium,
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                     searchTextStyle:
-                                        FlutterFlowTheme.of(context).bodyMedium,
-                                    textStyle:
-                                        FlutterFlowTheme.of(context).bodyMedium,
+                                        FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
                                     hintText: 'Category*',
                                     searchHintText: 'Search for categories',
                                     icon: Icon(
@@ -394,16 +711,19 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                     isOverButton: true,
                                     isSearchable: true,
                                     isMultiSelect: false,
+                                  ).animateOnActionTrigger(
+                                    animationsMap[
+                                        'dropDownOnActionTriggerAnimation']!,
                                   ),
                                 ),
                                 FlutterFlowIconButton(
                                   borderColor:
-                                      FlutterFlowTheme.of(context).primary,
+                                      FlutterFlowTheme.of(context).tertiary,
                                   borderRadius: 20.0,
                                   borderWidth: 1.0,
                                   buttonSize: 40.0,
                                   fillColor:
-                                      FlutterFlowTheme.of(context).accent1,
+                                      FlutterFlowTheme.of(context).accent3,
                                   icon: Icon(
                                     Icons.image_outlined,
                                     color: FlutterFlowTheme.of(context)
@@ -411,6 +731,15 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                     size: 24.0,
                                   ),
                                   onPressed: () async {
+                                    if (animationsMap[
+                                            'iconOnActionTriggerAnimation'] !=
+                                        null) {
+                                      animationsMap[
+                                              'iconOnActionTriggerAnimation']!
+                                          .controller
+                                        ..reset()
+                                        ..repeat();
+                                    }
                                     final selectedMedia =
                                         await selectMediaWithSourceBottomSheet(
                                       context: context,
@@ -455,8 +784,18 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
 
                                     setState(() {
                                       FFAppState().helptext =
-                                          'Loading Image Please Wait';
+                                          'Analyzing Image Please Wait';
                                     });
+                                    await geminiTextFromImage(
+                                      context,
+                                      'Look at the image and give a description accordingly eg: New Item, Has been stored, In original packing, looks like its about to expire, might have expired, in okay condition etc. dont make the description long.',
+                                      uploadImageBytes:
+                                          _model.uploadedLocalFile1,
+                                    ).then((generatedText) {
+                                      safeSetState(
+                                          () => _model.gemdesc = generatedText);
+                                    });
+
                                     await geminiTextFromImage(
                                       context,
                                       'Classify the image into one of these given categories and return only the category and nothing else as response  (return exact category string, dont change capitalization) if no category matches return only \"0\": ${functions.combineall(FFAppState().categories.toList())}',
@@ -471,18 +810,15 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                         _model.image == '') {
                                       setState(() {
                                         FFAppState().helptext =
-                                            'Try Image Generation Again';
+                                            'Try Image Uploading Again';
                                       });
                                     } else {
                                       if (_model.image == ' 0') {
                                         setState(() {
                                           FFAppState().helptext =
-                                              'Try Image Generation Again :(';
+                                              'Your Item doesn\'t match any Category. Create a new Category or upload a new Image.';
                                         });
                                       } else {
-                                        setState(() {
-                                          FFAppState().helptext = 'Help Text';
-                                        });
                                         setState(() {
                                           _model.dropDownValueController
                                                   ?.value =
@@ -490,30 +826,125 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                                   FFAppState()
                                                       .categories
                                                       .toList(),
-                                                  _model.image!);
-                                        });
-                                        await geminiTextFromImage(
-                                          context,
-                                          'Look at the image and give a description accordingly eg: New Item, Has been stored, In original packing, looks like its about to expire, might have expired, in okay condition etc. dont make the description long.',
-                                          uploadImageBytes:
-                                              _model.uploadedLocalFile1,
-                                        ).then((generatedText) {
-                                          safeSetState(() =>
-                                              _model.gemdesc = generatedText);
-                                        });
-
-                                        setState(() {
-                                          _model.textController7?.text =
-                                              _model.gemdesc!;
+                                                  '${_model.image}');
                                         });
                                         setState(() {
-                                          _model.textController1?.text =
-                                              _model.dropDownValue!;
+                                          FFAppState().helptext = 'Help Text';
                                         });
+                                        if (_model.gemdesc != null &&
+                                            _model.gemdesc != '') {
+                                          setState(() {
+                                            _model.textController7?.text =
+                                                _model.gemdesc!;
+                                          });
+                                          setState(() {
+                                            _model.textController1?.text =
+                                                _model.dropDownValue!;
+                                          });
+                                        }
+                                        if (animationsMap[
+                                                'textFieldOnActionTriggerAnimation1'] !=
+                                            null) {
+                                          await animationsMap[
+                                                  'textFieldOnActionTriggerAnimation1']!
+                                              .controller
+                                              .forward(from: 0.0);
+                                        }
+                                        if (animationsMap[
+                                                'dropDownOnActionTriggerAnimation'] !=
+                                            null) {
+                                          await animationsMap[
+                                                  'dropDownOnActionTriggerAnimation']!
+                                              .controller
+                                              .forward(from: 0.0);
+                                        }
+                                        if (animationsMap[
+                                                'iconOnActionTriggerAnimation'] !=
+                                            null) {
+                                          await animationsMap[
+                                                  'iconOnActionTriggerAnimation']!
+                                              .controller
+                                              .forward(from: 0.0);
+                                        }
                                       }
                                     }
 
+                                    if (animationsMap[
+                                            'iconOnActionTriggerAnimation'] !=
+                                        null) {
+                                      animationsMap[
+                                              'iconOnActionTriggerAnimation']!
+                                          .controller
+                                          .stop();
+                                    }
+                                    if (animationsMap[
+                                            'iconOnActionTriggerAnimation'] !=
+                                        null) {
+                                      animationsMap[
+                                              'iconOnActionTriggerAnimation']!
+                                          .controller
+                                          .reset();
+                                    }
+                                    if (animationsMap[
+                                            'textFieldOnActionTriggerAnimation1'] !=
+                                        null) {
+                                      animationsMap[
+                                              'textFieldOnActionTriggerAnimation1']!
+                                          .controller
+                                          .reset();
+                                    }
+                                    if (animationsMap[
+                                            'dropDownOnActionTriggerAnimation'] !=
+                                        null) {
+                                      animationsMap[
+                                              'dropDownOnActionTriggerAnimation']!
+                                          .controller
+                                          .reset();
+                                    }
+                                    if (animationsMap[
+                                            'iconOnActionTriggerAnimation'] !=
+                                        null) {
+                                      animationsMap[
+                                              'iconOnActionTriggerAnimation']!
+                                          .controller
+                                          .reset();
+                                    }
+
                                     setState(() {});
+                                  },
+                                ),
+                                FlutterFlowIconButton(
+                                  borderColor:
+                                      FlutterFlowTheme.of(context).primary,
+                                  borderRadius: 20.0,
+                                  borderWidth: 1.0,
+                                  buttonSize: 40.0,
+                                  fillColor:
+                                      FlutterFlowTheme.of(context).accent1,
+                                  icon: Icon(
+                                    Icons.delete_forever_rounded,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    size: 24.0,
+                                  ),
+                                  onPressed: () async {
+                                    setState(() {
+                                      _model.textController1?.clear();
+                                      _model.textController2?.clear();
+                                      _model.textController3?.clear();
+                                      _model.textController4?.clear();
+                                      _model.textController5?.clear();
+                                      _model.textController6?.clear();
+                                    });
+                                    setState(() {
+                                      _model.dropDownValueController?.reset();
+                                    });
+                                    setState(() {
+                                      _model.isDataUploading1 = false;
+                                      _model.uploadedLocalFile1 =
+                                          FFUploadedFile(
+                                              bytes: Uint8List.fromList([]));
+                                    });
                                   },
                                 ),
                               ],
@@ -522,6 +953,8 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                               padding: const EdgeInsets.all(4.0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Expanded(
                                     flex: 6,
@@ -535,6 +968,7 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryText,
                                             fontSize: 16.0,
+                                            letterSpacing: 0.0,
                                             fontWeight: FontWeight.w500,
                                           ),
                                     ),
@@ -553,11 +987,19 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                           labelText: 'Date',
                                           labelStyle:
                                               FlutterFlowTheme.of(context)
-                                                  .labelMedium,
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                  ),
                                           alignLabelWithHint: false,
                                           hintStyle:
                                               FlutterFlowTheme.of(context)
-                                                  .labelMedium,
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                  ),
                                           enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
                                               color:
@@ -601,8 +1043,14 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                           ),
                                         ),
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyMedium,
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                         textAlign: TextAlign.center,
+                                        minLines: null,
+                                        keyboardType: TextInputType.number,
                                         validator: _model
                                             .textController3Validator
                                             .asValidator(context),
@@ -610,6 +1058,9 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                           FilteringTextInputFormatter.allow(
                                               RegExp('[0-9]'))
                                         ],
+                                      ).animateOnActionTrigger(
+                                        animationsMap[
+                                            'textFieldOnActionTriggerAnimation2']!,
                                       ),
                                     ),
                                   ),
@@ -627,11 +1078,19 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                           labelText: 'Month(eg.12)',
                                           labelStyle:
                                               FlutterFlowTheme.of(context)
-                                                  .labelMedium,
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                  ),
                                           alignLabelWithHint: false,
                                           hintStyle:
                                               FlutterFlowTheme.of(context)
-                                                  .labelMedium,
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                  ),
                                           enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
                                               color:
@@ -675,8 +1134,14 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                           ),
                                         ),
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyMedium,
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                         textAlign: TextAlign.center,
+                                        minLines: null,
+                                        keyboardType: TextInputType.number,
                                         validator: _model
                                             .textController4Validator
                                             .asValidator(context),
@@ -684,6 +1149,9 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                           FilteringTextInputFormatter.allow(
                                               RegExp('[0-9]'))
                                         ],
+                                      ).animateOnActionTrigger(
+                                        animationsMap[
+                                            'textFieldOnActionTriggerAnimation3']!,
                                       ),
                                     ),
                                   ),
@@ -701,11 +1169,19 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                           labelText: 'Year',
                                           labelStyle:
                                               FlutterFlowTheme.of(context)
-                                                  .labelMedium,
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                  ),
                                           alignLabelWithHint: false,
                                           hintStyle:
                                               FlutterFlowTheme.of(context)
-                                                  .labelMedium,
+                                                  .labelMedium
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                  ),
                                           enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
                                               color:
@@ -749,8 +1225,14 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                           ),
                                         ),
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyMedium,
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                         textAlign: TextAlign.center,
+                                        minLines: null,
+                                        keyboardType: TextInputType.number,
                                         validator: _model
                                             .textController5Validator
                                             .asValidator(context),
@@ -758,6 +1240,9 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                           FilteringTextInputFormatter.allow(
                                               RegExp('[0-9]'))
                                         ],
+                                      ).animateOnActionTrigger(
+                                        animationsMap[
+                                            'textFieldOnActionTriggerAnimation4']!,
                                       ),
                                     ),
                                   ),
@@ -765,43 +1250,12 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                     flex: 3,
                                     child: FlutterFlowIconButton(
                                       borderColor:
-                                          FlutterFlowTheme.of(context).primary,
+                                          FlutterFlowTheme.of(context).tertiary,
                                       borderRadius: 20.0,
                                       borderWidth: 1.0,
                                       buttonSize: 40.0,
                                       fillColor:
-                                          FlutterFlowTheme.of(context).accent1,
-                                      icon: Icon(
-                                        Icons.edit_calendar,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 24.0,
-                                      ),
-                                      onPressed: () async {
-                                        if (FFAppState().datepick == 1.0) {
-                                          setState(() {
-                                            FFAppState().datepick = 0.0;
-                                          });
-                                          return;
-                                        } else {
-                                          setState(() {
-                                            FFAppState().datepick = 1.0;
-                                          });
-                                          return;
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 3,
-                                    child: FlutterFlowIconButton(
-                                      borderColor:
-                                          FlutterFlowTheme.of(context).primary,
-                                      borderRadius: 20.0,
-                                      borderWidth: 1.0,
-                                      buttonSize: 40.0,
-                                      fillColor:
-                                          FlutterFlowTheme.of(context).accent1,
+                                          FlutterFlowTheme.of(context).accent3,
                                       icon: Icon(
                                         Icons.camera_rounded,
                                         color: FlutterFlowTheme.of(context)
@@ -809,7 +1263,15 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                         size: 24.0,
                                       ),
                                       onPressed: () async {
-                                        var shouldSetState = false;
+                                        if (animationsMap[
+                                                'iconOnActionTriggerAnimation'] !=
+                                            null) {
+                                          animationsMap[
+                                                  'iconOnActionTriggerAnimation']!
+                                              .controller
+                                            ..reset()
+                                            ..repeat();
+                                        }
                                         final selectedMedia =
                                             await selectMediaWithSourceBottomSheet(
                                           context: context,
@@ -865,7 +1327,6 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                               generatedText);
                                         });
 
-                                        shouldSetState = true;
                                         if (_model.expirydate == '0') {
                                           await showDialog(
                                             context: context,
@@ -886,33 +1347,105 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                               );
                                             },
                                           );
-                                          if (shouldSetState) setState(() {});
+                                          if (animationsMap[
+                                                  'iconOnActionTriggerAnimation'] !=
+                                              null) {
+                                            animationsMap[
+                                                    'iconOnActionTriggerAnimation']!
+                                                .controller
+                                                .stop();
+                                          }
+                                        } else {
+                                          setState(() {
+                                            _model.textController3?.text =
+                                                ((String fullexpiry) {
+                                              return fullexpiry[1] +
+                                                  fullexpiry[2];
+                                            }(_model.expirydate!));
+                                          });
+                                          setState(() {
+                                            _model.textController4?.text =
+                                                ((String fullexpiry) {
+                                              return fullexpiry[4] +
+                                                  fullexpiry[5];
+                                            }(_model.expirydate!));
+                                          });
+                                          setState(() {
+                                            _model.textController5?.text =
+                                                ((String fullexpiry) {
+                                              return fullexpiry[7] +
+                                                  fullexpiry[8] +
+                                                  fullexpiry[9] +
+                                                  fullexpiry[10];
+                                            }(_model.expirydate!));
+                                          });
+                                          if (animationsMap[
+                                                  'textFieldOnActionTriggerAnimation2'] !=
+                                              null) {
+                                            await animationsMap[
+                                                    'textFieldOnActionTriggerAnimation2']!
+                                                .controller
+                                                .forward(from: 0.0);
+                                          }
+                                          if (animationsMap[
+                                                  'textFieldOnActionTriggerAnimation3'] !=
+                                              null) {
+                                            await animationsMap[
+                                                    'textFieldOnActionTriggerAnimation3']!
+                                                .controller
+                                                .forward(from: 0.0);
+                                          }
+                                          if (animationsMap[
+                                                  'textFieldOnActionTriggerAnimation4'] !=
+                                              null) {
+                                            await animationsMap[
+                                                    'textFieldOnActionTriggerAnimation4']!
+                                                .controller
+                                                .forward(from: 0.0);
+                                          }
+                                        }
+
+                                        if (animationsMap[
+                                                'iconOnActionTriggerAnimation'] !=
+                                            null) {
+                                          animationsMap[
+                                                  'iconOnActionTriggerAnimation']!
+                                              .controller
+                                              .stop();
+                                        }
+
+                                        setState(() {});
+                                      },
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 3,
+                                    child: FlutterFlowIconButton(
+                                      borderColor:
+                                          FlutterFlowTheme.of(context).primary,
+                                      borderRadius: 20.0,
+                                      borderWidth: 1.0,
+                                      buttonSize: 40.0,
+                                      fillColor:
+                                          FlutterFlowTheme.of(context).accent1,
+                                      icon: Icon(
+                                        Icons.edit_calendar,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        size: 24.0,
+                                      ),
+                                      onPressed: () async {
+                                        if (FFAppState().datepick == 1.0) {
+                                          setState(() {
+                                            FFAppState().datepick = 0.0;
+                                          });
+                                          return;
+                                        } else {
+                                          setState(() {
+                                            FFAppState().datepick = 1.0;
+                                          });
                                           return;
                                         }
-                                        setState(() {
-                                          _model.textController3?.text =
-                                              ((String fullexpiry) {
-                                            return fullexpiry[1] +
-                                                fullexpiry[2];
-                                          }(_model.expirydate!));
-                                        });
-                                        setState(() {
-                                          _model.textController4?.text =
-                                              ((String fullexpiry) {
-                                            return fullexpiry[4] +
-                                                fullexpiry[5];
-                                          }(_model.expirydate!));
-                                        });
-                                        setState(() {
-                                          _model.textController5?.text =
-                                              ((String fullexpiry) {
-                                            return fullexpiry[7] +
-                                                fullexpiry[8] +
-                                                fullexpiry[9] +
-                                                fullexpiry[10];
-                                          }(_model.expirydate!));
-                                        });
-                                        if (shouldSetState) setState(() {});
                                       },
                                     ),
                                   ),
@@ -963,18 +1496,41 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                           .languageCode,
                                     );
                                   });
+                                  setState(() {
+                                    FFAppState().datepick = 0.0;
+                                  });
                                   setState(() {});
                                 },
-                                titleStyle:
-                                    FlutterFlowTheme.of(context).headlineSmall,
-                                dayOfWeekStyle:
-                                    FlutterFlowTheme.of(context).labelLarge,
-                                dateStyle:
-                                    FlutterFlowTheme.of(context).bodyMedium,
-                                selectedDateStyle:
-                                    FlutterFlowTheme.of(context).titleSmall,
-                                inactiveDateStyle:
-                                    FlutterFlowTheme.of(context).labelMedium,
+                                titleStyle: FlutterFlowTheme.of(context)
+                                    .headlineSmall
+                                    .override(
+                                      fontFamily: 'Sora',
+                                      letterSpacing: 0.0,
+                                    ),
+                                dayOfWeekStyle: FlutterFlowTheme.of(context)
+                                    .labelLarge
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
+                                dateStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
+                                selectedDateStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
+                                inactiveDateStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
                                 locale:
                                     FFLocalizations.of(context).languageCode,
                               ),
@@ -995,10 +1551,18 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                       decoration: InputDecoration(
                                         labelText: 'Quantity(pc/kg)',
                                         labelStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium,
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                         alignLabelWithHint: false,
                                         hintStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium,
+                                            .labelMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                         enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
                                             color: FlutterFlowTheme.of(context)
@@ -1038,7 +1602,15 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                         ),
                                       ),
                                       style: FlutterFlowTheme.of(context)
-                                          .bodyMedium,
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      minLines: null,
+                                      keyboardType:
+                                          const TextInputType.numberWithOptions(
+                                              decimal: true),
                                       validator: _model.textController6Validator
                                           .asValidator(context),
                                       inputFormatters: [
@@ -1084,7 +1656,11 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                           onSelected: onSelected,
                                           textStyle:
                                               FlutterFlowTheme.of(context)
-                                                  .bodyMedium,
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Inter',
+                                                    letterSpacing: 0.0,
+                                                  ),
                                           textHighlightStyle: const TextStyle(),
                                           elevation: 4.0,
                                           optionBackgroundColor:
@@ -1120,13 +1696,21 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                           autofocus: true,
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Description/Condition',
+                                            labelText: 'Description/Condition*',
                                             labelStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .labelMedium,
+                                                    .labelMedium
+                                                    .override(
+                                                      fontFamily: 'Inter',
+                                                      letterSpacing: 0.0,
+                                                    ),
                                             hintStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .labelMedium,
+                                                    .labelMedium
+                                                    .override(
+                                                      fontFamily: 'Inter',
+                                                      letterSpacing: 0.0,
+                                                    ),
                                             enabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                 color:
@@ -1170,13 +1754,21 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                             ),
                                           ),
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyMedium,
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Inter',
+                                                letterSpacing: 0.0,
+                                              ),
+                                          minLines: null,
                                           keyboardType: TextInputType.multiline,
                                           validator: _model
                                               .textController7Validator
                                               .asValidator(context),
                                         );
                                       },
+                                    ).animateOnActionTrigger(
+                                      animationsMap[
+                                          'textFieldOnActionTriggerAnimation5']!,
                                     ),
                                   ),
                                 ),
@@ -1197,7 +1789,11 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                             FlutterFlowTheme.of(context)
                                                 .secondaryText,
                                         labelStyle: FlutterFlowTheme.of(context)
-                                            .titleMedium,
+                                            .titleMedium
+                                            .override(
+                                              fontFamily: 'Inter',
+                                              letterSpacing: 0.0,
+                                            ),
                                         unselectedLabelStyle: const TextStyle(),
                                         indicatorColor:
                                             FlutterFlowTheme.of(context)
@@ -1254,11 +1850,23 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                                             labelStyle:
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .labelMedium,
+                                                                    .labelMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Inter',
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
                                                             hintStyle:
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .labelMedium,
+                                                                    .labelMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Inter',
+                                                                      letterSpacing:
+                                                                          0.0,
+                                                                    ),
                                                             enabledBorder:
                                                                 UnderlineInputBorder(
                                                               borderSide:
@@ -1318,7 +1926,14 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                                           ),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .bodyMedium,
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Inter',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                          minLines: null,
                                                           validator: _model
                                                               .textController8Validator
                                                               .asValidator(
@@ -1362,6 +1977,19 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                                                 .textController8
                                                                 ?.clear();
                                                           });
+                                                          setState(() {
+                                                            _model
+                                                                .tabBarController!
+                                                                .animateTo(
+                                                              0,
+                                                              duration: const Duration(
+                                                                  milliseconds:
+                                                                      300),
+                                                              curve:
+                                                                  Curves.ease,
+                                                            );
+                                                          });
+
                                                           await _model
                                                               .listViewController1
                                                               ?.animateTo(
@@ -1371,7 +1999,7 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                                                 .maxScrollExtent,
                                                             duration: const Duration(
                                                                 milliseconds:
-                                                                    100),
+                                                                    500),
                                                             curve: Curves.ease,
                                                           );
                                                         } else {
@@ -1387,7 +2015,7 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                                           0.0, 0.0, 0.0, 24.0),
                                                   child: Builder(
                                                     builder: (context) {
-                                                      final category =
+                                                      final categoryimg =
                                                           FFAppState()
                                                               .categories
                                                               .toList();
@@ -1398,12 +2026,12 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                                         scrollDirection:
                                                             Axis.vertical,
                                                         itemCount:
-                                                            category.length,
+                                                            categoryimg.length,
                                                         itemBuilder: (context,
-                                                            categoryIndex) {
-                                                          final categoryItem =
-                                                              category[
-                                                                  categoryIndex];
+                                                            categoryimgIndex) {
+                                                          final categoryimgItem =
+                                                              categoryimg[
+                                                                  categoryimgIndex];
                                                           return Padding(
                                                             padding:
                                                                 const EdgeInsetsDirectional
@@ -1426,8 +2054,8 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                                                   () async {
                                                                 setState(() {
                                                                   FFAppState()
-                                                                      .removeFromCategories(
-                                                                          categoryItem);
+                                                                      .removeAtIndexFromCategories(
+                                                                          categoryimgIndex);
                                                                 });
                                                               },
                                                               child: Row(
@@ -1449,12 +2077,13 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                                                               .start,
                                                                       children: [
                                                                         Text(
-                                                                          'April 25, 9:00am',
+                                                                          'User Added Category',
                                                                           style: FlutterFlowTheme.of(context)
                                                                               .bodySmall
                                                                               .override(
                                                                                 fontFamily: 'Inter',
                                                                                 color: FlutterFlowTheme.of(context).primary,
+                                                                                letterSpacing: 0.0,
                                                                               ),
                                                                         ),
                                                                         Padding(
@@ -1465,42 +2094,73 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                                                               8.0),
                                                                           child:
                                                                               Text(
-                                                                            categoryItem,
-                                                                            style:
-                                                                                FlutterFlowTheme.of(context).headlineSmall,
+                                                                            categoryimgItem,
+                                                                            style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                  fontFamily: 'Sora',
+                                                                                  letterSpacing: 0.0,
+                                                                                ),
                                                                           ),
-                                                                        ),
-                                                                        Text(
-                                                                          'With Kaylene Huchtins',
-                                                                          style:
-                                                                              FlutterFlowTheme.of(context).labelMedium,
                                                                         ),
                                                                       ],
                                                                     ),
                                                                   ),
-                                                                  Padding(
-                                                                    padding: const EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                                  Stack(
+                                                                    alignment:
+                                                                        const AlignmentDirectional(
+                                                                            0.0,
+                                                                            0.0),
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                                                             8.0,
                                                                             8.0,
                                                                             0.0,
                                                                             8.0),
-                                                                    child:
-                                                                        ClipRRect(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              12.0),
-                                                                      child: Image
-                                                                          .network(
-                                                                        'https://images.unsplash.com/photo-1519582149095-fe7d19b2a3d2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8d2F0ZXJmYWxsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-                                                                        width:
-                                                                            100.0,
-                                                                        height:
-                                                                            100.0,
-                                                                        fit: BoxFit
-                                                                            .cover,
+                                                                        child:
+                                                                            ClipRRect(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(24.0),
+                                                                          child:
+                                                                              Image.asset(
+                                                                            'assets/images/foodcat.png',
+                                                                            width:
+                                                                                100.0,
+                                                                            height:
+                                                                                100.0,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                            alignment:
+                                                                                const Alignment(0.0, 0.0),
+                                                                            errorBuilder: (context, error, stackTrace) =>
+                                                                                Image.asset(
+                                                                              'assets/images/error_image.png',
+                                                                              width: 100.0,
+                                                                              height: 100.0,
+                                                                              fit: BoxFit.cover,
+                                                                              alignment: const Alignment(0.0, 0.0),
+                                                                            ),
+                                                                          ),
+                                                                        ),
                                                                       ),
-                                                                    ),
+                                                                      ClipRRect(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(18.0),
+                                                                        child: Image
+                                                                            .network(
+                                                                          valueOrDefault<
+                                                                              String>(
+                                                                            functions.getDefaultImage(categoryimgItem),
+                                                                            '.',
+                                                                          ),
+                                                                          width:
+                                                                              109.0,
+                                                                          height:
+                                                                              109.0,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        ),
+                                                                      ),
+                                                                    ],
                                                                   ),
                                                                 ],
                                                               ),
@@ -1520,95 +2180,301 @@ class _StartuppageWidgetState extends State<StartuppageWidget>
                                             padding:
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 0.0, 24.0),
-                                            child: ListView(
-                                              padding: EdgeInsets.zero,
-                                              primary: false,
-                                              shrinkWrap: true,
-                                              scrollDirection: Axis.vertical,
-                                              controller:
-                                                  _model.listViewController2,
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          16.0, 0.0, 16.0, 8.0),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Expanded(
-                                                        child: Column(
+                                            child: Builder(
+                                              builder: (context) {
+                                                final addedItems = FFAppState()
+                                                    .foodItem
+                                                    .toList();
+                                                return ListView.builder(
+                                                  padding: EdgeInsets.zero,
+                                                  primary: false,
+                                                  shrinkWrap: true,
+                                                  scrollDirection:
+                                                      Axis.vertical,
+                                                  itemCount: addedItems.length,
+                                                  itemBuilder: (context,
+                                                      addedItemsIndex) {
+                                                    final addedItemsItem =
+                                                        addedItems[
+                                                            addedItemsIndex];
+                                                    return Padding(
+                                                      padding:
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  16.0,
+                                                                  0.0,
+                                                                  16.0,
+                                                                  8.0),
+                                                      child: InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
+                                                        onTap: () async {
+                                                          var foodItemsRecordReference =
+                                                              FoodItemsRecord
+                                                                  .collection
+                                                                  .doc();
+                                                          await foodItemsRecordReference
+                                                              .set(
+                                                                  createFoodItemsRecordData(
+                                                            name: addedItemsItem
+                                                                .name,
+                                                            description:
+                                                                valueOrDefault<
+                                                                    String>(
+                                                              addedItemsItem
+                                                                  .description,
+                                                              'Empty Description',
+                                                            ),
+                                                            price:
+                                                                valueOrDefault<
+                                                                    double>(
+                                                              addedItemsItem
+                                                                  .price,
+                                                              0.0,
+                                                            ),
+                                                            category:
+                                                                addedItemsItem
+                                                                    .category,
+                                                            expiry:
+                                                                addedItemsItem
+                                                                    .expiry,
+                                                            donated:
+                                                                addedItemsItem
+                                                                    .donated,
+                                                            quantity:
+                                                                valueOrDefault<
+                                                                    double>(
+                                                              addedItemsItem
+                                                                  .quantity,
+                                                              1.0,
+                                                            ),
+                                                            image:
+                                                                addedItemsItem
+                                                                    .img,
+                                                          ));
+                                                          _model.uploadedentry =
+                                                              FoodItemsRecord
+                                                                  .getDocumentFromData(
+                                                                      createFoodItemsRecordData(
+                                                                        name: addedItemsItem
+                                                                            .name,
+                                                                        description:
+                                                                            valueOrDefault<String>(
+                                                                          addedItemsItem
+                                                                              .description,
+                                                                          'Empty Description',
+                                                                        ),
+                                                                        price: valueOrDefault<
+                                                                            double>(
+                                                                          addedItemsItem
+                                                                              .price,
+                                                                          0.0,
+                                                                        ),
+                                                                        category:
+                                                                            addedItemsItem.category,
+                                                                        expiry:
+                                                                            addedItemsItem.expiry,
+                                                                        donated:
+                                                                            addedItemsItem.donated,
+                                                                        quantity:
+                                                                            valueOrDefault<double>(
+                                                                          addedItemsItem
+                                                                              .quantity,
+                                                                          1.0,
+                                                                        ),
+                                                                        image: addedItemsItem
+                                                                            .img,
+                                                                      ),
+                                                                      foodItemsRecordReference);
+
+                                                          context.pushNamed(
+                                                            'ItemDetail',
+                                                            queryParameters: {
+                                                              'currentItem':
+                                                                  serializeParam(
+                                                                _model
+                                                                    .uploadedentry,
+                                                                ParamType
+                                                                    .Document,
+                                                              ),
+                                                              'index':
+                                                                  serializeParam(
+                                                                addedItemsIndex,
+                                                                ParamType.int,
+                                                              ),
+                                                            }.withoutNulls,
+                                                            extra: <String,
+                                                                dynamic>{
+                                                              'currentItem': _model
+                                                                  .uploadedentry,
+                                                              kTransitionInfoKey:
+                                                                  const TransitionInfo(
+                                                                hasTransition:
+                                                                    true,
+                                                                transitionType:
+                                                                    PageTransitionType
+                                                                        .scale,
+                                                                alignment: Alignment
+                                                                    .bottomCenter,
+                                                              ),
+                                                            },
+                                                          );
+
+                                                          setState(() {});
+                                                        },
+                                                        onLongPress: () async {
+                                                          setState(() {
+                                                            FFAppState()
+                                                                .removeFromFoodItem(
+                                                                    addedItemsItem);
+                                                          });
+                                                        },
+                                                        child: Row(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
-                                                            Text(
-                                                              '4 hour session',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodySmall
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Inter',
-                                                                    color: FlutterFlowTheme.of(
+                                                            Expanded(
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Text(
+                                                                    valueOrDefault<
+                                                                        String>(
+                                                                      dateTimeFormat(
+                                                                        'relative',
+                                                                        addedItemsItem
+                                                                            .expiry,
+                                                                        locale:
+                                                                            FFLocalizations.of(context).languageCode,
+                                                                      ),
+                                                                      'expiry',
+                                                                    ),
+                                                                    style: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .primary,
+                                                                        .bodySmall
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Inter',
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primary,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
                                                                   ),
+                                                                  Padding(
+                                                                    padding: const EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            4.0,
+                                                                            0.0,
+                                                                            8.0),
+                                                                    child: Text(
+                                                                      valueOrDefault<
+                                                                          String>(
+                                                                        addedItemsItem
+                                                                            .name,
+                                                                        'name',
+                                                                      ),
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .headlineSmall
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Sora',
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                  Text(
+                                                                    valueOrDefault<
+                                                                        String>(
+                                                                      'AED${addedItemsItem.price.toString()} | ${addedItemsItem.category} | ${addedItemsItem.quantity.toString()}pc/kg',
+                                                                      'price | category | quantity',
+                                                                    ),
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .headlineMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Sora',
+                                                                          fontSize:
+                                                                              16.0,
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                  ),
+                                                                  Text(
+                                                                    valueOrDefault<
+                                                                        String>(
+                                                                      addedItemsItem
+                                                                          .description,
+                                                                      'description',
+                                                                    ),
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Inter',
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          fontStyle:
+                                                                              FontStyle.italic,
+                                                                        ),
+                                                                  ),
+                                                                ],
+                                                              ),
                                                             ),
                                                             Padding(
                                                               padding:
                                                                   const EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0.0,
-                                                                          4.0,
+                                                                          8.0,
+                                                                          8.0,
                                                                           0.0,
                                                                           8.0),
-                                                              child: Text(
-                                                                'Scene Setup 101',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .headlineSmall,
+                                                              child: ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            12.0),
+                                                                child: Image
+                                                                    .network(
+                                                                  addedItemsItem
+                                                                      .img,
+                                                                  width: 100.0,
+                                                                  height: 100.0,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
                                                               ),
-                                                            ),
-                                                            Text(
-                                                              '\$500',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .headlineMedium,
                                                             ),
                                                           ],
                                                         ),
                                                       ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    8.0,
-                                                                    8.0,
-                                                                    0.0,
-                                                                    8.0),
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      12.0),
-                                                          child: Image.network(
-                                                            'https://images.unsplash.com/photo-1516357231954-91487b459602?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8cGhvdG9ncmFwaGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60',
-                                                            width: 100.0,
-                                                            height: 100.0,
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
+                                                    );
+                                                  },
+                                                  controller: _model
+                                                      .listViewController2,
+                                                );
+                                              },
                                             ),
                                           ),
                                         ],

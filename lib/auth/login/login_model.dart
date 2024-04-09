@@ -20,8 +20,6 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
   TextEditingController? forgorController;
   String? Function(BuildContext, String?)? forgorControllerValidator;
 
-  /// Initialization and disposal methods.
-
   @override
   void initState(BuildContext context) {
     passwordVisibility = false;
@@ -39,8 +37,4 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
     forgorFocusNode?.dispose();
     forgorController?.dispose();
   }
-
-  /// Action blocks are added here.
-
-  /// Additional helper methods are added here.
 }

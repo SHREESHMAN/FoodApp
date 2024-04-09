@@ -68,6 +68,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   style: FlutterFlowTheme.of(context).displayLarge.override(
                         fontFamily: 'Sora',
                         color: FlutterFlowTheme.of(context).primaryText,
+                        letterSpacing: 0.0,
                         fontWeight: FontWeight.w600,
                       ),
                 ),
@@ -78,6 +79,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     style: FlutterFlowTheme.of(context).titleMedium.override(
                           fontFamily: 'Inter',
                           color: FlutterFlowTheme.of(context).secondaryText,
+                          letterSpacing: 0.0,
                         ),
                   ),
                 ),
@@ -86,11 +88,16 @@ class _LoginWidgetState extends State<LoginWidget> {
                   child: TextFormField(
                     controller: _model.emailTextController1,
                     focusNode: _model.textFieldFocusNode1,
+                    autofocus: false,
                     obscureText: false,
                     decoration: InputDecoration(
                       labelText: 'Email',
                       hintText: 'Enter your email',
-                      hintStyle: FlutterFlowTheme.of(context).bodyLarge,
+                      hintStyle:
+                          FlutterFlowTheme.of(context).bodyLarge.override(
+                                fontFamily: 'Inter',
+                                letterSpacing: 0.0,
+                              ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).tertiary,
@@ -120,7 +127,11 @@ class _LoginWidgetState extends State<LoginWidget> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
-                    style: FlutterFlowTheme.of(context).bodyLarge,
+                    style: FlutterFlowTheme.of(context).bodyLarge.override(
+                          fontFamily: 'Inter',
+                          letterSpacing: 0.0,
+                        ),
+                    minLines: null,
                     keyboardType: TextInputType.emailAddress,
                     validator: _model.emailTextController1Validator
                         .asValidator(context),
@@ -131,11 +142,16 @@ class _LoginWidgetState extends State<LoginWidget> {
                   child: TextFormField(
                     controller: _model.passwordTextController,
                     focusNode: _model.textFieldFocusNode2,
+                    autofocus: false,
                     obscureText: !_model.passwordVisibility,
                     decoration: InputDecoration(
                       labelText: 'Password',
                       hintText: 'Enter your password',
-                      hintStyle: FlutterFlowTheme.of(context).bodyLarge,
+                      hintStyle:
+                          FlutterFlowTheme.of(context).bodyLarge.override(
+                                fontFamily: 'Inter',
+                                letterSpacing: 0.0,
+                              ),
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).tertiary,
@@ -179,7 +195,11 @@ class _LoginWidgetState extends State<LoginWidget> {
                         ),
                       ),
                     ),
-                    style: FlutterFlowTheme.of(context).bodyLarge,
+                    style: FlutterFlowTheme.of(context).bodyLarge.override(
+                          fontFamily: 'Inter',
+                          letterSpacing: 0.0,
+                        ),
+                    minLines: null,
                     validator: _model.passwordTextControllerValidator
                         .asValidator(context),
                   ),
@@ -216,6 +236,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           FlutterFlowTheme.of(context).titleMedium.override(
                                 fontFamily: 'Inter',
                                 color: Colors.white,
+                                letterSpacing: 0.0,
                               ),
                       elevation: 3.0,
                       borderRadius: BorderRadius.circular(8.0),
@@ -264,6 +285,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           FlutterFlowTheme.of(context).titleSmall.override(
                                 fontFamily: 'Inter',
                                 color: Colors.black,
+                                letterSpacing: 0.0,
                               ),
                       elevation: 3.0,
                       borderSide: const BorderSide(
@@ -297,6 +319,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               FlutterFlowTheme.of(context).labelMedium.override(
                                     fontFamily: 'Inter',
                                     color: FlutterFlowTheme.of(context).primary,
+                                    letterSpacing: 0.0,
                                   ),
                         ),
                       ),
@@ -316,10 +339,18 @@ class _LoginWidgetState extends State<LoginWidget> {
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'Email',
-                                labelStyle:
-                                    FlutterFlowTheme.of(context).labelMedium,
-                                hintStyle:
-                                    FlutterFlowTheme.of(context).labelMedium,
+                                labelStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
+                                hintStyle: FlutterFlowTheme.of(context)
+                                    .labelMedium
+                                    .override(
+                                      fontFamily: 'Inter',
+                                      letterSpacing: 0.0,
+                                    ),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                     color:
@@ -350,7 +381,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                               ),
-                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
+                              minLines: null,
                               validator: _model.forgorControllerValidator
                                   .asValidator(context),
                             ),
@@ -389,6 +426,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               FlutterFlowTheme.of(context).titleSmall.override(
                                     fontFamily: 'Inter',
                                     color: FlutterFlowTheme.of(context).primary,
+                                    letterSpacing: 0.0,
                                   ),
                           elevation: 3.0,
                           borderSide: const BorderSide(
@@ -409,6 +447,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Inter',
                             color: FlutterFlowTheme.of(context).secondaryText,
+                            letterSpacing: 0.0,
                           ),
                     ),
                     InkWell(
@@ -432,6 +471,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
                               color: FlutterFlowTheme.of(context).primary,
+                              letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
                             ),
                       ),

@@ -101,9 +101,15 @@ class _MyAppState extends State<MyApp> {
       ],
       theme: ThemeData(
         brightness: Brightness.light,
+        scrollbarTheme: ScrollbarThemeData(
+          thumbVisibility: MaterialStateProperty.all(false),
+        ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
+        scrollbarTheme: ScrollbarThemeData(
+          thumbVisibility: MaterialStateProperty.all(false),
+        ),
       ),
       themeMode: _themeMode,
       routerConfig: _router,
@@ -139,6 +145,9 @@ class _NavBarPageState extends State<NavBarPage> {
       'startuppage': const StartuppageWidget(),
       'profile': const ProfileWidget(),
       'foodcart': const FoodcartWidget(),
+      'expenses': const ExpensesWidget(),
+      'inbox': const InboxWidget(),
+      'chat_2_main': const Chat2MainWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -179,6 +188,34 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24.0,
             ),
             label: 'Basket',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.pie_chart_outline,
+              size: 24.0,
+            ),
+            activeIcon: FaIcon(
+              FontAwesomeIcons.chartPie,
+              size: 24.0,
+            ),
+            label: 'Stats',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(
+              FontAwesomeIcons.inbox,
+              size: 24.0,
+            ),
+            label: 'Inbox',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.forum_outlined,
+              size: 24.0,
+            ),
+            label: 'Chats',
             tooltip: '',
           )
         ],

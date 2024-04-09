@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'flutter_flow/request_manager.dart';
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'flutter_flow/flutter_flow_util.dart';
 
 class FFAppState extends ChangeNotifier {
   static FFAppState _instance = FFAppState._internal();
@@ -20,6 +21,21 @@ class FFAppState extends ChangeNotifier {
     prefs = await SharedPreferences.getInstance();
     _safeInit(() {
       _categories = prefs.getStringList('ff_categories') ?? _categories;
+    });
+    _safeInit(() {
+      _foodItem = prefs
+              .getStringList('ff_foodItem')
+              ?.map((x) {
+                try {
+                  return FoodItemStruct.fromSerializableMap(jsonDecode(x));
+                } catch (e) {
+                  print("Can't decode persisted data type. Error: $e.");
+                  return null;
+                }
+              })
+              .withoutNulls
+              .toList() ??
+          _foodItem;
     });
   }
 
@@ -96,18 +112,26 @@ class FFAppState extends ChangeNotifier {
   List<FoodItemStruct> get foodItem => _foodItem;
   set foodItem(List<FoodItemStruct> value) {
     _foodItem = value;
+    prefs.setStringList(
+        'ff_foodItem', value.map((x) => x.serialize()).toList());
   }
 
   void addToFoodItem(FoodItemStruct value) {
     _foodItem.add(value);
+    prefs.setStringList(
+        'ff_foodItem', _foodItem.map((x) => x.serialize()).toList());
   }
 
   void removeFromFoodItem(FoodItemStruct value) {
     _foodItem.remove(value);
+    prefs.setStringList(
+        'ff_foodItem', _foodItem.map((x) => x.serialize()).toList());
   }
 
   void removeAtIndexFromFoodItem(int index) {
     _foodItem.removeAt(index);
+    prefs.setStringList(
+        'ff_foodItem', _foodItem.map((x) => x.serialize()).toList());
   }
 
   void updateFoodItemAtIndex(
@@ -115,10 +139,14 @@ class FFAppState extends ChangeNotifier {
     FoodItemStruct Function(FoodItemStruct) updateFn,
   ) {
     _foodItem[index] = updateFn(_foodItem[index]);
+    prefs.setStringList(
+        'ff_foodItem', _foodItem.map((x) => x.serialize()).toList());
   }
 
   void insertAtIndexInFoodItem(int index, FoodItemStruct value) {
     _foodItem.insert(index, value);
+    prefs.setStringList(
+        'ff_foodItem', _foodItem.map((x) => x.serialize()).toList());
   }
 
   double _datepick = 0.0;
@@ -126,6 +154,31 @@ class FFAppState extends ChangeNotifier {
   set datepick(double value) {
     _datepick = value;
   }
+
+  UserTypeStruct _fetchedusers = UserTypeStruct();
+  UserTypeStruct get fetchedusers => _fetchedusers;
+  set fetchedusers(UserTypeStruct value) {
+    _fetchedusers = value;
+  }
+
+  void updateFetchedusersStruct(Function(UserTypeStruct) updateFn) {
+    updateFn(_fetchedusers);
+  }
+
+  final _userDocQueryManager = FutureRequestManager<UsersRecord>();
+  Future<UsersRecord> userDocQuery({
+    String? uniqueQueryKey,
+    bool? overrideCache,
+    required Future<UsersRecord> Function() requestFn,
+  }) =>
+      _userDocQueryManager.performRequest(
+        uniqueQueryKey: uniqueQueryKey,
+        overrideCache: overrideCache,
+        requestFn: requestFn,
+      );
+  void clearUserDocQueryCache() => _userDocQueryManager.clear();
+  void clearUserDocQueryCacheKey(String? uniqueKey) =>
+      _userDocQueryManager.clearRequest(uniqueKey);
 }
 
 void _safeInit(Function() initializeField) {
