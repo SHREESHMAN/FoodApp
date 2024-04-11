@@ -1,13 +1,13 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/firebase_storage/storage.dart';
+import '/complete/components/dark_light_switch_small/dark_light_switch_small_widget.dart';
+import '/complete/components/location/location_widget.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
-import '/user/dark_light_switch_small/dark_light_switch_small_widget.dart';
-import '/user/location/location_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -497,7 +497,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                             }
 
                                             context.goNamedAuth(
-                                                'addItem', context.mounted);
+                                                'homescreen', context.mounted);
                                           },
                                         ),
                                       ),

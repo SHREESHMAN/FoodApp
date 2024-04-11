@@ -1,6 +1,7 @@
 // Export pages
-export '/auth/s_ignuppage/s_ignuppage_widget.dart' show SIgnuppageWidget;
-export '/auth/login/login_widget.dart' show LoginWidget;
+export '/complete/auth/s_ignuppage/s_ignuppage_widget.dart'
+    show SIgnuppageWidget;
+export '/complete/auth/login/login_widget.dart' show LoginWidget;
 export '/other_pages/add_item/add_item_widget.dart' show AddItemWidget;
 export '/user/profile/profile_widget.dart' show ProfileWidget;
 export '/user/foodcart/foodcart_widget.dart' show FoodcartWidget;
@@ -15,7 +16,6 @@ export '/chat_groupwbubbles/chat_2_invite_users/chat2_invite_users_widget.dart'
     show Chat2InviteUsersWidget;
 export '/chat_groupwbubbles/image_details/image_details_widget.dart'
     show ImageDetailsWidget;
-export '/other_pages/map/map_widget.dart' show MapWidget;
-export '/other_pages/experimental/experimental_widget.dart'
-    show ExperimentalWidget;
+export '/complete/map/map_widget.dart' show MapWidget;
+export '/other_pages/homescreen/homescreen_widget.dart' show HomescreenWidget;
 export '/tests/tests_widget.dart' show TestsWidget;

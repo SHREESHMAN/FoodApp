@@ -131,7 +131,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                           fontFamily: 'Inter',
                           letterSpacing: 0.0,
                         ),
-                    minLines: null,
                     keyboardType: TextInputType.emailAddress,
                     validator: _model.emailTextController1Validator
                         .asValidator(context),
@@ -199,7 +198,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                           fontFamily: 'Inter',
                           letterSpacing: 0.0,
                         ),
-                    minLines: null,
                     validator: _model.passwordTextControllerValidator
                         .asValidator(context),
                   ),
@@ -280,7 +278,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                           const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                       iconPadding:
                           const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: FlutterFlowTheme.of(context).primaryText,
+                      color: FlutterFlowTheme.of(context).info,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
                                 fontFamily: 'Inter',
@@ -288,9 +286,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 letterSpacing: 0.0,
                               ),
                       elevation: 3.0,
-                      borderSide: const BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).secondaryText,
+                        width: 2.0,
                       ),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
@@ -387,7 +385,6 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     fontFamily: 'Inter',
                                     letterSpacing: 0.0,
                                   ),
-                              minLines: null,
                               validator: _model.forgorControllerValidator
                                   .asValidator(context),
                             ),
@@ -450,30 +447,36 @@ class _LoginWidgetState extends State<LoginWidget> {
                             letterSpacing: 0.0,
                           ),
                     ),
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        context.goNamed(
-                          'SIgnuppage',
-                          extra: <String, dynamic>{
-                            kTransitionInfoKey: const TransitionInfo(
-                              hasTransition: true,
-                              transitionType: PageTransitionType.rightToLeft,
-                            ),
-                          },
-                        );
-                      },
-                      child: Text(
-                        'Sign Up',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Inter',
-                              color: FlutterFlowTheme.of(context).primary,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.w600,
-                            ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(5.0, 0.0, 0.0, 0.0),
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          context.goNamed(
+                            'SIgnuppage',
+                            extra: <String, dynamic>{
+                              kTransitionInfoKey: const TransitionInfo(
+                                hasTransition: true,
+                                transitionType: PageTransitionType.rightToLeft,
+                              ),
+                            },
+                          );
+                        },
+                        child: Text(
+                          'Sign Up',
+                          textAlign: TextAlign.start,
+                          style:
+                              FlutterFlowTheme.of(context).bodyMedium.override(
+                                    fontFamily: 'Inter',
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                        ),
                       ),
                     ),
                   ],

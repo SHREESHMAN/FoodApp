@@ -1,9 +1,9 @@
+import '/complete/components/helpful_tip/helpful_tip_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/other_pages/helpful_tip/helpful_tip_widget.dart';
-import 'experimental_widget.dart' show ExperimentalWidget;
+import 'homescreen_widget.dart' show HomescreenWidget;
 import 'package:flutter/material.dart';
 
-class ExperimentalModel extends FlutterFlowModel<ExperimentalWidget> {
+class HomescreenModel extends FlutterFlowModel<HomescreenWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();

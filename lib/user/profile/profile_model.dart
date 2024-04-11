@@ -1,5 +1,5 @@
+import '/complete/components/dark_light_switch_small/dark_light_switch_small_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/user/dark_light_switch_small/dark_light_switch_small_widget.dart';
 import 'profile_widget.dart' show ProfileWidget;
 import 'package:flutter/material.dart';
 

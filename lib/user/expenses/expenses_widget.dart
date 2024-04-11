@@ -1,5 +1,5 @@
 import '/backend/schema/structs/index.dart';
-import '/complete/empty/empty_widget.dart';
+import '/complete/components/empty/empty_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_charts.dart';
 import '/flutter_flow/flutter_flow_data_table.dart';

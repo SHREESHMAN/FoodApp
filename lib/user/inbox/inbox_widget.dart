@@ -201,7 +201,10 @@ class _InboxWidgetState extends State<InboxWidget>
                                                     .fromSTEB(
                                                         12.0, 0.0, 0.0, 0.0),
                                                 child: Text(
-                                                  bankItem.displayName,
+                                                  valueOrDefault<String>(
+                                                    bankItem.displayName,
+                                                    'UserName Not Set',
+                                                  ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyLarge
@@ -228,7 +231,10 @@ class _InboxWidgetState extends State<InboxWidget>
                                                                   0.0,
                                                                   0.0),
                                                       child: Text(
-                                                        '${bankItem.phoneNumber} | ',
+                                                        valueOrDefault<String>(
+                                                          '${bankItem.phoneNumber} | ',
+                                                          'Phone. !',
+                                                        ),
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -250,7 +256,10 @@ class _InboxWidgetState extends State<InboxWidget>
                                                                   0.0,
                                                                   0.0),
                                                       child: Text(
-                                                        bankItem.email,
+                                                        valueOrDefault<String>(
+                                                          bankItem.email,
+                                                          'Email will appear here',
+                                                        ),
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -277,7 +286,7 @@ class _InboxWidgetState extends State<InboxWidget>
                                                   valueOrDefault<String>(
                                                     bankItem.address
                                                         ?.toString(),
-                                                    'Address',
+                                                    'Adress not set',
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)

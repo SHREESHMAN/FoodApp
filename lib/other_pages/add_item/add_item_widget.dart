@@ -1,6 +1,8 @@
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/backend/gemini/gemini.dart';
+import '/complete/components/add_new_category/add_new_category_widget.dart';
+import '/complete/components/empty/empty_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_autocomplete_options_list.dart';
 import '/flutter_flow/flutter_flow_calendar.dart';
@@ -578,7 +580,6 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                             letterSpacing: 0.0,
                                           ),
                                       textAlign: TextAlign.center,
-                                      minLines: null,
                                       keyboardType: TextInputType.name,
                                       validator: _model.textController1Validator
                                           .asValidator(context),
@@ -660,7 +661,6 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                             letterSpacing: 0.0,
                                           ),
                                       textAlign: TextAlign.center,
-                                      minLines: null,
                                       keyboardType:
                                           const TextInputType.numberWithOptions(
                                               decimal: true),
@@ -770,6 +770,11 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                           <FFUploadedFile>[];
 
                                       try {
+                                        showUploadMessage(
+                                          context,
+                                          'Uploading file...',
+                                          showLoading: true,
+                                        );
                                         selectedUploadedFiles = selectedMedia
                                             .map((m) => FFUploadedFile(
                                                   name: m.storagePath
@@ -782,6 +787,8 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                                 ))
                                             .toList();
                                       } finally {
+                                        ScaffoldMessenger.of(context)
+                                            .hideCurrentSnackBar();
                                         _model.isDataUploading1 = false;
                                       }
                                       if (selectedUploadedFiles.length ==
@@ -790,16 +797,15 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                           _model.uploadedLocalFile1 =
                                               selectedUploadedFiles.first;
                                         });
+                                        showUploadMessage(context, 'Success!');
                                       } else {
                                         setState(() {});
+                                        showUploadMessage(
+                                            context, 'Failed to upload data');
                                         return;
                                       }
                                     }
 
-                                    setState(() {
-                                      FFAppState().helptext =
-                                          'Analyzing Image Please Wait';
-                                    });
                                     await geminiTextFromImage(
                                       context,
                                       'Look at the image and give a description accordingly eg: New Item, Has been stored, In original packing, looks like its about to expire, might have expired, in okay condition etc. dont make the description long.',
@@ -810,9 +816,13 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                           () => _model.gemdesc = generatedText);
                                     });
 
+                                    setState(() {
+                                      FFAppState().helptext =
+                                          'Analyzing Image Please Wait';
+                                    });
                                     await geminiTextFromImage(
                                       context,
-                                      'Classify the image into one of these given categories and return only the category and nothing else as response  (return exact category string, dont change capitalization) if no category matches return only \"0\": ${functions.combineall(FFAppState().categories.toList())}',
+                                      'Classify the image into one of these given categories and return only the category and nothing else as response  (return exact category string, dont change capitalization) if no category matches return that category with quotes eg: \"newCategoryName\": ${functions.combineall(FFAppState().categories.toList())}',
                                       uploadImageBytes:
                                           _model.uploadedLocalFile1,
                                     ).then((generatedText) {
@@ -827,11 +837,96 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                             'Try Image Uploading Again';
                                       });
                                     } else {
-                                      if (_model.image == ' 0') {
-                                        setState(() {
-                                          FFAppState().helptext =
-                                              'Your Item doesn\'t match any Category. Create a new Category or upload a new Image.';
-                                        });
+                                      if (!functions.checkIfPresent(
+                                          _model.image!,
+                                          FFAppState().categories.toList())) {
+                                        await showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.transparent,
+                                          context: context,
+                                          builder: (context) {
+                                            return GestureDetector(
+                                              onTap: () => _model.unfocusNode
+                                                      .canRequestFocus
+                                                  ? FocusScope.of(context)
+                                                      .requestFocus(
+                                                          _model.unfocusNode)
+                                                  : FocusScope.of(context)
+                                                      .unfocus(),
+                                              child: Padding(
+                                                padding:
+                                                    MediaQuery.viewInsetsOf(
+                                                        context),
+                                                child: AddNewCategoryWidget(
+                                                  newcat:
+                                                      valueOrDefault<String>(
+                                                    functions
+                                                        .noquote(_model.image!),
+                                                    'Other',
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ).then((value) => safeSetState(() {}));
+
+                                        if (functions.checkIfPresent(
+                                            valueOrDefault<String>(
+                                              functions.noquote(_model.image!),
+                                              'Other',
+                                            ),
+                                            FFAppState().categories.toList())) {
+                                          setState(() {
+                                            _model.dropDownValueController
+                                                    ?.value =
+                                                valueOrDefault<String>(
+                                              FFAppState().categories.last,
+                                              'Other',
+                                            );
+                                          });
+                                          setState(() {
+                                            FFAppState().helptext =
+                                                'Help will appear here';
+                                          });
+                                          setState(() {
+                                            _model.textController7?.text =
+                                                _model.gemdesc!;
+                                          });
+                                          setState(() {
+                                            _model.textController1?.text =
+                                                _model.dropDownValue!;
+                                          });
+                                        } else {
+                                          setState(() {
+                                            FFAppState().helptext =
+                                                'Your Item doesn\'t match any Category. Create a new Category or upload a new Image.';
+                                          });
+                                        }
+
+                                        if (animationsMap[
+                                                'textFieldOnActionTriggerAnimation1'] !=
+                                            null) {
+                                          await animationsMap[
+                                                  'textFieldOnActionTriggerAnimation1']!
+                                              .controller
+                                              .forward(from: 0.0);
+                                        }
+                                        if (animationsMap[
+                                                'dropDownOnActionTriggerAnimation'] !=
+                                            null) {
+                                          await animationsMap[
+                                                  'dropDownOnActionTriggerAnimation']!
+                                              .controller
+                                              .forward(from: 0.0);
+                                        }
+                                        if (animationsMap[
+                                                'iconOnActionTriggerAnimation'] !=
+                                            null) {
+                                          await animationsMap[
+                                                  'iconOnActionTriggerAnimation']!
+                                              .controller
+                                              .forward(from: 0.0);
+                                        }
                                       } else {
                                         setState(() {
                                           _model.dropDownValueController
@@ -843,7 +938,8 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                                   '${_model.image}');
                                         });
                                         setState(() {
-                                          FFAppState().helptext = 'Help Text';
+                                          FFAppState().helptext =
+                                              'Help will appear here';
                                         });
                                         if (_model.gemdesc != null &&
                                             _model.gemdesc != '') {
@@ -1063,7 +1159,6 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                               letterSpacing: 0.0,
                                             ),
                                         textAlign: TextAlign.center,
-                                        minLines: null,
                                         keyboardType: TextInputType.number,
                                         validator: _model
                                             .textController3Validator
@@ -1154,7 +1249,6 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                               letterSpacing: 0.0,
                                             ),
                                         textAlign: TextAlign.center,
-                                        minLines: null,
                                         keyboardType: TextInputType.number,
                                         validator: _model
                                             .textController4Validator
@@ -1245,7 +1339,6 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                               letterSpacing: 0.0,
                                             ),
                                         textAlign: TextAlign.center,
-                                        minLines: null,
                                         keyboardType: TextInputType.number,
                                         validator: _model
                                             .textController5Validator
@@ -1621,7 +1714,6 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-                                      minLines: null,
                                       keyboardType:
                                           const TextInputType.numberWithOptions(
                                               decimal: true),
@@ -1773,7 +1865,6 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                                 fontFamily: 'Inter',
                                                 letterSpacing: 0.0,
                                               ),
-                                          minLines: null,
                                           keyboardType: TextInputType.multiline,
                                           validator: _model
                                               .textController7Validator
@@ -1860,7 +1951,7 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                                           decoration:
                                                               InputDecoration(
                                                             labelText:
-                                                                'Category here...',
+                                                                'Enter Custom Category Here...',
                                                             labelStyle:
                                                                 FlutterFlowTheme.of(
                                                                         context)
@@ -1947,7 +2038,6 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                                                 letterSpacing:
                                                                     0.0,
                                                               ),
-                                                          minLines: null,
                                                           validator: _model
                                                               .textController8Validator
                                                               .asValidator(
@@ -2201,6 +2291,9 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                                     .sortedList(
                                                         (e) => e.expiry!)
                                                     .toList();
+                                                if (addedItems.isEmpty) {
+                                                  return const EmptyWidget();
+                                                }
                                                 return ListView.builder(
                                                   padding: EdgeInsets.zero,
                                                   primary: false,

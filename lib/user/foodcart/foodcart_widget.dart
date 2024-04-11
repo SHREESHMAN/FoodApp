@@ -1,4 +1,5 @@
 import '/backend/backend.dart';
+import '/complete/components/empty/empty_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -54,35 +55,51 @@ class _FoodcartWidgetState extends State<FoodcartWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          backgroundColor: FlutterFlowTheme.of(context).alternate,
           automaticallyImplyLeading: false,
-          title: Text(
-            'Your Cart',
-            style: FlutterFlowTheme.of(context).displaySmall.override(
-                  fontFamily: 'Sora',
-                  letterSpacing: 0.0,
-                ),
-          ),
           actions: [
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
               child: FlutterFlowIconButton(
-                borderColor: Colors.transparent,
-                borderRadius: 30.0,
-                borderWidth: 1.0,
-                buttonSize: 44.0,
+                borderColor: FlutterFlowTheme.of(context).primaryBackground,
+                borderRadius: 35.0,
+                borderWidth: 3.0,
+                buttonSize: 64.0,
+                fillColor: FlutterFlowTheme.of(context).secondaryBackground,
                 icon: Icon(
-                  Icons.shopping_cart_outlined,
+                  Icons.add_shopping_cart,
                   color: FlutterFlowTheme.of(context).secondaryText,
                   size: 24.0,
                 ),
-                onPressed: () {
-                  print('IconButton pressed ...');
+                onPressed: () async {
+                  context.pushNamed(
+                    'addItem',
+                    extra: <String, dynamic>{
+                      kTransitionInfoKey: const TransitionInfo(
+                        hasTransition: true,
+                        transitionType: PageTransitionType.fade,
+                        duration: Duration(milliseconds: 1000),
+                      ),
+                    },
+                  );
                 },
               ),
             ),
           ],
-          centerTitle: false,
+          flexibleSpace: FlexibleSpaceBar(
+            title: Align(
+              alignment: const AlignmentDirectional(0.0, 1.0),
+              child: Text(
+                'Your Cart',
+                style: FlutterFlowTheme.of(context).displaySmall.override(
+                      fontFamily: 'Sora',
+                      letterSpacing: 0.0,
+                    ),
+              ),
+            ),
+            centerTitle: true,
+            expandedTitleScale: 1.0,
+          ),
           elevation: 0.0,
         ),
         body: SingleChildScrollView(
@@ -95,12 +112,18 @@ class _FoodcartWidgetState extends State<FoodcartWidget> {
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Text(
-                      'Here are your added Items',
-                      style: FlutterFlowTheme.of(context).labelMedium.override(
-                            fontFamily: 'Inter',
-                            letterSpacing: 0.0,
-                          ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: Text(
+                          'Here are your added Items. Click to edit details, Long press to delete, double tap to duplicate',
+                          style:
+                              FlutterFlowTheme.of(context).labelMedium.override(
+                                    fontFamily: 'Inter',
+                                    letterSpacing: 0.0,
+                                  ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -111,6 +134,9 @@ class _FoodcartWidgetState extends State<FoodcartWidget> {
                       .foodItem
                       .sortedList((e) => e.expiry!)
                       .toList();
+                  if (fooditems.isEmpty) {
+                    return const EmptyWidget();
+                  }
                   return ListView.builder(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
@@ -232,217 +258,246 @@ class _FoodcartWidgetState extends State<FoodcartWidget> {
                               FFAppState().addToFoodItem(fooditemsItem);
                             });
                           },
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              boxShadow: const [
-                                BoxShadow(
-                                  blurRadius: 3.0,
-                                  color: Color(0x411D2429),
-                                  offset: Offset(
-                                    0.0,
-                                    1.0,
-                                  ),
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(8.0),
+                          onLongPress: () async {
+                            setState(() {
+                              FFAppState().removeFromFoodItem(fooditemsItem);
+                            });
+                          },
+                          child: Material(
+                            color: Colors.transparent,
+                            elevation: 15.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24.0),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          8.0, 8.0, 4.0, 0.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Flexible(
-                                                child: Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          -1.0, 0.0),
-                                                  child: Text(
-                                                    valueOrDefault<String>(
-                                                      fooditemsItem.name,
-                                                      'Food Name',
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .headlineSmall
-                                                        .override(
-                                                          fontFamily: 'Sora',
-                                                          fontSize: 20.0,
-                                                          letterSpacing: 0.0,
-                                                        ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          1.0, -1.0),
-                                                  child: Text(
-                                                    valueOrDefault<String>(
-                                                      dateTimeFormat(
-                                                        'd/M/y',
-                                                        fooditemsItem.expiry,
-                                                        locale:
-                                                            FFLocalizations.of(
-                                                                    context)
-                                                                .languageCode,
+                            child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                boxShadow: const [
+                                  BoxShadow(
+                                    blurRadius: 3.0,
+                                    color: Color(0x411D2429),
+                                    offset: Offset(
+                                      0.0,
+                                      1.0,
+                                    ),
+                                  )
+                                ],
+                                gradient: LinearGradient(
+                                  colors: [
+                                    FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    const Color(0xFF673AB7),
+                                    FlutterFlowTheme.of(context)
+                                        .primaryBackground
+                                  ],
+                                  stops: const [0.0, 0.5, 1.0],
+                                  begin: const AlignmentDirectional(1.0, -0.5),
+                                  end: const AlignmentDirectional(-1.0, 0.5),
+                                ),
+                                borderRadius: BorderRadius.circular(24.0),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            8.0, 8.0, 4.0, 0.0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Flexible(
+                                                  child: Align(
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                            -1.0, 0.0),
+                                                    child: Text(
+                                                      valueOrDefault<String>(
+                                                        fooditemsItem.name,
+                                                        'Food Name',
                                                       ),
-                                                      'Expiry',
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .headlineSmall
+                                                          .override(
+                                                            fontFamily: 'Sora',
+                                                            fontSize: 20.0,
+                                                            letterSpacing: 0.0,
+                                                          ),
                                                     ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primary,
-                                                          letterSpacing: 0.0,
-                                                        ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Container(
-                                                width: 120.0,
-                                                height: 120.0,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: Image.network(
-                                                  fooditemsItem.img,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                              Flexible(
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(12.0),
-                                                  child: Text(
-                                                    valueOrDefault<String>(
-                                                      fooditemsItem.description,
-                                                      'Description',
-                                                    ).maybeHandleOverflow(
-                                                      maxChars: 22,
-                                                      replacement: '…',
-                                                    ),
-                                                    maxLines: 3,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily: 'Inter',
-                                                          letterSpacing: 0.0,
+                                                Expanded(
+                                                  child: Align(
+                                                    alignment:
+                                                        const AlignmentDirectional(
+                                                            1.0, -1.0),
+                                                    child: Text(
+                                                      valueOrDefault<String>(
+                                                        dateTimeFormat(
+                                                          'd/M/y',
+                                                          fooditemsItem.expiry,
+                                                          locale:
+                                                              FFLocalizations.of(
+                                                                      context)
+                                                                  .languageCode,
                                                         ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 4.0, 8.0, 0.0),
-                                            child: AutoSizeText(
-                                              valueOrDefault<String>(
-                                                fooditemsItem.category,
-                                                'Category',
-                                              ).maybeHandleOverflow(
-                                                maxChars: 70,
-                                                replacement: '…',
-                                              ),
-                                              textAlign: TextAlign.start,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
+                                                        'Expiry',
                                                       ),
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily: 'Inter',
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primary,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                        ],
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Container(
+                                                  width: 120.0,
+                                                  height: 120.0,
+                                                  clipBehavior: Clip.antiAlias,
+                                                  decoration: const BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: Image.network(
+                                                    fooditemsItem.img,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(12.0),
+                                                    child: Text(
+                                                      valueOrDefault<String>(
+                                                        fooditemsItem
+                                                            .description,
+                                                        'Description',
+                                                      ).maybeHandleOverflow(
+                                                        maxChars: 22,
+                                                        replacement: '…',
+                                                      ),
+                                                      maxLines: 3,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily: 'Inter',
+                                                            letterSpacing: 0.0,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 4.0, 8.0, 0.0),
+                                              child: AutoSizeText(
+                                                valueOrDefault<String>(
+                                                  fooditemsItem.category,
+                                                  'Category',
+                                                ).maybeHandleOverflow(
+                                                  maxChars: 70,
+                                                  replacement: '…',
+                                                ),
+                                                textAlign: TextAlign.start,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      const Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 4.0, 0.0, 0.0),
-                                        child: Icon(
-                                          Icons.chevron_right_rounded,
-                                          color: Color(0xFF57636C),
-                                          size: 24.0,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 12.0, 4.0, 78.0),
-                                        child: Text(
-                                          valueOrDefault<String>(
-                                            formatNumber(
-                                              fooditemsItem.price,
-                                              formatType: FormatType.custom,
-                                              format: 'AED ',
-                                              locale: '',
-                                            ),
-                                            'price',
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        const Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 4.0, 0.0, 0.0),
+                                          child: Icon(
+                                            Icons.chevron_right_rounded,
+                                            color: Color(0xFF57636C),
+                                            size: 24.0,
                                           ),
-                                          textAlign: TextAlign.end,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Inter',
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.bold,
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 12.0, 4.0, 78.0),
+                                          child: Text(
+                                            valueOrDefault<String>(
+                                              formatNumber(
+                                                fooditemsItem.price,
+                                                formatType: FormatType.custom,
+                                                format: 'AED ',
+                                                locale: '',
                                               ),
+                                              'price',
+                                            ),
+                                            textAlign: TextAlign.end,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Inter',
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                          ),
                                         ),
-                                      ),
-                                      if (fooditemsItem.donated)
-                                        Icon(
-                                          Icons.done_outline,
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          size: 24.0,
-                                        ),
-                                      if (!fooditemsItem.donated)
-                                        Icon(
-                                          Icons.crop_din_sharp,
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          size: 24.0,
-                                        ),
-                                    ],
-                                  ),
-                                ],
+                                        if (fooditemsItem.donated)
+                                          Icon(
+                                            Icons.done_outline,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 24.0,
+                                          ),
+                                        if (!fooditemsItem.donated)
+                                          Icon(
+                                            Icons.crop_din_sharp,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 24.0,
+                                          ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

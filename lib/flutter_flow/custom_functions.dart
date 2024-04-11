@@ -336,3 +336,16 @@ String getRadomTip() {
   var randomTip = tips[random.nextInt(tips.length)];
   return (randomTip);
 }
+
+bool checkIfPresent(
+  String item,
+  List<String> list,
+) {
+  // check if item is in list
+  return list.contains(item);
+}
+
+String noquote(String itemwithquote) {
+  // takes a string and removes all single and double quote
+  return itemwithquote.replaceAll(RegExp("[\'\"]"), '');
+}

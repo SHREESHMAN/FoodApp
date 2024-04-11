@@ -2,6 +2,7 @@ import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'dark_light_switch_small_model.dart';
 export 'dark_light_switch_small_model.dart';
@@ -44,6 +45,23 @@ class _DarkLightSwitchSmallWidgetState extends State<DarkLightSwitchSmallWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => DarkLightSwitchSmallModel());
+
+    // On component load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if ((Theme.of(context).brightness == Brightness.light) == true) {
+        if (animationsMap['containerOnActionTriggerAnimation'] != null) {
+          animationsMap['containerOnActionTriggerAnimation']!
+              .controller
+              .reverse();
+        }
+      } else {
+        if (animationsMap['containerOnActionTriggerAnimation'] != null) {
+          animationsMap['containerOnActionTriggerAnimation']!
+              .controller
+              .forward(from: 0.0);
+        }
+      }
+    });
 
     setupAnimations(
       animationsMap.values.where((anim) =>
@@ -127,14 +145,7 @@ class _DarkLightSwitchSmallWidgetState extends State<DarkLightSwitchSmallWidget>
                   ),
                 ),
                 Align(
-                  alignment: AlignmentDirectional(
-                      valueOrDefault<double>(
-                        Theme.of(context).brightness == Brightness.dark
-                            ? 1.0
-                            : 0.0,
-                        -1.0,
-                      ),
-                      0.0),
+                  alignment: const AlignmentDirectional(1.0, 0.0),
                   child: Container(
                     width: 36.0,
                     height: 36.0,

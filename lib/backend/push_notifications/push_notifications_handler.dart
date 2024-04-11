@@ -146,7 +146,7 @@ final parametersBuilderMap =
         },
       ),
   'map': ParameterData.none(),
-  'experimental': (data) async => ParameterData(
+  'homescreen': (data) async => ParameterData(
         allParams: {
           'oneH': getParameter<int>(data, 'oneH'),
           'twoH': getParameter<int>(data, 'twoH'),

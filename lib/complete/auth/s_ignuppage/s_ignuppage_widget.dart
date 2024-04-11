@@ -63,9 +63,35 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
               padding: const EdgeInsetsDirectional.fromSTEB(32.0, 32.0, 32.0, 32.0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Align(
+                    alignment: const AlignmentDirectional(0.0, -1.0),
+                    child: SwitchListTile.adaptive(
+                      value: _model.switchListTileValue ??= false,
+                      onChanged: (newValue) async {
+                        setState(() => _model.switchListTileValue = newValue);
+                      },
+                      title: Text(
+                        'Sign up as a Food Bank [Approval]',
+                        textAlign: TextAlign.center,
+                        style: FlutterFlowTheme.of(context).titleLarge.override(
+                              fontFamily: 'Sora',
+                              fontSize: 12.0,
+                              letterSpacing: 0.0,
+                            ),
+                      ),
+                      tileColor: FlutterFlowTheme.of(context).accent3,
+                      activeColor: FlutterFlowTheme.of(context).primary,
+                      activeTrackColor: FlutterFlowTheme.of(context).accent1,
+                      dense: true,
+                      controlAffinity: ListTileControlAffinity.leading,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                  ),
                   Text(
                     'Sign Up',
                     style: FlutterFlowTheme.of(context).displayLarge.override(
@@ -75,17 +101,25 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                           fontWeight: FontWeight.w600,
                         ),
                   ),
-                  Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-                    child: Text(
-                      'Create your account',
-                      style: FlutterFlowTheme.of(context).titleMedium.override(
-                            fontFamily: 'Inter',
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            letterSpacing: 0.0,
-                          ),
-                    ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                        child: Text(
+                          'Create your account',
+                          style: FlutterFlowTheme.of(context)
+                              .titleMedium
+                              .override(
+                                fontFamily: 'Inter',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                letterSpacing: 0.0,
+                              ),
+                        ),
+                      ),
+                    ],
                   ),
                   Padding(
                     padding:
@@ -136,7 +170,6 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                             fontFamily: 'Inter',
                             letterSpacing: 0.0,
                           ),
-                      minLines: null,
                       validator:
                           _model.textController1Validator.asValidator(context),
                     ),
@@ -190,7 +223,6 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                             fontFamily: 'Inter',
                             letterSpacing: 0.0,
                           ),
-                      minLines: null,
                       validator: _model.emailTextControllerValidator
                           .asValidator(context),
                     ),
@@ -267,7 +299,6 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                                       fontFamily: 'Inter',
                                       letterSpacing: 0.0,
                                     ),
-                            minLines: null,
                             validator: _model.passwordTextControllerValidator
                                 .asValidator(context),
                           ),
@@ -281,7 +312,44 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                     child: TextFormField(
                       controller: _model.confirmPasswordTextController,
                       focusNode: _model.textFieldFocusNode4,
+                      onFieldSubmitted: (_) async {
+                        GoRouter.of(context).prepareAuthEvent();
+                        if (_model.passwordTextController.text !=
+                            _model.confirmPasswordTextController.text) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'Passwords don\'t match!',
+                              ),
+                            ),
+                          );
+                          return;
+                        }
+
+                        final user = await authManager.createAccountWithEmail(
+                          context,
+                          _model.emailTextController.text,
+                          _model.passwordTextController.text,
+                        );
+                        if (user == null) {
+                          return;
+                        }
+
+                        await UsersRecord.collection
+                            .doc(user.uid)
+                            .update(createUsersRecordData(
+                              displayName: _model.textController1.text,
+                              createdTime: getCurrentTimestamp,
+                              role: valueOrDefault<String>(
+                                _model.switchListTileValue! ? 'bank' : 'user',
+                                'user',
+                              ),
+                            ));
+
+                        context.goNamedAuth('homescreen', context.mounted);
+                      },
                       autofocus: false,
+                      textInputAction: TextInputAction.send,
                       obscureText: !_model.passwordVisibility2,
                       decoration: InputDecoration(
                         labelText: 'Confirm Password',
@@ -340,7 +408,6 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                             letterSpacing: 0.0,
                           ),
                       textAlign: TextAlign.start,
-                      minLines: null,
                       validator: _model.confirmPasswordTextControllerValidator
                           .asValidator(context),
                     ),
@@ -406,9 +473,13 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                             .update(createUsersRecordData(
                               displayName: _model.textController1.text,
                               createdTime: getCurrentTimestamp,
+                              role: valueOrDefault<String>(
+                                _model.switchListTileValue! ? 'bank' : 'user',
+                                'user',
+                              ),
                             ));
 
-                        context.goNamedAuth('addItem', context.mounted);
+                        context.goNamedAuth('homescreen', context.mounted);
                       },
                       text: 'Create Account',
                       options: FFButtonOptions(
@@ -442,28 +513,34 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                           return;
                         }
                         navigate = () =>
-                            context.goNamedAuth('addItem', context.mounted);
+                            context.goNamedAuth('homescreen', context.mounted);
                         if (currentUserEmail != '') {
-                          return;
+                          await currentUserReference!
+                              .update(createUsersRecordData(
+                            role: valueOrDefault<String>(
+                              _model.switchListTileValue! ? 'bank' : 'user',
+                              'user',
+                            ),
+                          ));
+                        } else {
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: const Text('Google Signup Failed'),
+                                content:
+                                    const Text('Please enter your details manually!'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(alertDialogContext),
+                                    child: const Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         }
-
-                        await showDialog(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: const Text('Google Signup Failed'),
-                              content:
-                                  const Text('Please enter your details manually!'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(alertDialogContext),
-                                  child: const Text('Ok'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
 
                         navigate();
                       },
@@ -474,7 +551,7 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                             24.0, 0.0, 24.0, 0.0),
                         iconPadding:
                             const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        color: FlutterFlowTheme.of(context).info,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Inter',
@@ -483,12 +560,23 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                                   fontWeight: FontWeight.w800,
                                 ),
                         elevation: 3.0,
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                          width: 1.0,
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          width: 3.0,
                         ),
                         borderRadius: BorderRadius.circular(8.0),
                       ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                    child: Text(
+                      'Remember if you previously logged in using Google then please go to login page, do not use the Google sign up button here.',
+                      textAlign: TextAlign.center,
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.0,
+                          ),
                     ),
                   ),
                 ],

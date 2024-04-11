@@ -107,12 +107,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'profile',
           path: '/profile',
           requireAuth: true,
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'profile')
-              : const NavBarPage(
-                  initialPage: 'profile',
-                  page: ProfileWidget(),
-                ),
+          builder: (context, params) => const ProfileWidget(),
         ),
         FFRoute(
           name: 'foodcart',
@@ -120,18 +115,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           asyncParams: {
             'chatRef': getDoc(['chats'], ChatsRecord.fromSnapshot),
           },
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'foodcart')
-              : FoodcartWidget(
-                  sendInChat: params.getParam(
-                    'sendInChat',
-                    ParamType.bool,
-                  ),
-                  chatRef: params.getParam(
-                    'chatRef',
-                    ParamType.Document,
-                  ),
-                ),
+          builder: (context, params) => FoodcartWidget(
+            sendInChat: params.getParam(
+              'sendInChat',
+              ParamType.bool,
+            ),
+            chatRef: params.getParam(
+              'chatRef',
+              ParamType.Document,
+            ),
+          ),
         ),
         FFRoute(
           name: 'expenses',
@@ -229,11 +222,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               params.isEmpty ? const NavBarPage(initialPage: 'map') : const MapWidget(),
         ),
         FFRoute(
-          name: 'experimental',
-          path: '/experimental',
+          name: 'homescreen',
+          path: '/homescreen',
           builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'experimental')
-              : ExperimentalWidget(
+              ? const NavBarPage(initialPage: 'homescreen')
+              : HomescreenWidget(
                   oneH: params.getParam(
                     'oneH',
                     ParamType.int,

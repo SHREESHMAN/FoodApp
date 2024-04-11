@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -328,12 +329,12 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                 alignment: const AlignmentDirectional(1.0, -1.0),
                                 child: FlutterFlowIconButton(
                                   borderColor:
-                                      FlutterFlowTheme.of(context).primary,
+                                      FlutterFlowTheme.of(context).tertiary,
                                   borderRadius: 16.0,
                                   borderWidth: 3.0,
                                   buttonSize: 40.0,
                                   fillColor:
-                                      FlutterFlowTheme.of(context).accent1,
+                                      FlutterFlowTheme.of(context).accent3,
                                   icon: FaIcon(
                                     FontAwesomeIcons.upload,
                                     color: FlutterFlowTheme.of(context)
@@ -408,6 +409,7 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                         .update(createFoodItemsRecordData(
                                       image: _model.uploadedFileUrl,
                                     ));
+                                    setState(() {});
                                   },
                                 ),
                               ),
@@ -502,7 +504,6 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                           fontFamily: 'Inter',
                                           letterSpacing: 0.0,
                                         ),
-                                    minLines: null,
                                     validator: _model.textController1Validator
                                         .asValidator(context),
                                   ),
@@ -719,19 +720,27 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                           ).animateOnPageLoad(
                               animationsMap['rowOnPageLoadAnimation1']!),
                         ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              4.0, 4.0, 0.0, 0.0),
-                          child: Text(
-                            'Description/Condition',
-                            style: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .override(
-                                  fontFamily: 'Inter',
-                                  letterSpacing: 0.0,
-                                ),
-                          ).animateOnPageLoad(
-                              animationsMap['textOnPageLoadAnimation2']!),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    4.0, 4.0, 0.0, 0.0),
+                                child: AutoSizeText(
+                                  'Description/Condition',
+                                  textAlign: TextAlign.center,
+                                  style: FlutterFlowTheme.of(context)
+                                      .labelMedium
+                                      .override(
+                                        fontFamily: 'Inter',
+                                        letterSpacing: 0.0,
+                                      ),
+                                ).animateOnPageLoad(
+                                    animationsMap['textOnPageLoadAnimation2']!),
+                              ),
+                            ),
+                          ],
                         ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
@@ -822,7 +831,6 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                           fontFamily: 'Inter',
                                           letterSpacing: 0.0,
                                         ),
-                                    minLines: null,
                                     validator: _model.textController2Validator
                                         .asValidator(context),
                                   ),
@@ -1062,7 +1070,6 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                                         letterSpacing: 0.0,
                                                       ),
                                               textAlign: TextAlign.center,
-                                              minLines: null,
                                               keyboardType: const TextInputType
                                                   .numberWithOptions(
                                                   decimal: true),
@@ -1288,7 +1295,6 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                           letterSpacing: 0.0,
                                         ),
                                     textAlign: TextAlign.center,
-                                    minLines: null,
                                     keyboardType:
                                         const TextInputType.numberWithOptions(
                                             decimal: true),

@@ -131,7 +131,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'addItem';
+  String _currentPageName = 'homescreen';
   late Widget? _currentPage;
 
   @override
@@ -144,13 +144,11 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'addItem': const AddItemWidget(),
-      'profile': const ProfileWidget(),
-      'foodcart': const FoodcartWidget(),
       'expenses': const ExpensesWidget(),
-      'chat_2_main': const Chat2MainWidget(),
+      'addItem': const AddItemWidget(),
+      'homescreen': const HomescreenWidget(),
       'map': const MapWidget(),
-      'experimental': const ExperimentalWidget(),
+      'chat_2_main': const Chat2MainWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -163,36 +161,12 @@ class _NavBarPageState extends State<NavBarPage> {
           _currentPageName = tabs.keys.toList()[i];
         }),
         backgroundColor: FlutterFlowTheme.of(context).tertiary,
-        selectedItemColor: FlutterFlowTheme.of(context).secondaryText,
-        unselectedItemColor: FlutterFlowTheme.of(context).primaryBackground,
+        selectedItemColor: FlutterFlowTheme.of(context).primaryText,
+        unselectedItemColor: FlutterFlowTheme.of(context).secondaryBackground,
         showSelectedLabels: true,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.fiber_new_outlined,
-              size: 25.0,
-            ),
-            label: 'Add Item',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_outline,
-              size: 24.0,
-            ),
-            label: 'Profile',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(
-              FontAwesomeIcons.shoppingBasket,
-              size: 24.0,
-            ),
-            label: 'Basket',
-            tooltip: '',
-          ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.pie_chart_outline,
@@ -207,10 +181,18 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.forum_outlined,
+              Icons.auto_awesome,
+              size: 25.0,
+            ),
+            label: 'New Item',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
               size: 24.0,
             ),
-            label: 'Chats',
+            label: 'Home',
             tooltip: '',
           ),
           BottomNavigationBarItem(
@@ -227,10 +209,10 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.home_outlined,
+              Icons.forum_outlined,
               size: 24.0,
             ),
-            label: 'Home',
+            label: 'Chats',
             tooltip: '',
           )
         ],
