@@ -408,7 +408,7 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                               createdTime: getCurrentTimestamp,
                             ));
 
-                        context.goNamedAuth('startuppage', context.mounted);
+                        context.goNamedAuth('addItem', context.mounted);
                       },
                       text: 'Create Account',
                       options: FFButtonOptions(
@@ -442,7 +442,7 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                           return;
                         }
                         navigate = () =>
-                            context.goNamedAuth('startuppage', context.mounted);
+                            context.goNamedAuth('addItem', context.mounted);
                         if (currentUserEmail != '') {
                           return;
                         }

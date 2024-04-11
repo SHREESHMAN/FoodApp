@@ -6,6 +6,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
+import '/user/dark_light_switch_small/dark_light_switch_small_widget.dart';
+import '/user/location/location_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -332,101 +334,112 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          AuthUserStreamWidget(
-                                            builder: (context) => Text(
-                                              currentUserDisplayName,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .headlineSmall
-                                                      .override(
-                                                        fontFamily: 'Sora',
-                                                        letterSpacing: 0.0,
-                                                      ),
-                                            ),
-                                          ),
-                                          Text(
-                                            currentUserEmail,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryText,
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 4.0, 0.0, 0.0),
-                                            child: AuthUserStreamWidget(
+                                      Align(
+                                        alignment:
+                                            const AlignmentDirectional(-1.0, 0.0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            AuthUserStreamWidget(
                                               builder: (context) => Text(
-                                                'User since ${dateTimeFormat(
-                                                  'relative',
-                                                  currentUserDocument
-                                                      ?.createdTime,
-                                                  locale: FFLocalizations.of(
-                                                          context)
-                                                      .languageCode,
-                                                )}',
+                                                currentUserDisplayName,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .labelMedium
+                                                        .headlineSmall
                                                         .override(
-                                                          fontFamily: 'Inter',
+                                                          fontFamily: 'Sora',
                                                           letterSpacing: 0.0,
                                                         ),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      FFButtonWidget(
-                                        onPressed: () async {
-                                          GoRouter.of(context)
-                                              .prepareAuthEvent();
-                                          await authManager.signOut();
-                                          GoRouter.of(context)
-                                              .clearRedirectLocation();
-
-                                          context.goNamedAuth(
-                                              'SIgnuppage', context.mounted);
-                                        },
-                                        text: 'Log Out',
-                                        options: FFButtonOptions(
-                                          height: 40.0,
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  24.0, 0.0, 24.0, 0.0),
-                                          iconPadding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily: 'Inter',
-                                                    color: Colors.white,
-                                                    letterSpacing: 0.0,
-                                                  ),
-                                          elevation: 3.0,
-                                          borderSide: const BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
+                                            Text(
+                                              currentUserEmail,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                              child: AuthUserStreamWidget(
+                                                builder: (context) => Text(
+                                                  'User since ${dateTimeFormat(
+                                                    'relative',
+                                                    currentUserDocument
+                                                        ?.createdTime,
+                                                    locale: FFLocalizations.of(
+                                                            context)
+                                                        .languageCode,
+                                                  )}',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .labelMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      Flexible(
+                                      Align(
+                                        alignment:
+                                            const AlignmentDirectional(1.0, 0.0),
+                                        child: FFButtonWidget(
+                                          onPressed: () async {
+                                            GoRouter.of(context)
+                                                .prepareAuthEvent();
+                                            await authManager.signOut();
+                                            GoRouter.of(context)
+                                                .clearRedirectLocation();
+
+                                            context.goNamedAuth(
+                                                'SIgnuppage', context.mounted);
+                                          },
+                                          text: 'Log Out',
+                                          options: FFButtonOptions(
+                                            height: 40.0,
+                                            padding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    24.0, 0.0, 24.0, 0.0),
+                                            iconPadding:
+                                                const EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .override(
+                                                      fontFamily: 'Inter',
+                                                      color: Colors.white,
+                                                      letterSpacing: 0.0,
+                                                    ),
+                                            elevation: 3.0,
+                                            borderSide: const BorderSide(
+                                              color: Colors.transparent,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment:
+                                            const AlignmentDirectional(1.0, 0.0),
                                         child: FlutterFlowIconButton(
                                           borderColor:
                                               FlutterFlowTheme.of(context)
@@ -484,71 +497,88 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                             }
 
                                             context.goNamedAuth(
-                                                'startuppage', context.mounted);
+                                                'addItem', context.mounted);
                                           },
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 0.0, 16.0, 0.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: SwitchListTile.adaptive(
-                                          value: _model.switchListTileValue ??=
-                                              Theme.of(context).brightness ==
-                                                  Brightness.dark,
-                                          onChanged: (newValue) async {
-                                            setState(() =>
-                                                _model.switchListTileValue =
-                                                    newValue);
-                                            if (newValue) {
-                                              setDarkModeSetting(
-                                                  context, ThemeMode.dark);
-                                            } else {
-                                              setDarkModeSetting(
-                                                  context, ThemeMode.light);
-                                            }
-                                          },
-                                          title: Text(
-                                            'Set Dark Mode',
-                                            style: FlutterFlowTheme.of(context)
-                                                .titleLarge
-                                                .override(
-                                                  fontFamily: 'Sora',
-                                                  letterSpacing: 0.0,
-                                                ),
+                                Align(
+                                  alignment: const AlignmentDirectional(1.0, 0.0),
+                                  child: Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 0.0, 16.0, 0.0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              const AlignmentDirectional(-1.0, 0.0),
+                                          child: FlutterFlowIconButton(
+                                            borderColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primary,
+                                            borderRadius: 20.0,
+                                            borderWidth: 1.0,
+                                            buttonSize: 40.0,
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .accent1,
+                                            icon: Icon(
+                                              Icons.location_pin,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 24.0,
+                                            ),
+                                            onPressed: () async {
+                                              showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                context: context,
+                                                builder: (context) {
+                                                  return GestureDetector(
+                                                    onTap: () => _model
+                                                            .unfocusNode
+                                                            .canRequestFocus
+                                                        ? FocusScope.of(context)
+                                                            .requestFocus(_model
+                                                                .unfocusNode)
+                                                        : FocusScope.of(context)
+                                                            .unfocus(),
+                                                    child: Padding(
+                                                      padding: MediaQuery
+                                                          .viewInsetsOf(
+                                                              context),
+                                                      child: const LocationWidget(),
+                                                    ),
+                                                  );
+                                                },
+                                              ).then((value) =>
+                                                  safeSetState(() {}));
+                                            },
                                           ),
-                                          subtitle: Text(
-                                            'Remembers your selection',
-                                            style: FlutterFlowTheme.of(context)
-                                                .labelMedium
-                                                .override(
-                                                  fontFamily: 'Inter',
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                          tileColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondaryBackground,
-                                          activeColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primary,
-                                          activeTrackColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .accent1,
-                                          dense: false,
-                                          controlAffinity:
-                                              ListTileControlAffinity.trailing,
                                         ),
-                                      ),
-                                    ],
+                                        Expanded(
+                                          child: Align(
+                                            alignment:
+                                                const AlignmentDirectional(1.0, 0.0),
+                                            child: wrapWithModel(
+                                              model: _model
+                                                  .darkLightSwitchSmallModel,
+                                              updateCallback: () =>
+                                                  setState(() {}),
+                                              child:
+                                                  const DarkLightSwitchSmallWidget(),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Expanded(

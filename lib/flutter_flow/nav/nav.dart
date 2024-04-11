@@ -6,6 +6,8 @@ import '/backend/backend.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
+import '/backend/push_notifications/push_notifications_handler.dart'
+    show PushNotificationsHandler;
 import '/index.dart';
 import '/main.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -92,13 +94,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const LoginWidget(),
         ),
         FFRoute(
-          name: 'startuppage',
-          path: '/startuppage',
+          name: 'addItem',
+          path: '/addItem',
           builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'startuppage')
+              ? const NavBarPage(initialPage: 'addItem')
               : const NavBarPage(
-                  initialPage: 'startuppage',
-                  page: StartuppageWidget(),
+                  initialPage: 'addItem',
+                  page: AddItemWidget(),
                 ),
         ),
         FFRoute(
@@ -161,15 +163,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           asyncParams: {
             'allbanks': getDocList(['users'], UsersRecord.fromSnapshot),
           },
-          builder: (context, params) => params.isEmpty
-              ? const NavBarPage(initialPage: 'inbox')
-              : InboxWidget(
-                  allbanks: params.getParam<UsersRecord>(
-                    'allbanks',
-                    ParamType.Document,
-                    true,
-                  ),
-                ),
+          builder: (context, params) => InboxWidget(
+            allbanks: params.getParam<UsersRecord>(
+              'allbanks',
+              ParamType.Document,
+              true,
+            ),
+          ),
         ),
         FFRoute(
           name: 'chat_2_Details',
@@ -221,6 +221,53 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.Document,
             ),
           ),
+        ),
+        FFRoute(
+          name: 'map',
+          path: '/map',
+          builder: (context, params) =>
+              params.isEmpty ? const NavBarPage(initialPage: 'map') : const MapWidget(),
+        ),
+        FFRoute(
+          name: 'experimental',
+          path: '/experimental',
+          builder: (context, params) => params.isEmpty
+              ? const NavBarPage(initialPage: 'experimental')
+              : ExperimentalWidget(
+                  oneH: params.getParam(
+                    'oneH',
+                    ParamType.int,
+                  ),
+                  twoH: params.getParam(
+                    'twoH',
+                    ParamType.int,
+                  ),
+                  size: params.getParam(
+                    'size',
+                    ParamType.double,
+                  ),
+                  fill: params.getParam(
+                    'fill',
+                    ParamType.Color,
+                  ),
+                  border: params.getParam(
+                    'border',
+                    ParamType.Color,
+                  ),
+                  width: params.getParam(
+                    'width',
+                    ParamType.int,
+                  ),
+                  radius: params.getParam(
+                    'radius',
+                    ParamType.int,
+                  ),
+                ),
+        ),
+        FFRoute(
+          name: 'tests',
+          path: '/tests',
+          builder: (context, params) => const TestsWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],
@@ -415,7 +462,7 @@ class FFRoute {
                     fit: BoxFit.cover,
                   ),
                 )
-              : page;
+              : PushNotificationsHandler(child: page);
 
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition

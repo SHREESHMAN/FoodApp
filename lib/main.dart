@@ -6,6 +6,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
 
+import 'backend/push_notifications/push_notifications_util.dart';
 import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
@@ -53,6 +54,7 @@ class _MyAppState extends State<MyApp> {
   late GoRouter _router;
 
   final authUserSub = authenticatedUserStream.listen((_) {});
+  final fcmTokenSub = fcmTokenUserStream.listen((_) {});
 
   @override
   void initState() {
@@ -72,7 +74,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void dispose() {
     authUserSub.cancel();
-
+    fcmTokenSub.cancel();
     super.dispose();
   }
 
@@ -129,7 +131,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'startuppage';
+  String _currentPageName = 'addItem';
   late Widget? _currentPage;
 
   @override
@@ -142,12 +144,13 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'startuppage': const StartuppageWidget(),
+      'addItem': const AddItemWidget(),
       'profile': const ProfileWidget(),
       'foodcart': const FoodcartWidget(),
       'expenses': const ExpensesWidget(),
-      'inbox': const InboxWidget(),
       'chat_2_main': const Chat2MainWidget(),
+      'map': const MapWidget(),
+      'experimental': const ExperimentalWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -159,9 +162,9 @@ class _NavBarPageState extends State<NavBarPage> {
           _currentPage = null;
           _currentPageName = tabs.keys.toList()[i];
         }),
-        backgroundColor: FlutterFlowTheme.of(context).primaryText,
-        selectedItemColor: FlutterFlowTheme.of(context).primary,
-        unselectedItemColor: const Color(0x8A000000),
+        backgroundColor: FlutterFlowTheme.of(context).tertiary,
+        selectedItemColor: FlutterFlowTheme.of(context).secondaryText,
+        unselectedItemColor: FlutterFlowTheme.of(context).primaryBackground,
         showSelectedLabels: true,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
@@ -203,19 +206,31 @@ class _NavBarPageState extends State<NavBarPage> {
             tooltip: '',
           ),
           BottomNavigationBarItem(
-            icon: FaIcon(
-              FontAwesomeIcons.inbox,
-              size: 24.0,
-            ),
-            label: 'Inbox',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(
               Icons.forum_outlined,
               size: 24.0,
             ),
             label: 'Chats',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.location_on_outlined,
+              size: 24.0,
+            ),
+            activeIcon: Icon(
+              Icons.location_pin,
+              size: 24.0,
+            ),
+            label: 'Nearby',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              size: 24.0,
+            ),
+            label: 'Home',
             tooltip: '',
           )
         ],

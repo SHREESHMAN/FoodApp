@@ -220,7 +220,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       }
 
                       if (currentUserEmail != '') {
-                        context.pushNamedAuth('startuppage', context.mounted);
+                        context.pushNamedAuth('addItem', context.mounted);
                       }
                     },
                     text: 'Sign In',
@@ -253,7 +253,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         return;
                       }
                       if (currentUserEmail != '') {
-                        context.pushNamedAuth('startuppage', context.mounted);
+                        context.pushNamedAuth('addItem', context.mounted);
                       } else {
                         await showDialog(
                           context: context,

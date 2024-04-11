@@ -165,6 +165,35 @@ class FFAppState extends ChangeNotifier {
     updateFn(_fetchedusers);
   }
 
+  List<FoodItemStruct> _queryusers = [];
+  List<FoodItemStruct> get queryusers => _queryusers;
+  set queryusers(List<FoodItemStruct> value) {
+    _queryusers = value;
+  }
+
+  void addToQueryusers(FoodItemStruct value) {
+    _queryusers.add(value);
+  }
+
+  void removeFromQueryusers(FoodItemStruct value) {
+    _queryusers.remove(value);
+  }
+
+  void removeAtIndexFromQueryusers(int index) {
+    _queryusers.removeAt(index);
+  }
+
+  void updateQueryusersAtIndex(
+    int index,
+    FoodItemStruct Function(FoodItemStruct) updateFn,
+  ) {
+    _queryusers[index] = updateFn(_queryusers[index]);
+  }
+
+  void insertAtIndexInQueryusers(int index, FoodItemStruct value) {
+    _queryusers.insert(index, value);
+  }
+
   final _userDocQueryManager = FutureRequestManager<UsersRecord>();
   Future<UsersRecord> userDocQuery({
     String? uniqueQueryKey,

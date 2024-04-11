@@ -13,7 +13,7 @@ class FoodcartWidget extends StatefulWidget {
     super.key,
     bool? sendInChat,
     this.chatRef,
-  }) : sendInChat = sendInChat ?? true;
+  }) : sendInChat = sendInChat ?? false;
 
   final bool sendInChat;
   final ChatsRecord? chatRef;
@@ -227,6 +227,11 @@ class _FoodcartWidgetState extends State<FoodcartWidget> {
 
                             setState(() {});
                           },
+                          onDoubleTap: () async {
+                            setState(() {
+                              FFAppState().addToFoodItem(fooditemsItem);
+                            });
+                          },
                           child: Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -400,13 +405,16 @@ class _FoodcartWidgetState extends State<FoodcartWidget> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 12.0, 4.0, 8.0),
+                                            0.0, 12.0, 4.0, 78.0),
                                         child: Text(
-                                          formatNumber(
-                                            fooditemsItem.price,
-                                            formatType: FormatType.custom,
-                                            format: 'AED ',
-                                            locale: '',
+                                          valueOrDefault<String>(
+                                            formatNumber(
+                                              fooditemsItem.price,
+                                              formatType: FormatType.custom,
+                                              format: 'AED ',
+                                              locale: '',
+                                            ),
+                                            'price',
                                           ),
                                           textAlign: TextAlign.end,
                                           style: FlutterFlowTheme.of(context)
@@ -414,9 +422,24 @@ class _FoodcartWidgetState extends State<FoodcartWidget> {
                                               .override(
                                                 fontFamily: 'Inter',
                                                 letterSpacing: 0.0,
+                                                fontWeight: FontWeight.bold,
                                               ),
                                         ),
                                       ),
+                                      if (fooditemsItem.donated)
+                                        Icon(
+                                          Icons.done_outline,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 24.0,
+                                        ),
+                                      if (!fooditemsItem.donated)
+                                        Icon(
+                                          Icons.crop_din_sharp,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 24.0,
+                                        ),
                                     ],
                                   ),
                                 ],
