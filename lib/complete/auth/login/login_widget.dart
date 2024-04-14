@@ -217,8 +217,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                         return;
                       }
 
-                      if (currentUserEmail != '') {
-                        context.pushNamedAuth('addItem', context.mounted);
+                      if (loggedIn) {
+                        context.pushNamedAuth('homescreen', context.mounted);
                       }
                     },
                     text: 'Sign In',
@@ -250,8 +250,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                       if (user == null) {
                         return;
                       }
-                      if (currentUserEmail != '') {
-                        context.pushNamedAuth('addItem', context.mounted);
+                      if (loggedIn) {
+                        context.goNamedAuth('homescreen', context.mounted);
                       } else {
                         await showDialog(
                           context: context,

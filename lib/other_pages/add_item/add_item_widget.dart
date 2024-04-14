@@ -3,6 +3,7 @@ import '/backend/firebase_storage/storage.dart';
 import '/backend/gemini/gemini.dart';
 import '/complete/components/add_new_category/add_new_category_widget.dart';
 import '/complete/components/empty/empty_widget.dart';
+import '/complete/components/helpful_tip/helpful_tip_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_autocomplete_options_list.dart';
 import '/flutter_flow/flutter_flow_calendar.dart';
@@ -12,8 +13,12 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
+import '/walkthroughs/third.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart'
+    show TutorialCoachMark;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -152,6 +157,18 @@ class _AddItemWidgetState extends State<AddItemWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => AddItemModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (!functions.tutdone(FFAppState().tutorialsdone.toList(), 3)) {
+        safeSetState(
+            () => _model.thirdController = createPageWalkthrough(context));
+        _model.thirdController?.show(context: context);
+        setState(() {
+          FFAppState().addToTutorialsdone(3);
+        });
+      }
+    });
 
     _model.textController1 ??= TextEditingController();
     _model.textFieldFocusNode1 ??= FocusNode();
@@ -341,8 +358,13 @@ class _AddItemWidgetState extends State<AddItemWidget>
                 color: FlutterFlowTheme.of(context).info,
                 size: 24.0,
               ),
-            ).animateOnPageLoad(
-                animationsMap['floatingActionButtonOnPageLoadAnimation']!),
+            )
+                .addWalkthrough(
+                  floatingActionButton0cefzjx6,
+                  _model.thirdController,
+                )
+                .animateOnPageLoad(
+                    animationsMap['floatingActionButtonOnPageLoadAnimation']!),
           ),
         ),
         body: SafeArea(
@@ -466,6 +488,13 @@ class _AddItemWidgetState extends State<AddItemWidget>
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
+                            Flexible(
+                              child: wrapWithModel(
+                                model: _model.helpfulTipModel,
+                                updateCallback: () => setState(() {}),
+                                child: const HelpfulTipWidget(),
+                              ),
+                            ),
                             Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: Row(
@@ -822,7 +851,7 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                     });
                                     await geminiTextFromImage(
                                       context,
-                                      'Classify the image into one of these given categories and return only the category and nothing else as response  (return exact category string, dont change capitalization) if no category matches return that category with quotes eg: \"newCategoryName\": ${functions.combineall(FFAppState().categories.toList())}',
+                                      'Classify the image into one of these given categories and return only the category and nothing else as response  (return exact category string, dont change capitalization) if no category matches return that Detected Category with quotes eg: \" ... \" in 1-2 words. ${functions.combineall(FFAppState().categories.toList())}',
                                       uploadImageBytes:
                                           _model.uploadedLocalFile1,
                                     ).then((generatedText) {
@@ -843,6 +872,7 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                         await showModalBottomSheet(
                                           isScrollControlled: true,
                                           backgroundColor: Colors.transparent,
+                                          isDismissible: false,
                                           context: context,
                                           builder: (context) {
                                             return GestureDetector(
@@ -868,14 +898,10 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                               ),
                                             );
                                           },
-                                        ).then((value) => safeSetState(() {}));
+                                        ).then((value) => safeSetState(
+                                            () => _model.addNew = value));
 
-                                        if (functions.checkIfPresent(
-                                            valueOrDefault<String>(
-                                              functions.noquote(_model.image!),
-                                              'Other',
-                                            ),
-                                            FFAppState().categories.toList())) {
+                                        if (_model.addNew!) {
                                           setState(() {
                                             _model.dropDownValueController
                                                     ?.value =
@@ -1022,6 +1048,9 @@ class _AddItemWidgetState extends State<AddItemWidget>
 
                                     setState(() {});
                                   },
+                                ).addWalkthrough(
+                                  iconButton41s4acvl,
+                                  _model.thirdController,
                                 ),
                                 FlutterFlowIconButton(
                                   borderColor:
@@ -1094,7 +1123,7 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                         autofocus: true,
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'Date',
+                                          labelText: 'DD',
                                           labelStyle:
                                               FlutterFlowTheme.of(context)
                                                   .labelMedium
@@ -1184,7 +1213,7 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                         autofocus: true,
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'Month(eg.12)',
+                                          labelText: 'MM',
                                           labelStyle:
                                               FlutterFlowTheme.of(context)
                                                   .labelMedium
@@ -1274,7 +1303,7 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                         autofocus: true,
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'Year',
+                                          labelText: 'YYYY',
                                           labelStyle:
                                               FlutterFlowTheme.of(context)
                                                   .labelMedium
@@ -1523,6 +1552,9 @@ class _AddItemWidgetState extends State<AddItemWidget>
 
                                         setState(() {});
                                       },
+                                    ).addWalkthrough(
+                                      iconButtonQaox8skd,
+                                      _model.thirdController,
                                     ),
                                   ),
                                   Expanded(
@@ -2112,6 +2144,9 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                                       },
                                                     ),
                                                   ],
+                                                ).addWalkthrough(
+                                                  rowI9oaqab4,
+                                                  _model.thirdController,
                                                 ),
                                                 Padding(
                                                   padding: const EdgeInsetsDirectional
@@ -2590,6 +2625,9 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                       ),
                                     ),
                                   ],
+                                ).addWalkthrough(
+                                  tabBarU6p110go,
+                                  _model.thirdController,
                                 ),
                               ),
                             ),
@@ -2606,4 +2644,15 @@ class _AddItemWidgetState extends State<AddItemWidget>
       ),
     );
   }
+
+  TutorialCoachMark createPageWalkthrough(BuildContext context) =>
+      TutorialCoachMark(
+        targets: createWalkthroughTargets(context),
+        onFinish: () async {
+          safeSetState(() => _model.thirdController = null);
+        },
+        onSkip: () {
+          return true;
+        },
+      );
 }

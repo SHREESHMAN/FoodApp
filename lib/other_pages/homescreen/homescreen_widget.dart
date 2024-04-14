@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/complete/components/empty/empty_widget.dart';
 import '/complete/components/helpful_tip/helpful_tip_widget.dart';
@@ -8,8 +9,11 @@ import '/flutter_flow/flutter_flow_media_display.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_video_player.dart';
+import '/walkthroughs/first.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flip_card/flip_card.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart'
+    show TutorialCoachMark;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -80,6 +84,14 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
         FFAppState().queryusers =
             FFAppState().foodItem.toList().cast<FoodItemStruct>();
       });
+      if (!functions.tutdone(FFAppState().tutorialsdone.toList(), 1)) {
+        safeSetState(
+            () => _model.firstController = createPageWalkthrough(context));
+        _model.firstController?.show(context: context);
+        setState(() {
+          FFAppState().addToTutorialsdone(1);
+        });
+      }
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -123,7 +135,7 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                   kTransitionInfoKey: const TransitionInfo(
                     hasTransition: true,
                     transitionType: PageTransitionType.topToBottom,
-                    duration: Duration(milliseconds: 1000),
+                    duration: Duration(milliseconds: 500),
                   ),
                 },
               );
@@ -174,36 +186,78 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                       ),
                     ),
                   ),
-                  Align(
-                    alignment: const AlignmentDirectional(1.0, 0.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: FlutterFlowIconButton(
-                        borderColor: FlutterFlowTheme.of(context).tertiary,
-                        borderRadius: 10.0,
-                        borderWidth: 1.0,
-                        buttonSize: 50.0,
-                        fillColor: FlutterFlowTheme.of(context).accent3,
-                        icon: Icon(
-                          Icons.shopping_cart,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          size: 34.0,
-                        ),
-                        onPressed: () async {
-                          context.pushNamed(
-                            'foodcart',
-                            extra: <String, dynamic>{
-                              kTransitionInfoKey: const TransitionInfo(
-                                hasTransition: true,
-                                transitionType: PageTransitionType.scale,
-                                alignment: Alignment.bottomCenter,
-                                duration: Duration(milliseconds: 1000),
-                              ),
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Align(
+                        alignment: const AlignmentDirectional(1.0, 0.0),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 10.0, 15.0, 0.0),
+                          child: FlutterFlowIconButton(
+                            borderColor: FlutterFlowTheme.of(context).tertiary,
+                            borderRadius: 10.0,
+                            borderWidth: 1.0,
+                            buttonSize: 50.0,
+                            fillColor:
+                                FlutterFlowTheme.of(context).customColor1,
+                            icon: FaIcon(
+                              FontAwesomeIcons.gift,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 34.0,
+                            ),
+                            onPressed: () async {
+                              context.pushNamed(
+                                'tests',
+                                extra: <String, dynamic>{
+                                  kTransitionInfoKey: const TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType: PageTransitionType.scale,
+                                    alignment: Alignment.bottomCenter,
+                                    duration: Duration(milliseconds: 500),
+                                  ),
+                                },
+                              );
                             },
-                          );
-                        },
+                          ),
+                        ),
                       ),
-                    ),
+                      Align(
+                        alignment: const AlignmentDirectional(1.0, 0.0),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 5.0, 15.0, 0.0),
+                          child: FlutterFlowIconButton(
+                            borderColor: FlutterFlowTheme.of(context).tertiary,
+                            borderRadius: 10.0,
+                            borderWidth: 1.0,
+                            buttonSize: 50.0,
+                            fillColor: FlutterFlowTheme.of(context).accent3,
+                            icon: Icon(
+                              Icons.shopping_cart,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 34.0,
+                            ),
+                            onPressed: () async {
+                              context.pushNamed(
+                                'foodcart',
+                                extra: <String, dynamic>{
+                                  kTransitionInfoKey: const TransitionInfo(
+                                    hasTransition: true,
+                                    transitionType: PageTransitionType.scale,
+                                    alignment: Alignment.bottomCenter,
+                                    duration: Duration(milliseconds: 500),
+                                  ),
+                                },
+                              );
+                            },
+                          ).addWalkthrough(
+                            iconButtonG5vao9p6,
+                            _model.firstController,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -1473,6 +1527,9 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                           },
                         );
                       },
+                    ).addWalkthrough(
+                      listViewSk5ljdw1,
+                      _model.firstController,
                     );
                   },
                 ),
@@ -1483,4 +1540,15 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
       ),
     );
   }
+
+  TutorialCoachMark createPageWalkthrough(BuildContext context) =>
+      TutorialCoachMark(
+        targets: createWalkthroughTargets(context),
+        onFinish: () async {
+          safeSetState(() => _model.firstController = null);
+        },
+        onSkip: () {
+          return true;
+        },
+      );
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'flutter_flow/request_manager.dart';
 import '/backend/backend.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:csv/csv.dart';
+import 'package:synchronized/synchronized.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
 class FFAppState extends ChangeNotifier {
@@ -18,13 +20,13 @@ class FFAppState extends ChangeNotifier {
   }
 
   Future initializePersistedState() async {
-    prefs = await SharedPreferences.getInstance();
-    _safeInit(() {
-      _categories = prefs.getStringList('ff_categories') ?? _categories;
+    secureStorage = const FlutterSecureStorage();
+    await _safeInitAsync(() async {
+      _categories =
+          await secureStorage.getStringList('ff_categories') ?? _categories;
     });
-    _safeInit(() {
-      _foodItem = prefs
-              .getStringList('ff_foodItem')
+    await _safeInitAsync(() async {
+      _foodItem = (await secureStorage.getStringList('ff_foodItem'))
               ?.map((x) {
                 try {
                   return FoodItemStruct.fromSerializableMap(jsonDecode(x));
@@ -37,6 +39,12 @@ class FFAppState extends ChangeNotifier {
               .toList() ??
           _foodItem;
     });
+    await _safeInitAsync(() async {
+      _tutorialsdone = (await secureStorage.getStringList('ff_tutorialsdone'))
+              ?.map(int.parse)
+              .toList() ??
+          _tutorialsdone;
+    });
   }
 
   void update(VoidCallback callback) {
@@ -44,7 +52,7 @@ class FFAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  late SharedPreferences prefs;
+  late FlutterSecureStorage secureStorage;
 
   String _appState = '0';
   String get appState => _appState;
@@ -77,22 +85,26 @@ class FFAppState extends ChangeNotifier {
   List<String> get categories => _categories;
   set categories(List<String> value) {
     _categories = value;
-    prefs.setStringList('ff_categories', value);
+    secureStorage.setStringList('ff_categories', value);
+  }
+
+  void deleteCategories() {
+    secureStorage.delete(key: 'ff_categories');
   }
 
   void addToCategories(String value) {
     _categories.add(value);
-    prefs.setStringList('ff_categories', _categories);
+    secureStorage.setStringList('ff_categories', _categories);
   }
 
   void removeFromCategories(String value) {
     _categories.remove(value);
-    prefs.setStringList('ff_categories', _categories);
+    secureStorage.setStringList('ff_categories', _categories);
   }
 
   void removeAtIndexFromCategories(int index) {
     _categories.removeAt(index);
-    prefs.setStringList('ff_categories', _categories);
+    secureStorage.setStringList('ff_categories', _categories);
   }
 
   void updateCategoriesAtIndex(
@@ -100,37 +112,41 @@ class FFAppState extends ChangeNotifier {
     String Function(String) updateFn,
   ) {
     _categories[index] = updateFn(_categories[index]);
-    prefs.setStringList('ff_categories', _categories);
+    secureStorage.setStringList('ff_categories', _categories);
   }
 
   void insertAtIndexInCategories(int index, String value) {
     _categories.insert(index, value);
-    prefs.setStringList('ff_categories', _categories);
+    secureStorage.setStringList('ff_categories', _categories);
   }
 
   List<FoodItemStruct> _foodItem = [];
   List<FoodItemStruct> get foodItem => _foodItem;
   set foodItem(List<FoodItemStruct> value) {
     _foodItem = value;
-    prefs.setStringList(
+    secureStorage.setStringList(
         'ff_foodItem', value.map((x) => x.serialize()).toList());
+  }
+
+  void deleteFoodItem() {
+    secureStorage.delete(key: 'ff_foodItem');
   }
 
   void addToFoodItem(FoodItemStruct value) {
     _foodItem.add(value);
-    prefs.setStringList(
+    secureStorage.setStringList(
         'ff_foodItem', _foodItem.map((x) => x.serialize()).toList());
   }
 
   void removeFromFoodItem(FoodItemStruct value) {
     _foodItem.remove(value);
-    prefs.setStringList(
+    secureStorage.setStringList(
         'ff_foodItem', _foodItem.map((x) => x.serialize()).toList());
   }
 
   void removeAtIndexFromFoodItem(int index) {
     _foodItem.removeAt(index);
-    prefs.setStringList(
+    secureStorage.setStringList(
         'ff_foodItem', _foodItem.map((x) => x.serialize()).toList());
   }
 
@@ -139,13 +155,13 @@ class FFAppState extends ChangeNotifier {
     FoodItemStruct Function(FoodItemStruct) updateFn,
   ) {
     _foodItem[index] = updateFn(_foodItem[index]);
-    prefs.setStringList(
+    secureStorage.setStringList(
         'ff_foodItem', _foodItem.map((x) => x.serialize()).toList());
   }
 
   void insertAtIndexInFoodItem(int index, FoodItemStruct value) {
     _foodItem.insert(index, value);
-    prefs.setStringList(
+    secureStorage.setStringList(
         'ff_foodItem', _foodItem.map((x) => x.serialize()).toList());
   }
 
@@ -153,16 +169,6 @@ class FFAppState extends ChangeNotifier {
   double get datepick => _datepick;
   set datepick(double value) {
     _datepick = value;
-  }
-
-  UserTypeStruct _fetchedusers = UserTypeStruct();
-  UserTypeStruct get fetchedusers => _fetchedusers;
-  set fetchedusers(UserTypeStruct value) {
-    _fetchedusers = value;
-  }
-
-  void updateFetchedusersStruct(Function(UserTypeStruct) updateFn) {
-    updateFn(_fetchedusers);
   }
 
   List<FoodItemStruct> _queryusers = [];
@@ -194,6 +200,51 @@ class FFAppState extends ChangeNotifier {
     _queryusers.insert(index, value);
   }
 
+  List<int> _tutorialsdone = [];
+  List<int> get tutorialsdone => _tutorialsdone;
+  set tutorialsdone(List<int> value) {
+    _tutorialsdone = value;
+    secureStorage.setStringList(
+        'ff_tutorialsdone', value.map((x) => x.toString()).toList());
+  }
+
+  void deleteTutorialsdone() {
+    secureStorage.delete(key: 'ff_tutorialsdone');
+  }
+
+  void addToTutorialsdone(int value) {
+    _tutorialsdone.add(value);
+    secureStorage.setStringList(
+        'ff_tutorialsdone', _tutorialsdone.map((x) => x.toString()).toList());
+  }
+
+  void removeFromTutorialsdone(int value) {
+    _tutorialsdone.remove(value);
+    secureStorage.setStringList(
+        'ff_tutorialsdone', _tutorialsdone.map((x) => x.toString()).toList());
+  }
+
+  void removeAtIndexFromTutorialsdone(int index) {
+    _tutorialsdone.removeAt(index);
+    secureStorage.setStringList(
+        'ff_tutorialsdone', _tutorialsdone.map((x) => x.toString()).toList());
+  }
+
+  void updateTutorialsdoneAtIndex(
+    int index,
+    int Function(int) updateFn,
+  ) {
+    _tutorialsdone[index] = updateFn(_tutorialsdone[index]);
+    secureStorage.setStringList(
+        'ff_tutorialsdone', _tutorialsdone.map((x) => x.toString()).toList());
+  }
+
+  void insertAtIndexInTutorialsdone(int index, int value) {
+    _tutorialsdone.insert(index, value);
+    secureStorage.setStringList(
+        'ff_tutorialsdone', _tutorialsdone.map((x) => x.toString()).toList());
+  }
+
   final _userDocQueryManager = FutureRequestManager<UsersRecord>();
   Future<UsersRecord> userDocQuery({
     String? uniqueQueryKey,
@@ -220,4 +271,47 @@ Future _safeInitAsync(Function() initializeField) async {
   try {
     await initializeField();
   } catch (_) {}
+}
+
+extension FlutterSecureStorageExtensions on FlutterSecureStorage {
+  static final _lock = Lock();
+
+  Future<void> writeSync({required String key, String? value}) async =>
+      await _lock.synchronized(() async {
+        await write(key: key, value: value);
+      });
+
+  void remove(String key) => delete(key: key);
+
+  Future<String?> getString(String key) async => await read(key: key);
+  Future<void> setString(String key, String value) async =>
+      await writeSync(key: key, value: value);
+
+  Future<bool?> getBool(String key) async => (await read(key: key)) == 'true';
+  Future<void> setBool(String key, bool value) async =>
+      await writeSync(key: key, value: value.toString());
+
+  Future<int?> getInt(String key) async =>
+      int.tryParse(await read(key: key) ?? '');
+  Future<void> setInt(String key, int value) async =>
+      await writeSync(key: key, value: value.toString());
+
+  Future<double?> getDouble(String key) async =>
+      double.tryParse(await read(key: key) ?? '');
+  Future<void> setDouble(String key, double value) async =>
+      await writeSync(key: key, value: value.toString());
+
+  Future<List<String>?> getStringList(String key) async =>
+      await read(key: key).then((result) {
+        if (result == null || result.isEmpty) {
+          return null;
+        }
+        return const CsvToListConverter()
+            .convert(result)
+            .first
+            .map((e) => e.toString())
+            .toList();
+      });
+  Future<void> setStringList(String key, List<String> value) async =>
+      await writeSync(key: key, value: const ListToCsvConverter().convert([value]));
 }

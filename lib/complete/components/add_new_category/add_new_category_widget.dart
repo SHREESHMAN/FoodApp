@@ -82,7 +82,7 @@ class _AddNewCategoryWidgetState extends State<AddNewCategoryWidget> {
               child: Align(
                 alignment: const AlignmentDirectional(0.0, 0.0),
                 child: Text(
-                  'Your Item has been classified as ${widget.newcat} and toy haven\'t added this category yet.',
+                  'Your Item has been classified as ${widget.newcat} and you haven\'t added this category yet.',
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Inter',
@@ -99,6 +99,7 @@ class _AddNewCategoryWidgetState extends State<AddNewCategoryWidget> {
                   setState(() {
                     FFAppState().addToCategories(widget.newcat);
                   });
+                  Navigator.pop(context, true);
                 },
                 text: 'Add ${widget.newcat} as a Category',
                 options: FFButtonOptions(
@@ -125,6 +126,7 @@ class _AddNewCategoryWidgetState extends State<AddNewCategoryWidget> {
               child: FFButtonWidget(
                 onPressed: () async {
                   context.pop();
+                  Navigator.pop(context, false);
                 },
                 text: 'Select Category yourself',
                 options: FFButtonOptions(

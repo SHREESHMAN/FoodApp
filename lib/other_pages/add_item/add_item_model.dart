@@ -1,16 +1,22 @@
 import '/backend/backend.dart';
+import '/complete/components/helpful_tip/helpful_tip_widget.dart';
 import '/flutter_flow/flutter_flow_calendar.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'add_item_widget.dart' show AddItemWidget;
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart'
+    show TutorialCoachMark;
 import 'package:flutter/material.dart';
 
 class AddItemModel extends FlutterFlowModel<AddItemWidget> {
   ///  State fields for stateful widgets in this page.
 
+  TutorialCoachMark? thirdController;
   final unfocusNode = FocusNode();
   // State field(s) for Column widget.
   ScrollController? columnController1;
+  // Model for HelpfulTip component.
+  late HelpfulTipModel helpfulTipModel;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode1;
   TextEditingController? textController1;
@@ -30,6 +36,8 @@ class AddItemModel extends FlutterFlowModel<AddItemWidget> {
   String? gemdesc;
   // Stores action output result for [Gemini - Text From Image] action in IconButton widget.
   String? image;
+  // Stores action output result for [Bottom Sheet - addNewCategory] action in IconButton widget.
+  bool? addNew;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode3;
   TextEditingController? textController3;
@@ -85,6 +93,7 @@ class AddItemModel extends FlutterFlowModel<AddItemWidget> {
   @override
   void initState(BuildContext context) {
     columnController1 = ScrollController();
+    helpfulTipModel = createModel(context, () => HelpfulTipModel());
     calendarSelectedDay = DateTimeRange(
       start: DateTime.now().startOfDay,
       end: DateTime.now().endOfDay,
@@ -96,8 +105,10 @@ class AddItemModel extends FlutterFlowModel<AddItemWidget> {
 
   @override
   void dispose() {
+    thirdController?.finish();
     unfocusNode.dispose();
     columnController1?.dispose();
+    helpfulTipModel.dispose();
     textFieldFocusNode1?.dispose();
     textController1?.dispose();
 

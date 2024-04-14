@@ -1,11 +1,13 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/chat_groupwbubbles/empty_state_simple/empty_state_simple_widget.dart';
+import '/complete/components/blocked/blocked_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'chat2_main_model.dart';
 export 'chat2_main_model.dart';
@@ -26,6 +28,35 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => Chat2MainModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await authManager.refreshUser();
+      if (!currentUserEmailVerified) {
+        await authManager.sendEmailVerification();
+        await showModalBottomSheet(
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          context: context,
+          builder: (context) {
+            return GestureDetector(
+              onTap: () => _model.unfocusNode.canRequestFocus
+                  ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+                  : FocusScope.of(context).unfocus(),
+              child: Padding(
+                padding: MediaQuery.viewInsetsOf(context),
+                child: const BlockedWidget(
+                  display:
+                      'You Need to verify your account first. Check your email.',
+                ),
+              ),
+            );
+          },
+        ).then((value) => safeSetState(() {}));
+
+        context.goNamed('homescreen');
+      }
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -71,6 +102,36 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
                   size: 24.0,
                 ),
                 onPressed: () async {
+                  await authManager.refreshUser();
+                  if (!currentUserEmailVerified) {
+                    await showModalBottomSheet(
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      builder: (context) {
+                        return GestureDetector(
+                          onTap: () => _model.unfocusNode.canRequestFocus
+                              ? FocusScope.of(context)
+                                  .requestFocus(_model.unfocusNode)
+                              : FocusScope.of(context).unfocus(),
+                          child: Padding(
+                            padding: MediaQuery.viewInsetsOf(context),
+                            child: const BlockedWidget(
+                              display:
+                                  'You Need to verify your account first. Check your email.',
+                            ),
+                          ),
+                        );
+                      },
+                    ).then((value) => safeSetState(() {}));
+
+                    await authManager.sendEmailVerification();
+
+                    context.goNamed('homescreen');
+
+                    return;
+                  }
+
                   context.pushNamed(
                     'chat_2_InviteUsers',
                     extra: <String, dynamic>{
@@ -97,7 +158,7 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                 child: Text(
-                  'Below are your chats and group chats',
+                  'To report any offences please contact shreeshcreates@gmail.com',
                   style: FlutterFlowTheme.of(context).labelMedium.override(
                         fontFamily: 'Inter',
                         letterSpacing: 0.0,

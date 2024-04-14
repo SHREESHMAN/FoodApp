@@ -1,4 +1,5 @@
 import '/backend/schema/structs/index.dart';
+import '/complete/components/blocked/blocked_widget.dart';
 import '/complete/components/empty/empty_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_charts.dart';
@@ -56,6 +57,39 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
         FFAppState().queryusers =
             FFAppState().foodItem.toList().cast<FoodItemStruct>();
       });
+      if (FFAppState().foodItem.isEmpty) {
+        await showModalBottomSheet(
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          isDismissible: false,
+          context: context,
+          builder: (context) {
+            return GestureDetector(
+              onTap: () => _model.unfocusNode.canRequestFocus
+                  ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+                  : FocusScope.of(context).unfocus(),
+              child: Padding(
+                padding: MediaQuery.viewInsetsOf(context),
+                child: const BlockedWidget(
+                  display:
+                      'You havent added any items yet, add some items to see stats here. Happy Saving!',
+                ),
+              ),
+            );
+          },
+        ).then((value) => safeSetState(() {}));
+
+        context.goNamed(
+          'homescreen',
+          extra: <String, dynamic>{
+            kTransitionInfoKey: const TransitionInfo(
+              hasTransition: true,
+              transitionType: PageTransitionType.fade,
+              duration: Duration(milliseconds: 500),
+            ),
+          },
+        );
+      }
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));

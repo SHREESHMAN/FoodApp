@@ -80,7 +80,7 @@ class _Chat2InviteUsersWidgetState extends State<Chat2InviteUsersWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Invite Friends',
+                'Find a Food Bank',
                 style: FlutterFlowTheme.of(context).headlineSmall.override(
                       fontFamily: 'Sora',
                       letterSpacing: 0.0,
@@ -89,7 +89,7 @@ class _Chat2InviteUsersWidgetState extends State<Chat2InviteUsersWidget> {
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                 child: Text(
-                  'Select users from below to start a chat.',
+                  'Select bank below to start a chat.',
                   style: FlutterFlowTheme.of(context).labelSmall.override(
                         fontFamily: 'Inter',
                         letterSpacing: 0.0,

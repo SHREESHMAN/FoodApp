@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'map_model.dart';
 export 'map_model.dart';
@@ -110,28 +111,55 @@ class _MapWidgetState extends State<MapWidget> {
                               ),
                               singleRecord: true,
                             ).then((s) => s.firstOrNull);
-                            await showDialog(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  title: Text(valueOrDefault<String>(
-                                    googleMapUsersRecord.displayName,
-                                    'Name',
-                                  )),
-                                  content: Text(valueOrDefault<String>(
-                                    googleMapUsersRecord.displayName,
-                                    'details',
-                                  )),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(alertDialogContext),
-                                      child: const Text('Ok'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
+                            var confirmDialogResponse = await showDialog<bool>(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text(valueOrDefault<String>(
+                                        googleMapUsersRecord.displayName,
+                                        'Name',
+                                      )),
+                                      content:
+                                          Text('Email: ${valueOrDefault<String>(
+                                        googleMapUsersRecord.email,
+                                        'Not Available',
+                                      )}${"\n"}Phone: ${valueOrDefault<String>(
+                                        googleMapUsersRecord.phoneNumber,
+                                        'Not Available',
+                                      )}${"\n"}Address: ${valueOrDefault<String>(
+                                        googleMapUsersRecord.address
+                                            ?.toString(),
+                                        'Not Available',
+                                      )}'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, false),
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () => Navigator.pop(
+                                              alertDialogContext, true),
+                                          child: const Text('Copy Details'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ) ??
+                                false;
+                            if (confirmDialogResponse) {
+                              await Clipboard.setData(ClipboardData(
+                                  text: 'Email: ${valueOrDefault<String>(
+                                googleMapUsersRecord.email,
+                                'Not Available',
+                              )}${"\n"}Phone: ${valueOrDefault<String>(
+                                googleMapUsersRecord.phoneNumber,
+                                'Not Available',
+                              )}${"\n"}Address: ${valueOrDefault<String>(
+                                googleMapUsersRecord.address?.toString(),
+                                'Not Available',
+                              )}'));
+                            }
 
                             setState(() {});
                           },

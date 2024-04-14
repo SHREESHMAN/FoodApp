@@ -3,8 +3,13 @@ import '/complete/components/empty/empty_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/walkthroughs/second.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart'
+    show TutorialCoachMark;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'foodcart_model.dart';
 export 'foodcart_model.dart';
@@ -32,6 +37,18 @@ class _FoodcartWidgetState extends State<FoodcartWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => FoodcartModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (!functions.tutdone(FFAppState().tutorialsdone.toList(), 2)) {
+        safeSetState(
+            () => _model.secondController = createPageWalkthrough(context));
+        _model.secondController?.show(context: context);
+        setState(() {
+          FFAppState().addToTutorialsdone(2);
+        });
+      }
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -78,11 +95,14 @@ class _FoodcartWidgetState extends State<FoodcartWidget> {
                       kTransitionInfoKey: const TransitionInfo(
                         hasTransition: true,
                         transitionType: PageTransitionType.fade,
-                        duration: Duration(milliseconds: 1000),
+                        duration: Duration(milliseconds: 500),
                       ),
                     },
                   );
                 },
+              ).addWalkthrough(
+                iconButtonEi1qpsrb,
+                _model.secondController,
               ),
             ),
           ],
@@ -504,6 +524,9 @@ class _FoodcartWidgetState extends State<FoodcartWidget> {
                         ),
                       );
                     },
+                  ).addWalkthrough(
+                    listView57kfpht5,
+                    _model.secondController,
                   );
                 },
               ),
@@ -513,4 +536,15 @@ class _FoodcartWidgetState extends State<FoodcartWidget> {
       ),
     );
   }
+
+  TutorialCoachMark createPageWalkthrough(BuildContext context) =>
+      TutorialCoachMark(
+        targets: createWalkthroughTargets(context),
+        onFinish: () async {
+          safeSetState(() => _model.secondController = null);
+        },
+        onSkip: () {
+          return true;
+        },
+      );
 }

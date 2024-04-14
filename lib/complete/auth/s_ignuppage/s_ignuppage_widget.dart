@@ -3,6 +3,7 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 's_ignuppage_model.dart';
 export 's_ignuppage_model.dart';
@@ -340,10 +341,9 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                             .update(createUsersRecordData(
                               displayName: _model.textController1.text,
                               createdTime: getCurrentTimestamp,
-                              role: valueOrDefault<String>(
-                                _model.switchListTileValue! ? 'bank' : 'user',
-                                'user',
-                              ),
+                              isBank: _model.switchListTileValue,
+                              email: '',
+                              points: 100,
                             ));
 
                         context.goNamedAuth('homescreen', context.mounted);
@@ -473,13 +473,16 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                             .update(createUsersRecordData(
                               displayName: _model.textController1.text,
                               createdTime: getCurrentTimestamp,
-                              role: valueOrDefault<String>(
-                                _model.switchListTileValue! ? 'bank' : 'user',
-                                'user',
-                              ),
+                              isBank: _model.switchListTileValue,
+                              email: '',
+                              points: 100,
                             ));
 
-                        context.goNamedAuth('homescreen', context.mounted);
+                        if (loggedIn) {
+                          await authManager.sendEmailVerification();
+                        }
+
+                        context.pushNamedAuth('homescreen', context.mounted);
                       },
                       text: 'Create Account',
                       options: FFButtonOptions(
@@ -505,23 +508,24 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                     alignment: const AlignmentDirectional(0.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        Function() navigate = () {};
                         GoRouter.of(context).prepareAuthEvent();
                         final user =
                             await authManager.signInWithGoogle(context);
                         if (user == null) {
                           return;
                         }
-                        navigate = () =>
-                            context.goNamedAuth('homescreen', context.mounted);
-                        if (currentUserEmail != '') {
-                          await currentUserReference!
-                              .update(createUsersRecordData(
-                            role: valueOrDefault<String>(
-                              _model.switchListTileValue! ? 'bank' : 'user',
-                              'user',
-                            ),
-                          ));
+                        if (loggedIn) {
+                          unawaited(
+                            () async {
+                              await currentUserReference!
+                                  .update(createUsersRecordData(
+                                isBank: _model.switchListTileValue,
+                                points: 100,
+                              ));
+                            }(),
+                          );
+
+                          context.goNamedAuth('homescreen', context.mounted);
                         } else {
                           await showDialog(
                             context: context,
@@ -541,8 +545,6 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                             },
                           );
                         }
-
-                        navigate();
                       },
                       text: 'Google Sign up',
                       options: FFButtonOptions(

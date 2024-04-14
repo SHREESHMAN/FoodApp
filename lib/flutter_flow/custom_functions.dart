@@ -349,3 +349,10 @@ String noquote(String itemwithquote) {
   // takes a string and removes all single and double quote
   return itemwithquote.replaceAll(RegExp("[\'\"]"), '');
 }
+
+bool tutdone(
+  List<int> list,
+  int item,
+) {
+  return list.contains(item);
+}

@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "353756899661-tqlr238ov3ekkpbq0mr16uqq065umqlg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shreesh.foodrescue",
+            "certificate_hash": "c5a8d51956c0720d10b1a136798d45956287aa4a"
+          }
+        },
+        {
           "client_id": "353756899661-35v57af7g16uj2nfiofpdrarg8kvlqpj.apps.googleusercontent.com",
           "client_type": 3
         }
