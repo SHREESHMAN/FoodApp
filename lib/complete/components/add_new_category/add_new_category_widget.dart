@@ -96,9 +96,8 @@ class _AddNewCategoryWidgetState extends State<AddNewCategoryWidget> {
               padding: const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
               child: FFButtonWidget(
                 onPressed: () async {
-                  setState(() {
-                    FFAppState().addToCategories(widget.newcat);
-                  });
+                  FFAppState().addToCategories(widget.newcat);
+                  setState(() {});
                   Navigator.pop(context, true);
                 },
                 text: 'Add ${widget.newcat} as a Category',
@@ -128,7 +127,9 @@ class _AddNewCategoryWidgetState extends State<AddNewCategoryWidget> {
                   context.pop();
                   Navigator.pop(context, false);
                 },
-                text: 'Select Category yourself',
+                text: FFLocalizations.of(context).getText(
+                  '05rxuety' /* Select Category yourself */,
+                ),
                 options: FFButtonOptions(
                   width: double.infinity,
                   height: 60.0,

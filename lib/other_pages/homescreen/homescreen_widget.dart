@@ -2,7 +2,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/complete/components/empty/empty_widget.dart';
-import '/complete/components/helpful_tip/helpful_tip_widget.dart';
+import '/complete/helpful_tip/helpful_tip_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_media_display.dart';
@@ -57,21 +57,7 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final animationsMap = {
-    'helpfulTipOnPageLoadAnimation': AnimationInfo(
-      reverse: true,
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(0.0, 0.0),
-          end: const Offset(18.0, 0.0),
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
@@ -80,18 +66,46 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().queryusers =
-            FFAppState().foodItem.toList().cast<FoodItemStruct>();
-      });
+      FFAppState().queryusers =
+          FFAppState().foodItem.toList().cast<FoodItemStruct>();
+      setState(() {});
       if (!functions.tutdone(FFAppState().tutorialsdone.toList(), 1)) {
         safeSetState(
             () => _model.firstController = createPageWalkthrough(context));
         _model.firstController?.show(context: context);
-        setState(() {
-          FFAppState().addToTutorialsdone(1);
-        });
+        FFAppState().addToTutorialsdone(1);
+        setState(() {});
       }
+    });
+
+    animationsMap.addAll({
+      'iconButtonOnPageLoadAnimation': AnimationInfo(
+        loop: true,
+        reverse: true,
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(1.0, 1.0),
+            end: const Offset(1.2, 1.1),
+          ),
+        ],
+      ),
+      'helpfulTipOnPageLoadAnimation': AnimationInfo(
+        reverse: true,
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(0.0, 0.0),
+            end: const Offset(18.0, 0.0),
+          ),
+        ],
+      ),
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -142,7 +156,9 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
             },
           ),
           title: Text(
-            'Dashboard',
+            FFLocalizations.of(context).getText(
+              '5oo64cjh' /* Dashboard */,
+            ),
             textAlign: TextAlign.center,
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Sora',
@@ -219,7 +235,8 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                                 },
                               );
                             },
-                          ),
+                          ).animateOnPageLoad(
+                              animationsMap['iconButtonOnPageLoadAnimation']!),
                         ),
                       ),
                       Align(
@@ -319,12 +336,11 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                               size: 24.0,
                             ),
                             onPressed: () async {
-                              setState(() {
-                                FFAppState().queryusers = FFAppState()
-                                    .foodItem
-                                    .toList()
-                                    .cast<FoodItemStruct>();
-                              });
+                              FFAppState().queryusers = FFAppState()
+                                  .foodItem
+                                  .toList()
+                                  .cast<FoodItemStruct>();
+                              setState(() {});
                             },
                           ),
                           FlutterFlowIconButton(
@@ -345,13 +361,12 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                               size: 24.0,
                             ),
                             onPressed: () async {
-                              setState(() {
-                                FFAppState().queryusers = FFAppState()
-                                    .foodItem
-                                    .where((e) => e.category == 'Bread')
-                                    .toList()
-                                    .cast<FoodItemStruct>();
-                              });
+                              FFAppState().queryusers = FFAppState()
+                                  .foodItem
+                                  .where((e) => e.category == 'Bread')
+                                  .toList()
+                                  .cast<FoodItemStruct>();
+                              setState(() {});
                             },
                           ),
                           FlutterFlowIconButton(
@@ -372,13 +387,12 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                               size: 24.0,
                             ),
                             onPressed: () async {
-                              setState(() {
-                                FFAppState().queryusers = FFAppState()
-                                    .foodItem
-                                    .where((e) => e.category == 'Milk')
-                                    .toList()
-                                    .cast<FoodItemStruct>();
-                              });
+                              FFAppState().queryusers = FFAppState()
+                                  .foodItem
+                                  .where((e) => e.category == 'Milk')
+                                  .toList()
+                                  .cast<FoodItemStruct>();
+                              setState(() {});
                             },
                           ),
                           FlutterFlowIconButton(
@@ -399,13 +413,12 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                               size: 24.0,
                             ),
                             onPressed: () async {
-                              setState(() {
-                                FFAppState().queryusers = FFAppState()
-                                    .foodItem
-                                    .where((e) => e.category == 'Cheese')
-                                    .toList()
-                                    .cast<FoodItemStruct>();
-                              });
+                              FFAppState().queryusers = FFAppState()
+                                  .foodItem
+                                  .where((e) => e.category == 'Cheese')
+                                  .toList()
+                                  .cast<FoodItemStruct>();
+                              setState(() {});
                             },
                           ),
                           FlutterFlowIconButton(
@@ -426,13 +439,12 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                               size: 24.0,
                             ),
                             onPressed: () async {
-                              setState(() {
-                                FFAppState().queryusers = FFAppState()
-                                    .foodItem
-                                    .where((e) => e.category == 'Chicken')
-                                    .toList()
-                                    .cast<FoodItemStruct>();
-                              });
+                              FFAppState().queryusers = FFAppState()
+                                  .foodItem
+                                  .where((e) => e.category == 'Chicken')
+                                  .toList()
+                                  .cast<FoodItemStruct>();
+                              setState(() {});
                             },
                           ),
                           FlutterFlowIconButton(
@@ -453,13 +465,12 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                               size: 24.0,
                             ),
                             onPressed: () async {
-                              setState(() {
-                                FFAppState().queryusers = FFAppState()
-                                    .foodItem
-                                    .where((e) => e.category == 'Meat')
-                                    .toList()
-                                    .cast<FoodItemStruct>();
-                              });
+                              FFAppState().queryusers = FFAppState()
+                                  .foodItem
+                                  .where((e) => e.category == 'Meat')
+                                  .toList()
+                                  .cast<FoodItemStruct>();
+                              setState(() {});
                             },
                           ),
                           FlutterFlowIconButton(
@@ -480,13 +491,12 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                               size: 24.0,
                             ),
                             onPressed: () async {
-                              setState(() {
-                                FFAppState().queryusers = FFAppState()
-                                    .foodItem
-                                    .where((e) => e.category == 'Fruit')
-                                    .toList()
-                                    .cast<FoodItemStruct>();
-                              });
+                              FFAppState().queryusers = FFAppState()
+                                  .foodItem
+                                  .where((e) => e.category == 'Fruit')
+                                  .toList()
+                                  .cast<FoodItemStruct>();
+                              setState(() {});
                             },
                           ),
                           FlutterFlowIconButton(
@@ -507,13 +517,12 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                               size: 24.0,
                             ),
                             onPressed: () async {
-                              setState(() {
-                                FFAppState().queryusers = FFAppState()
-                                    .foodItem
-                                    .where((e) => e.category == 'Vegetable')
-                                    .toList()
-                                    .cast<FoodItemStruct>();
-                              });
+                              FFAppState().queryusers = FFAppState()
+                                  .foodItem
+                                  .where((e) => e.category == 'Vegetable')
+                                  .toList()
+                                  .cast<FoodItemStruct>();
+                              setState(() {});
                             },
                           ),
                           FlutterFlowIconButton(
@@ -528,19 +537,18 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                               size: 24.0,
                             ),
                             onPressed: () async {
-                              setState(() {
-                                FFAppState().queryusers = FFAppState()
-                                    .foodItem
-                                    .where((e) =>
-                                        functions
-                                            .isdefault(valueOrDefault<String>(
-                                          e.category,
-                                          'xyz',
-                                        )) ==
-                                        0)
-                                    .toList()
-                                    .cast<FoodItemStruct>();
-                              });
+                              FFAppState().queryusers = FFAppState()
+                                  .foodItem
+                                  .where((e) =>
+                                      functions
+                                          .isdefault(valueOrDefault<String>(
+                                        e.category,
+                                        'xyz',
+                                      )) ==
+                                      0)
+                                  .toList()
+                                  .cast<FoodItemStruct>();
+                              setState(() {});
                             },
                           ),
                         ]
@@ -558,7 +566,9 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      'Click your items to check their donation status\nItems in category near expiry:',
+                      FFLocalizations.of(context).getText(
+                        '9d0oo084' /* Click your items to check thei... */,
+                      ),
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Inter',
                             letterSpacing: 0.0,
@@ -917,19 +927,12 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                                                           colors: [
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryBackground,
-                                                            FlutterFlowTheme.of(
-                                                                    context)
                                                                 .tertiary,
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .primaryBackground
                                                           ],
-                                                          stops: const [
-                                                            0.0,
-                                                            0.5,
-                                                            1.0
-                                                          ],
+                                                          stops: const [0.0, 1.0],
                                                           begin:
                                                               const AlignmentDirectional(
                                                                   1.0, -0.5),
@@ -1086,18 +1089,16 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                                             ],
                                             gradient: LinearGradient(
                                               colors: [
+                                                const Color(0x8CF83B46),
                                                 FlutterFlowTheme.of(context)
                                                     .secondary,
-                                                FlutterFlowTheme.of(context)
-                                                    .primary,
-                                                FlutterFlowTheme.of(context)
-                                                    .secondary
+                                                const Color(0x8CF83B46)
                                               ],
                                               stops: const [0.0, 0.5, 1.0],
                                               begin: const AlignmentDirectional(
-                                                  1.0, -0.5),
+                                                  1.0, -1.0),
                                               end: const AlignmentDirectional(
-                                                  -1.0, 0.5),
+                                                  -1.0, 1.0),
                                             ),
                                             borderRadius: const BorderRadius.only(
                                               bottomLeft: Radius.circular(12.0),
@@ -1260,25 +1261,18 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                                                             colors: [
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .primaryBackground,
-                                                              FlutterFlowTheme.of(
-                                                                      context)
                                                                   .tertiary,
                                                               FlutterFlowTheme.of(
                                                                       context)
                                                                   .primaryBackground
                                                             ],
-                                                            stops: const [
-                                                              0.0,
-                                                              0.5,
-                                                              1.0
-                                                            ],
+                                                            stops: const [0.0, 1.0],
                                                             begin:
                                                                 const AlignmentDirectional(
-                                                                    1.0, -0.5),
+                                                                    -1.0, 0.5),
                                                             end:
                                                                 const AlignmentDirectional(
-                                                                    -1.0, 0.5),
+                                                                    1.0, -0.5),
                                                           ),
                                                           borderRadius:
                                                               const BorderRadius.only(
@@ -1418,12 +1412,10 @@ class _HomescreenWidgetState extends State<HomescreenWidget>
                                               ],
                                               gradient: LinearGradient(
                                                 colors: [
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
+                                                  const Color(0x8CF83B46),
                                                   FlutterFlowTheme.of(context)
                                                       .secondary,
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary
+                                                  const Color(0x8CF83B46)
                                                 ],
                                                 stops: const [0.0, 0.5, 1.0],
                                                 begin: const AlignmentDirectional(

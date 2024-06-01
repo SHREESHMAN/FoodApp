@@ -4,7 +4,7 @@ admin.initializeApp();
 
 const kFcmTokensCollection = "fcm_tokens";
 const kPushNotificationsCollection = "ff_push_notifications";
-const kSchedulerIntervalMinutes = 60;
+const kSchedulerIntervalMinutes = 1;
 const firestore = admin.firestore();
 
 const kPushNotificationRuntimeOpts = {

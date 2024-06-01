@@ -17,21 +17,7 @@ class _ClickmeWidgetState extends State<ClickmeWidget>
     with TickerProviderStateMixin {
   late ClickmeModel _model;
 
-  final animationsMap = {
-    'textOnPageLoadAnimation': AnimationInfo(
-      loop: true,
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 1030.ms,
-          begin: const Offset(1.0, 1.0),
-          end: const Offset(1.25, 1.25),
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void setState(VoidCallback callback) {
@@ -43,6 +29,22 @@ class _ClickmeWidgetState extends State<ClickmeWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => ClickmeModel());
+
+    animationsMap.addAll({
+      'textOnPageLoadAnimation': AnimationInfo(
+        loop: true,
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 1030.0.ms,
+            begin: const Offset(1.0, 1.0),
+            end: const Offset(1.25, 1.25),
+          ),
+        ],
+      ),
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -60,7 +62,9 @@ class _ClickmeWidgetState extends State<ClickmeWidget>
       decoration: const BoxDecoration(),
       alignment: const AlignmentDirectional(0.0, 0.0),
       child: Text(
-        'Click Here! ',
+        FFLocalizations.of(context).getText(
+          '3jafxkr6' /* Click Here!  */,
+        ),
         style: FlutterFlowTheme.of(context).bodyMedium.override(
               fontFamily: 'Oswald',
               color: FlutterFlowTheme.of(context).tertiary,

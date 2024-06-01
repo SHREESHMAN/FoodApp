@@ -1,0 +1,3 @@
+NSCameraUsageDescription = "الإذن اللازم لتحميل المواد الغذائية";
+NSPhotoLibraryUsageDescription = "الإذن اللازم لتحميل المواد الغذائية";
+PermissionGroupNotification = "ليتم إعلامك بشأن انتهاء صلاحية الطعام، يرجى تمكين الإشعار";

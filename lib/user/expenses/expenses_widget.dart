@@ -30,21 +30,7 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final animationsMap = {
-    'columnOnPageLoadAnimation': AnimationInfo(
-      reverse: true,
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 310.ms,
-          duration: 310.ms,
-          begin: const Offset(1.0, 1.0),
-          end: const Offset(1.5, 1.5),
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
@@ -53,10 +39,9 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().queryusers =
-            FFAppState().foodItem.toList().cast<FoodItemStruct>();
-      });
+      FFAppState().queryusers =
+          FFAppState().foodItem.toList().cast<FoodItemStruct>();
+      setState(() {});
       if (FFAppState().foodItem.isEmpty) {
         await showModalBottomSheet(
           isScrollControlled: true,
@@ -90,6 +75,22 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
           },
         );
       }
+    });
+
+    animationsMap.addAll({
+      'columnOnPageLoadAnimation': AnimationInfo(
+        reverse: true,
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 310.0.ms,
+            duration: 310.0.ms,
+            begin: const Offset(1.0, 1.0),
+            end: const Offset(1.5, 1.5),
+          ),
+        ],
+      ),
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -178,7 +179,9 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
           title: Align(
             alignment: const AlignmentDirectional(0.0, 0.0),
             child: Text(
-              'Statistics',
+              FFLocalizations.of(context).getText(
+                '10p0k4nh' /* Statistics */,
+              ),
               style: FlutterFlowTheme.of(context).headlineMedium.override(
                     fontFamily: 'Noto Serif',
                     color: Colors.white,
@@ -197,10 +200,6 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              const Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [],
-              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
@@ -213,7 +212,9 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              'Spend Distribution',
+                              FFLocalizations.of(context).getText(
+                                'xf5iom5j' /* Spend Distribution */,
+                              ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -320,7 +321,9 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              'Spent Value Catogries',
+                              FFLocalizations.of(context).getText(
+                                'bb25ybab' /* Spent Value Catogries */,
+                              ),
                               textAlign: TextAlign.center,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -428,7 +431,9 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              'Individual Costs',
+                              FFLocalizations.of(context).getText(
+                                '7ni0eozg' /* Individual Costs */,
+                              ),
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
                                   .override(
@@ -533,7 +538,9 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              'Quantity Distribution',
+                              FFLocalizations.of(context).getText(
+                                'nb2wpxjm' /* Quantity Distribution */,
+                              ),
                               textAlign: TextAlign.center,
                               maxLines: 2,
                               style: FlutterFlowTheme.of(context)
@@ -672,7 +679,10 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
                                           label: DefaultTextStyle.merge(
                                             softWrap: true,
                                             child: Text(
-                                              'Name',
+                                              FFLocalizations.of(context)
+                                                  .getText(
+                                                '0hml7c54' /* Name */,
+                                              ),
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .labelLarge
@@ -691,7 +701,10 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
                                           label: DefaultTextStyle.merge(
                                             softWrap: true,
                                             child: Text(
-                                              'Qty',
+                                              FFLocalizations.of(context)
+                                                  .getText(
+                                                '9jv6n4r9' /* Qty */,
+                                              ),
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .labelLarge
@@ -710,7 +723,10 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
                                           label: DefaultTextStyle.merge(
                                             softWrap: true,
                                             child: Text(
-                                              'Price',
+                                              FFLocalizations.of(context)
+                                                  .getText(
+                                                'mlxwhgx0' /* Price */,
+                                              ),
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .labelLarge
@@ -729,7 +745,10 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
                                           label: DefaultTextStyle.merge(
                                             softWrap: true,
                                             child: Text(
-                                              'Cart',
+                                              FFLocalizations.of(context)
+                                                  .getText(
+                                                'hohiyepg' /* Cart */,
+                                              ),
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .labelLarge
@@ -786,10 +805,9 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
                                             hoverColor: Colors.transparent,
                                             highlightColor: Colors.transparent,
                                             onLongPress: () async {
-                                              setState(() {
-                                                FFAppState().removeFromFoodItem(
-                                                    itemItem);
-                                              });
+                                              FFAppState()
+                                                  .removeFromFoodItem(itemItem);
+                                              setState(() {});
                                             },
                                             child: Text(
                                               valueOrDefault<String>(
@@ -903,15 +921,14 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
                                         size: 15.0,
                                       ),
                                       onPressed: () async {
-                                        setState(() {
-                                          FFAppState().queryusers = FFAppState()
-                                              .foodItem
-                                              .where((e) =>
-                                                  e.expiry! <=
-                                                  getCurrentTimestamp)
-                                              .toList()
-                                              .cast<FoodItemStruct>();
-                                        });
+                                        FFAppState().queryusers = FFAppState()
+                                            .foodItem
+                                            .where((e) =>
+                                                e.expiry! <=
+                                                getCurrentTimestamp)
+                                            .toList()
+                                            .cast<FoodItemStruct>();
+                                        setState(() {});
                                       },
                                     ),
                                   ),
@@ -932,13 +949,12 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
                                         size: 15.0,
                                       ),
                                       onPressed: () async {
-                                        setState(() {
-                                          FFAppState().queryusers = FFAppState()
-                                              .foodItem
-                                              .sortedList((e) => e.name)
-                                              .toList()
-                                              .cast<FoodItemStruct>();
-                                        });
+                                        FFAppState().queryusers = FFAppState()
+                                            .foodItem
+                                            .sortedList((e) => e.name)
+                                            .toList()
+                                            .cast<FoodItemStruct>();
+                                        setState(() {});
                                       },
                                     ),
                                   ),
@@ -959,13 +975,12 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
                                         size: 15.0,
                                       ),
                                       onPressed: () async {
-                                        setState(() {
-                                          FFAppState().queryusers = FFAppState()
-                                              .foodItem
-                                              .sortedList((e) => e.price)
-                                              .toList()
-                                              .cast<FoodItemStruct>();
-                                        });
+                                        FFAppState().queryusers = FFAppState()
+                                            .foodItem
+                                            .sortedList((e) => e.price)
+                                            .toList()
+                                            .cast<FoodItemStruct>();
+                                        setState(() {});
                                       },
                                     ),
                                   ),
@@ -986,13 +1001,12 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
                                         size: 15.0,
                                       ),
                                       onPressed: () async {
-                                        setState(() {
-                                          FFAppState().queryusers = FFAppState()
-                                              .foodItem
-                                              .sortedList((e) => e.quantity)
-                                              .toList()
-                                              .cast<FoodItemStruct>();
-                                        });
+                                        FFAppState().queryusers = FFAppState()
+                                            .foodItem
+                                            .sortedList((e) => e.quantity)
+                                            .toList()
+                                            .cast<FoodItemStruct>();
+                                        setState(() {});
                                       },
                                     ),
                                   ),
@@ -1013,13 +1027,12 @@ class _ExpensesWidgetState extends State<ExpensesWidget>
                                         size: 15.0,
                                       ),
                                       onPressed: () async {
-                                        setState(() {
-                                          FFAppState().queryusers = FFAppState()
-                                              .foodItem
-                                              .where((e) => !e.donated)
-                                              .toList()
-                                              .cast<FoodItemStruct>();
-                                        });
+                                        FFAppState().queryusers = FFAppState()
+                                            .foodItem
+                                            .where((e) => !e.donated)
+                                            .toList()
+                                            .cast<FoodItemStruct>();
+                                        setState(() {});
                                       },
                                     ),
                                   ),

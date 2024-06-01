@@ -41,15 +41,13 @@ class _Chat2InviteUsersWidgetState extends State<Chat2InviteUsersWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (widget.chatRef != null) {
         // addChatUsers_ToList
-        setState(() {
-          _model.friendsList =
-              widget.chatRef!.users.toList().cast<DocumentReference>();
-        });
+        _model.friendsList =
+            widget.chatRef!.users.toList().cast<DocumentReference>();
+        setState(() {});
       } else {
         // addUser_ToList
-        setState(() {
-          _model.addToFriendsList(currentUserReference!);
-        });
+        _model.addToFriendsList(currentUserReference!);
+        setState(() {});
       }
     });
 
@@ -80,7 +78,9 @@ class _Chat2InviteUsersWidgetState extends State<Chat2InviteUsersWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Find a Food Bank',
+                FFLocalizations.of(context).getText(
+                  'lk4jmefg' /* Find a Food Bank */,
+                ),
                 style: FlutterFlowTheme.of(context).headlineSmall.override(
                       fontFamily: 'Sora',
                       letterSpacing: 0.0,
@@ -89,7 +89,9 @@ class _Chat2InviteUsersWidgetState extends State<Chat2InviteUsersWidget> {
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                 child: Text(
-                  'Select bank below to start a chat.',
+                  FFLocalizations.of(context).getText(
+                    'tyambvuq' /* Select bank below to start a c... */,
+                  ),
                   style: FlutterFlowTheme.of(context).labelSmall.override(
                         fontFamily: 'Inter',
                         letterSpacing: 0.0,
@@ -138,7 +140,9 @@ class _Chat2InviteUsersWidgetState extends State<Chat2InviteUsersWidget> {
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               16.0, 12.0, 0.0, 0.0),
                           child: Text(
-                            'Invite Friends',
+                            FFLocalizations.of(context).getText(
+                              '83uh4d3a' /* Invite Friends */,
+                            ),
                             style: FlutterFlowTheme.of(context)
                                 .labelMedium
                                 .override(
@@ -169,7 +173,9 @@ class _Chat2InviteUsersWidgetState extends State<Chat2InviteUsersWidget> {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(2.0, 12.0, 0.0, 0.0),
                         child: Text(
-                          'Selected',
+                          FFLocalizations.of(context).getText(
+                            'b1z15247' /* Selected */,
+                          ),
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Inter',
@@ -326,18 +332,16 @@ class _Chat2InviteUsersWidgetState extends State<Chat2InviteUsersWidget> {
                                                     newValue!);
                                             if (newValue!) {
                                               // addUser
-                                              setState(() {
-                                                _model.addToFriendsList(
-                                                    listViewUsersRecord
-                                                        .reference);
-                                              });
+                                              _model.addToFriendsList(
+                                                  listViewUsersRecord
+                                                      .reference);
+                                              setState(() {});
                                             } else {
                                               // removeUsser
-                                              setState(() {
-                                                _model.removeFromFriendsList(
-                                                    listViewUsersRecord
-                                                        .reference);
-                                              });
+                                              _model.removeFromFriendsList(
+                                                  listViewUsersRecord
+                                                      .reference);
+                                              setState(() {});
                                             }
                                           },
                                           title: Text(

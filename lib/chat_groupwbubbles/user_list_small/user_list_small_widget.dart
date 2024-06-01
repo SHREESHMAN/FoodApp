@@ -189,7 +189,9 @@ class _UserListSmallWidgetState extends State<UserListSmallWidget> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
                       child: Text(
-                        'ME',
+                        FFLocalizations.of(context).getText(
+                          'h61dceco' /* ME */,
+                        ),
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',

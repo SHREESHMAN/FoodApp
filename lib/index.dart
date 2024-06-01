@@ -19,3 +19,4 @@ export '/chat_groupwbubbles/image_details/image_details_widget.dart'
 export '/complete/map/map_widget.dart' show MapWidget;
 export '/other_pages/homescreen/homescreen_widget.dart' show HomescreenWidget;
 export '/tests/tests_widget.dart' show TestsWidget;
+export '/tttt/tttt_widget.dart' show TtttWidget;

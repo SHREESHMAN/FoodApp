@@ -18,11 +18,15 @@ import '/flutter_flow/admob_util.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
   await initFirebase();
 
   await FlutterFlowTheme.initialize();
-  requestConsent();
+  adMobRequestConsent();
+  adMobUpdateRequestConfiguration();
+
+  await FFLocalizations.initialize();
 
   final appState = FFAppState(); // Initialize FFAppState
   await appState.initializePersistedState();
@@ -45,7 +49,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale? _locale;
+  Locale? _locale = FFLocalizations.getStoredLocale();
   ThemeMode _themeMode = FlutterFlowTheme.themeMode;
 
   late Stream<BaseAuthUser> userStream;
@@ -62,7 +66,7 @@ class _MyAppState extends State<MyApp> {
 
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
-    userStream = foodRescueFirebaseUserStream()
+    userStream = kindBiteFirebaseUserStream()
       ..listen((user) => _appStateNotifier.update(user));
     jwtTokenStream.listen((_) {});
     Future.delayed(
@@ -80,6 +84,7 @@ class _MyAppState extends State<MyApp> {
 
   void setLocale(String language) {
     setState(() => _locale = createLocale(language));
+    FFLocalizations.storeLocale(language);
   }
 
   void setThemeMode(ThemeMode mode) => setState(() {
@@ -90,7 +95,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Food Rescue',
+      title: 'Kind Bite',
       localizationsDelegates: const [
         FFLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
@@ -100,6 +105,7 @@ class _MyAppState extends State<MyApp> {
       locale: _locale,
       supportedLocales: const [
         Locale('en'),
+        Locale('ar'),
       ],
       theme: ThemeData(
         brightness: Brightness.light,
@@ -160,59 +166,69 @@ class _NavBarPageState extends State<NavBarPage> {
           _currentPage = null;
           _currentPageName = tabs.keys.toList()[i];
         }),
-        backgroundColor: FlutterFlowTheme.of(context).tertiary,
+        backgroundColor: const Color(0x850097FF),
         selectedItemColor: FlutterFlowTheme.of(context).primaryText,
         unselectedItemColor: FlutterFlowTheme.of(context).secondaryBackground,
         showSelectedLabels: true,
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.pie_chart_outline,
               size: 24.0,
             ),
-            activeIcon: FaIcon(
+            activeIcon: const FaIcon(
               FontAwesomeIcons.chartPie,
               size: 24.0,
             ),
-            label: 'Stats',
+            label: FFLocalizations.of(context).getText(
+              '7rdirpc3' /* Stats */,
+            ),
             tooltip: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.auto_awesome,
               size: 25.0,
             ),
-            label: 'New Item',
+            label: FFLocalizations.of(context).getText(
+              '8l8cdwwu' /* New Item */,
+            ),
             tooltip: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.home_outlined,
               size: 24.0,
             ),
-            label: 'Home',
+            label: FFLocalizations.of(context).getText(
+              'qe0chuc8' /* Home */,
+            ),
             tooltip: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.location_on_outlined,
               size: 24.0,
             ),
-            activeIcon: Icon(
+            activeIcon: const Icon(
               Icons.location_pin,
               size: 24.0,
             ),
-            label: 'Nearby',
+            label: FFLocalizations.of(context).getText(
+              'grcgr199' /* Nearby */,
+            ),
             tooltip: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.forum_outlined,
               size: 24.0,
             ),
-            label: 'Chats',
+            label: FFLocalizations.of(context).getText(
+              '8znbadwa' /* Chats */,
+            ),
             tooltip: '',
           )
         ],

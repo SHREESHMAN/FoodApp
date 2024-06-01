@@ -1,4 +1,4 @@
-import '/complete/components/helpful_tip/helpful_tip_widget.dart';
+import '/complete/helpful_tip/helpful_tip_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'homescreen_widget.dart' show HomescreenWidget;
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart'

@@ -30,28 +30,7 @@ class _DeleteDialogWidgetState extends State<DeleteDialogWidget>
     with TickerProviderStateMixin {
   late DeleteDialogModel _model;
 
-  final animationsMap = {
-    'mouseRegionOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 1.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 300.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        TiltEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 300.ms,
-          begin: const Offset(0.524, 0),
-          end: const Offset(0, 0),
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void setState(VoidCallback callback) {
@@ -66,9 +45,31 @@ class _DeleteDialogWidgetState extends State<DeleteDialogWidget>
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        _model.showDelete = false;
-      });
+      _model.showDelete = false;
+      setState(() {});
+    });
+
+    animationsMap.addAll({
+      'mouseRegionOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 1.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 300.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          TiltEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 300.0.ms,
+            begin: const Offset(0.524, 0),
+            end: const Offset(0, 0),
+          ),
+        ],
+      ),
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -106,7 +107,9 @@ class _DeleteDialogWidgetState extends State<DeleteDialogWidget>
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 0.0, 8.0),
                   child: Text(
-                    'Options',
+                    FFLocalizations.of(context).getText(
+                      '7xx1pnum' /* Options */,
+                    ),
                     textAlign: TextAlign.start,
                     style: FlutterFlowTheme.of(context).labelMedium.override(
                           fontFamily: 'Inter',
@@ -135,9 +138,8 @@ class _DeleteDialogWidgetState extends State<DeleteDialogWidget>
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
                       onTap: () async {
-                        setState(() {
-                          _model.showDelete = true;
-                        });
+                        _model.showDelete = true;
+                        setState(() {});
                         unawaited(
                           () async {
                             await widget.deleteAction?.call();
@@ -174,7 +176,9 @@ class _DeleteDialogWidgetState extends State<DeleteDialogWidget>
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       12.0, 0.0, 0.0, 0.0),
                                   child: Text(
-                                    'Delete Chat',
+                                    FFLocalizations.of(context).getText(
+                                      '3vdilwmy' /* Delete Chat */,
+                                    ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
@@ -231,7 +235,9 @@ class _DeleteDialogWidgetState extends State<DeleteDialogWidget>
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         12.0, 0.0, 0.0, 4.0),
                                     child: Text(
-                                      'Confirm Delete',
+                                      FFLocalizations.of(context).getText(
+                                        'neg3ww3r' /* Confirm Delete */,
+                                      ),
                                       textAlign: TextAlign.start,
                                       style: FlutterFlowTheme.of(context)
                                           .labelMedium
@@ -245,7 +251,9 @@ class _DeleteDialogWidgetState extends State<DeleteDialogWidget>
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         12.0, 0.0, 0.0, 0.0),
                                     child: Text(
-                                      'You can\'t undo this action.',
+                                      FFLocalizations.of(context).getText(
+                                        '7jm1b4j8' /* You can't undo this action. */,
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
@@ -261,7 +269,9 @@ class _DeleteDialogWidgetState extends State<DeleteDialogWidget>
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   12.0, 0.0, 0.0, 0.0),
                               child: Text(
-                                'Delete',
+                                FFLocalizations.of(context).getText(
+                                  'x0c139ns' /* Delete */,
+                                ),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(

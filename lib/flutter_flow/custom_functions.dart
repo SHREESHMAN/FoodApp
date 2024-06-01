@@ -341,8 +341,8 @@ bool checkIfPresent(
   String item,
   List<String> list,
 ) {
-  // check if item is in list
-  return list.contains(item);
+  // check if stripped item string without any whitespaces in start or end is in array
+  return list.contains(item.trim());
 }
 
 String noquote(String itemwithquote) {

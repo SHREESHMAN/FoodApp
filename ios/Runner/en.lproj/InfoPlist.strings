@@ -1,0 +1,3 @@
+NSCameraUsageDescription = "Permission needed to upload Food Items";
+NSPhotoLibraryUsageDescription = "Permission needed to upload Food Items";
+PermissionGroupNotification = "To be notified about Food Expiry please enable notification";

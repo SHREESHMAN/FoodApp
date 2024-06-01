@@ -1,4 +1,4 @@
-# Food Rescue
+# KindBite
 
 A new Flutter project.
 

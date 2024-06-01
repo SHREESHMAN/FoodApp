@@ -39,6 +39,7 @@ class _ChatThreadUpdateWidgetState extends State<ChatThreadUpdateWidget> {
     super.initState();
     _model = createModel(context, () => ChatThreadUpdateModel());
 
+    _model.switchValue = widget.chatMessagesRef?.itemstatus == 'accepted';
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -250,10 +251,7 @@ class _ChatThreadUpdateWidgetState extends State<ChatThreadUpdateWidget> {
                                           alignment:
                                               const AlignmentDirectional(1.0, -1.0),
                                           child: Switch.adaptive(
-                                            value: _model.switchValue ??= widget
-                                                    .chatMessagesRef
-                                                    ?.itemstatus ==
-                                                'accepted',
+                                            value: _model.switchValue!,
                                             onChanged: (newValue) async {
                                               setState(() => _model
                                                   .switchValue = newValue);
@@ -265,21 +263,19 @@ class _ChatThreadUpdateWidgetState extends State<ChatThreadUpdateWidget> {
                                                   itemstatus: 'accepted',
                                                 ));
                                                 if (false) {
-                                                  setState(() {
-                                                    FFAppState()
-                                                        .updateFoodItemAtIndex(
-                                                      functions.lastItem(
-                                                          FFAppState()
-                                                              .foodItem
-                                                              .toList()),
-                                                      (e) => e..donated = true,
-                                                    );
-                                                  });
-                                                  setState(() {
-                                                    FFAppState().addToFoodItem(
-                                                        widget.chatMessagesRef!
-                                                            .itemspecs);
-                                                  });
+                                                  FFAppState()
+                                                      .updateFoodItemAtIndex(
+                                                    functions.lastItem(
+                                                        FFAppState()
+                                                            .foodItem
+                                                            .toList()),
+                                                    (e) => e..donated = true,
+                                                  );
+                                                  setState(() {});
+                                                  FFAppState().addToFoodItem(
+                                                      widget.chatMessagesRef!
+                                                          .itemspecs);
+                                                  setState(() {});
                                                 }
                                               } else {
                                                 await widget
@@ -289,14 +285,13 @@ class _ChatThreadUpdateWidgetState extends State<ChatThreadUpdateWidget> {
                                                   itemstatus: 'wait',
                                                 ));
                                                 if (false) {
-                                                  setState(() {
-                                                    FFAppState()
-                                                        .removeAtIndexFromFoodItem(
-                                                            functions.lastItem(
-                                                                FFAppState()
-                                                                    .foodItem
-                                                                    .toList()));
-                                                  });
+                                                  FFAppState()
+                                                      .removeAtIndexFromFoodItem(
+                                                          functions.lastItem(
+                                                              FFAppState()
+                                                                  .foodItem
+                                                                  .toList()));
+                                                  setState(() {});
                                                 }
                                               }
                                             },

@@ -95,7 +95,9 @@ class _Wt1WidgetState extends State<Wt1Widget> {
                         ),
                       ),
                       Text(
-                        'Suggestions',
+                        FFLocalizations.of(context).getText(
+                          '4ft5p9de' /* Suggestions */,
+                        ),
                         style: FlutterFlowTheme.of(context).titleSmall.override(
                               fontFamily: 'Inter',
                               letterSpacing: 0.0,

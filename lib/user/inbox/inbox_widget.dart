@@ -93,7 +93,9 @@ class _InboxWidgetState extends State<InboxWidget>
                 },
               ),
               title: Text(
-                'Inbox',
+                FFLocalizations.of(context).getText(
+                  'j0vb0cgi' /* Inbox */,
+                ),
                 style: FlutterFlowTheme.of(context).headlineSmall.override(
                       fontFamily: 'Sora',
                       letterSpacing: 0.0,
@@ -117,7 +119,9 @@ class _InboxWidgetState extends State<InboxWidget>
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             16.0, 12.0, 0.0, 0.0),
                         child: Text(
-                          'Nearest Food Banks Found: ',
+                          FFLocalizations.of(context).getText(
+                            '43h8mv7y' /* Nearest Food Banks Found:  */,
+                          ),
                           style:
                               FlutterFlowTheme.of(context).labelMedium.override(
                                     fontFamily: 'Inter',
@@ -157,7 +161,7 @@ class _InboxWidgetState extends State<InboxWidget>
                               final bankItem = bank[bankIndex];
                               return Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 1.0),
+                                    0.0, 2.0, 0.0, 2.0),
                                 child: Container(
                                   width: 100.0,
                                   decoration: BoxDecoration(

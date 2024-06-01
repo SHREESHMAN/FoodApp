@@ -37,182 +37,7 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final animationsMap = {
-    'imageOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(0.0, 40.0),
-          end: const Offset(0.0, 0.0),
-        ),
-        ScaleEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(0.6, 0.6),
-          end: const Offset(1.0, 1.0),
-        ),
-      ],
-    ),
-    'textOnPageLoadAnimation1': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(50.0, 0.0),
-          end: const Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'iconButtonOnActionTriggerAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: true,
-      effects: [
-        RotateEffect(
-          curve: Curves.elasticOut,
-          delay: 0.ms,
-          duration: 1640.ms,
-          begin: -0.75,
-          end: -1.0,
-        ),
-      ],
-    ),
-    'rowOnPageLoadAnimation1': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(50.0, 0.0),
-          end: const Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'textOnPageLoadAnimation2': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 1.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(60.0, 0.0),
-          end: const Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'textOnPageLoadAnimation3': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        VisibilityEffect(duration: 100.ms),
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 100.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 100.ms,
-          duration: 600.ms,
-          begin: const Offset(60.0, 0.0),
-          end: const Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'dividerOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(50.0, 0.0),
-          end: const Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'rowOnPageLoadAnimation2': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(0.0, 80.0),
-          end: const Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'containerOnPageLoadAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: const Offset(0.0, 100.0),
-          end: const Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
@@ -235,6 +60,182 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
         TextEditingController(text: widget.currentItem?.price.toString());
     _model.textFieldFocusNode4 ??= FocusNode();
 
+    animationsMap.addAll({
+      'imageOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(0.0, 40.0),
+            end: const Offset(0.0, 0.0),
+          ),
+          ScaleEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(0.6, 0.6),
+            end: const Offset(1.0, 1.0),
+          ),
+        ],
+      ),
+      'textOnPageLoadAnimation1': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(50.0, 0.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'iconButtonOnActionTriggerAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onActionTrigger,
+        applyInitialState: true,
+        effectsBuilder: () => [
+          RotateEffect(
+            curve: Curves.elasticOut,
+            delay: 0.0.ms,
+            duration: 1640.0.ms,
+            begin: -0.75,
+            end: -1.0,
+          ),
+        ],
+      ),
+      'rowOnPageLoadAnimation1': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(50.0, 0.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'textOnPageLoadAnimation2': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 1.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(60.0, 0.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'textOnPageLoadAnimation3': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          VisibilityEffect(duration: 100.ms),
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 100.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 100.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(60.0, 0.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'dividerOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(50.0, 0.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'rowOnPageLoadAnimation2': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(0.0, 80.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+      'containerOnPageLoadAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          FadeEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 1.0,
+          ),
+          MoveEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            begin: const Offset(0.0, 100.0),
+            end: const Offset(0.0, 0.0),
+          ),
+        ],
+      ),
+    });
     setupAnimations(
       animationsMap.values.where((anim) =>
           anim.trigger == AnimationTrigger.onActionTrigger ||
@@ -278,16 +279,15 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
             ),
             onPressed: () async {
               await widget.currentItem!.reference.delete();
-              setState(() {
-                FFAppState().updateFoodItemAtIndex(
-                  widget.index!,
-                  (e) => e
-                    ..quantity = double.tryParse(_model.textController3.text)
-                    ..description = _model.textController2.text
-                    ..name = _model.textController1.text
-                    ..price = double.tryParse(_model.textController4.text),
-                );
-              });
+              FFAppState().updateFoodItemAtIndex(
+                widget.index!,
+                (e) => e
+                  ..quantity = double.tryParse(_model.textController3.text)
+                  ..description = _model.textController2.text
+                  ..name = _model.textController1.text
+                  ..price = double.tryParse(_model.textController4.text),
+              );
+              setState(() {});
               context.safePop();
             },
           ),
@@ -398,17 +398,17 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                       }
                                     }
 
-                                    setState(() {
-                                      FFAppState().updateFoodItemAtIndex(
-                                        widget.index!,
-                                        (e) => e..img = _model.uploadedFileUrl,
-                                      );
-                                    });
+                                    FFAppState().updateFoodItemAtIndex(
+                                      widget.index!,
+                                      (e) => e..img = _model.uploadedFileUrl,
+                                    );
+                                    setState(() {});
 
                                     await widget.currentItem!.reference
                                         .update(createFoodItemsRecordData(
                                       image: _model.uploadedFileUrl,
                                     ));
+
                                     setState(() {});
                                   },
                                 ),
@@ -447,14 +447,20 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText: 'Name',
+                                      labelText:
+                                          FFLocalizations.of(context).getText(
+                                        'ja05f35s' /* Name */,
+                                      ),
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-                                      hintText: 'Item Name',
+                                      hintText:
+                                          FFLocalizations.of(context).getText(
+                                        'd6asvdt9' /* Item Name */,
+                                      ),
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
@@ -531,9 +537,8 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                     size: 24.0,
                                   ),
                                   onPressed: () async {
-                                    setState(() {
-                                      _model.editable = !_model.editable;
-                                    });
+                                    _model.editable = !_model.editable;
+                                    setState(() {});
                                     if (animationsMap[
                                             'iconButtonOnActionTriggerAnimation'] !=
                                         null) {
@@ -581,27 +586,24 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                             .update(createFoodItemsRecordData(
                                           expiry: _model.datePicked,
                                         ));
-                                        setState(() {
-                                          FFAppState().updateFoodItemAtIndex(
-                                            widget.index!,
-                                            (e) =>
-                                                e..expiry = _model.datePicked,
-                                          );
-                                        });
-                                      }
-                                      setState(() {
                                         FFAppState().updateFoodItemAtIndex(
                                           widget.index!,
-                                          (e) => e
-                                            ..quantity = double.tryParse(
-                                                _model.textController3.text)
-                                            ..description =
-                                                _model.textController2.text
-                                            ..name = _model.textController1.text
-                                            ..price = double.tryParse(
-                                                _model.textController4.text),
+                                          (e) => e..expiry = _model.datePicked,
                                         );
-                                      });
+                                        setState(() {});
+                                      }
+                                      FFAppState().updateFoodItemAtIndex(
+                                        widget.index!,
+                                        (e) => e
+                                          ..quantity = double.tryParse(
+                                              _model.textController3.text)
+                                          ..description =
+                                              _model.textController2.text
+                                          ..name = _model.textController1.text
+                                          ..price = double.tryParse(
+                                              _model.textController4.text),
+                                      );
+                                      setState(() {});
                                     }
 
                                     setState(() {});
@@ -683,12 +685,11 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                       .update(createFoodItemsRecordData(
                                     expiry: _model.datePicked,
                                   ));
-                                  setState(() {
-                                    FFAppState().updateFoodItemAtIndex(
-                                      widget.index!,
-                                      (e) => e..expiry = _model.datePicked,
-                                    );
-                                  });
+                                  FFAppState().updateFoodItemAtIndex(
+                                    widget.index!,
+                                    (e) => e..expiry = _model.datePicked,
+                                  );
+                                  setState(() {});
                                 },
                                 child: FaIcon(
                                   FontAwesomeIcons.calendarTimes,
@@ -728,7 +729,9 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     4.0, 4.0, 0.0, 0.0),
                                 child: AutoSizeText(
-                                  'Description/Condition',
+                                  FFLocalizations.of(context).getText(
+                                    'f4zuq1qb' /* Description/Condition */,
+                                  ),
                                   textAlign: TextAlign.center,
                                   style: FlutterFlowTheme.of(context)
                                       .labelMedium
@@ -774,14 +777,20 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText: 'Description',
+                                      labelText:
+                                          FFLocalizations.of(context).getText(
+                                        'iswp6u4l' /* Description */,
+                                      ),
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-                                      hintText: 'Item Description',
+                                      hintText:
+                                          FFLocalizations.of(context).getText(
+                                        'c7xre49h' /* Item Description */,
+                                      ),
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
@@ -893,14 +902,12 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                               .update(createFoodItemsRecordData(
                                             category: _model.dropDownValue,
                                           ));
-                                          setState(() {
-                                            FFAppState().updateFoodItemAtIndex(
-                                              widget.index!,
-                                              (e) => e
-                                                ..category =
-                                                    _model.dropDownValue,
-                                            );
-                                          });
+                                          FFAppState().updateFoodItemAtIndex(
+                                            widget.index!,
+                                            (e) => e
+                                              ..category = _model.dropDownValue,
+                                          );
+                                          setState(() {});
                                         },
                                         width: 100.0,
                                         height: 40.0,
@@ -910,7 +917,10 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                               fontFamily: 'Inter',
                                               letterSpacing: 0.0,
                                             ),
-                                        hintText: 'Category',
+                                        hintText:
+                                            FFLocalizations.of(context).getText(
+                                          'do5dybrb' /* Category */,
+                                        ),
                                         icon: Icon(
                                           Icons.keyboard_arrow_down_rounded,
                                           color: FlutterFlowTheme.of(context)
@@ -936,7 +946,9 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 4.0, 0.0, 0.0),
                                     child: Text(
-                                      'Category',
+                                      FFLocalizations.of(context).getText(
+                                        'gjlnzkwq' /* Category */,
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -1005,7 +1017,11 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                                           fontFamily: 'Inter',
                                                           letterSpacing: 0.0,
                                                         ),
-                                                hintText: 'Quantity',
+                                                hintText:
+                                                    FFLocalizations.of(context)
+                                                        .getText(
+                                                  'dp6msy43' /* Quantity */,
+                                                ),
                                                 hintStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
@@ -1090,7 +1106,9 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 4.0, 0.0, 0.0),
                                     child: Text(
-                                      'piece/kg',
+                                      FFLocalizations.of(context).getText(
+                                        'tx6lpo5w' /* piece/kg */,
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -1131,7 +1149,9 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 4.0, 0.0, 0.0),
                                     child: Text(
-                                      'Donation Status',
+                                      FFLocalizations.of(context).getText(
+                                        'jmflvf4t' /* Donation Status */,
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -1209,7 +1229,9 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                     padding: const EdgeInsetsDirectional.fromSTEB(
                                         4.0, 0.0, 0.0, 0.0),
                                     child: Text(
-                                      'AED',
+                                      FFLocalizations.of(context).getText(
+                                        'sxo5zb1f' /* AED */,
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall
                                           .override(
@@ -1238,7 +1260,10 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
-                                      labelText: 'Price',
+                                      labelText:
+                                          FFLocalizations.of(context).getText(
+                                        'fjpicnco' /* Price */,
+                                      ),
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(
@@ -1312,7 +1337,9 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 4.0, 0.0, 0.0),
                               child: Text(
-                                'Buying Value',
+                                FFLocalizations.of(context).getText(
+                                  'zu50bfam' /* Buying Value */,
+                                ),
                                 style: FlutterFlowTheme.of(context)
                                     .bodySmall
                                     .override(
@@ -1330,15 +1357,16 @@ class _ItemDetailWidgetState extends State<ItemDetailWidget>
                         if (!widget.currentItem!.donated)
                           FFButtonWidget(
                             onPressed: () async {
-                              setState(() {
-                                FFAppState().updateFoodItemAtIndex(
-                                  widget.index!,
-                                  (e) => e..donated = true,
-                                );
-                              });
+                              FFAppState().updateFoodItemAtIndex(
+                                widget.index!,
+                                (e) => e..donated = true,
+                              );
+                              setState(() {});
                               context.safePop();
                             },
-                            text: 'Donated?',
+                            text: FFLocalizations.of(context).getText(
+                              '5t2zl0v0' /* Donated? */,
+                            ),
                             icon: const Icon(
                               Icons.food_bank,
                               size: 15.0,

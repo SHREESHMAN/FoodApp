@@ -75,7 +75,9 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                         setState(() => _model.switchListTileValue = newValue);
                       },
                       title: Text(
-                        'Sign up as a Food Bank [Approval]',
+                        FFLocalizations.of(context).getText(
+                          'awa5kgfq' /* Sign up as a Food Bank [Approv... */,
+                        ),
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).titleLarge.override(
                               fontFamily: 'Sora',
@@ -94,7 +96,9 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                     ),
                   ),
                   Text(
-                    'Sign Up',
+                    FFLocalizations.of(context).getText(
+                      'ag7cjzx0' /* Sign Up */,
+                    ),
                     style: FlutterFlowTheme.of(context).displayLarge.override(
                           fontFamily: 'Sora',
                           color: FlutterFlowTheme.of(context).primaryText,
@@ -109,7 +113,9 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                         child: Text(
-                          'Create your account',
+                          FFLocalizations.of(context).getText(
+                            'ndhvk4bj' /* Create your account */,
+                          ),
                           style: FlutterFlowTheme.of(context)
                               .titleMedium
                               .override(
@@ -131,8 +137,12 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                       autofocus: false,
                       obscureText: false,
                       decoration: InputDecoration(
-                        labelText: 'Name',
-                        hintText: 'Enter your name',
+                        labelText: FFLocalizations.of(context).getText(
+                          '4ix7n5sm' /* Name */,
+                        ),
+                        hintText: FFLocalizations.of(context).getText(
+                          'abb1mma6' /* Enter your name */,
+                        ),
                         hintStyle:
                             FlutterFlowTheme.of(context).bodyLarge.override(
                                   fontFamily: 'Inter',
@@ -184,8 +194,12 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                       autofocus: false,
                       obscureText: false,
                       decoration: InputDecoration(
-                        labelText: 'Email',
-                        hintText: 'Enter your email',
+                        labelText: FFLocalizations.of(context).getText(
+                          '012atzdx' /* Email */,
+                        ),
+                        hintText: FFLocalizations.of(context).getText(
+                          'l3b5hzpt' /* Enter your email */,
+                        ),
                         hintStyle:
                             FlutterFlowTheme.of(context).bodyLarge.override(
                                   fontFamily: 'Inter',
@@ -242,8 +256,12 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                             textInputAction: TextInputAction.done,
                             obscureText: !_model.passwordVisibility1,
                             decoration: InputDecoration(
-                              labelText: 'Password',
-                              hintText: 'Enter your password',
+                              labelText: FFLocalizations.of(context).getText(
+                                'p9p49o40' /* Password */,
+                              ),
+                              hintText: FFLocalizations.of(context).getText(
+                                '3bqwoge9' /* Enter your password */,
+                              ),
                               hintStyle: FlutterFlowTheme.of(context)
                                   .bodyLarge
                                   .override(
@@ -352,8 +370,12 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                       textInputAction: TextInputAction.send,
                       obscureText: !_model.passwordVisibility2,
                       decoration: InputDecoration(
-                        labelText: 'Confirm Password',
-                        hintText: 'Retype Password',
+                        labelText: FFLocalizations.of(context).getText(
+                          'oma0nbjv' /* Confirm Password */,
+                        ),
+                        hintText: FFLocalizations.of(context).getText(
+                          '5kikj7jd' /* Retype Password */,
+                        ),
                         hintStyle:
                             FlutterFlowTheme.of(context).bodyLarge.override(
                                   fontFamily: 'Inter',
@@ -432,7 +454,9 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                         );
                       },
                       child: Text(
-                        'Already have an account? Sign In',
+                        FFLocalizations.of(context).getText(
+                          'fk0mstte' /* Already have an account? Sign ... */,
+                        ),
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
                               color: FlutterFlowTheme.of(context).primary,
@@ -484,7 +508,9 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
 
                         context.pushNamedAuth('homescreen', context.mounted);
                       },
-                      text: 'Create Account',
+                      text: FFLocalizations.of(context).getText(
+                        'z40iozt9' /* Create Account */,
+                      ),
                       options: FFButtonOptions(
                         width: double.infinity,
                         height: 50.0,
@@ -546,7 +572,9 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                           );
                         }
                       },
-                      text: 'Google Sign up',
+                      text: FFLocalizations.of(context).getText(
+                        '4xjgckah' /* Google Sign up */,
+                      ),
                       options: FFButtonOptions(
                         height: 40.0,
                         padding: const EdgeInsetsDirectional.fromSTEB(
@@ -573,7 +601,9 @@ class _SIgnuppageWidgetState extends State<SIgnuppageWidget> {
                   Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
                     child: Text(
-                      'Remember if you previously logged in using Google then please go to login page, do not use the Google sign up button here.',
+                      FFLocalizations.of(context).getText(
+                        'egdgousy' /* Remember if you previously log... */,
+                      ),
                       textAlign: TextAlign.center,
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Inter',

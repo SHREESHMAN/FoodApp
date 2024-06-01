@@ -5,8 +5,8 @@ import '../base_auth_user_provider.dart';
 
 export '../base_auth_user_provider.dart';
 
-class FoodRescueFirebaseUser extends BaseAuthUser {
-  FoodRescueFirebaseUser(this.user);
+class KindBiteFirebaseUser extends BaseAuthUser {
+  KindBiteFirebaseUser(this.user);
   User? user;
   @override
   bool get loggedIn => user != null;
@@ -55,17 +55,17 @@ class FoodRescueFirebaseUser extends BaseAuthUser {
   static BaseAuthUser fromUserCredential(UserCredential userCredential) =>
       fromFirebaseUser(userCredential.user);
   static BaseAuthUser fromFirebaseUser(User? user) =>
-      FoodRescueFirebaseUser(user);
+      KindBiteFirebaseUser(user);
 }
 
-Stream<BaseAuthUser> foodRescueFirebaseUserStream() => FirebaseAuth.instance
+Stream<BaseAuthUser> kindBiteFirebaseUserStream() => FirebaseAuth.instance
         .authStateChanges()
         .debounce((user) => user == null && !loggedIn
             ? TimerStream(true, const Duration(seconds: 1))
             : Stream.value(user))
         .map<BaseAuthUser>(
       (user) {
-        currentUser = FoodRescueFirebaseUser(user);
+        currentUser = KindBiteFirebaseUser(user);
         return currentUser!;
       },
     );

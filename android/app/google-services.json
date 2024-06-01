@@ -55,10 +55,54 @@
               "client_type": 3
             },
             {
-              "client_id": "353756899661-ufg4r8ig8ckl593loi5oaiprvda13agq.apps.googleusercontent.com",
+              "client_id": "353756899661-4p75dumvl3e46eeuqhv4k7vcesbr8urg.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.shreesh.foodrescue"
+                "bundle_id": "com.shreesh.kindbite"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353756899661:android:1d2dc00bebd035caf82f04",
+        "android_client_info": {
+          "package_name": "com.shreesh.kindbite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "353756899661-gipjqlaj3u16lig3h5708pnr83kbaara.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shreesh.kindbite",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "353756899661-35v57af7g16uj2nfiofpdrarg8kvlqpj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALqC5hXt6VN7k5zOBPDmNR2byCLRbFcEk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "353756899661-35v57af7g16uj2nfiofpdrarg8kvlqpj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "353756899661-4p75dumvl3e46eeuqhv4k7vcesbr8urg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.shreesh.kindbite"
               }
             }
           ]

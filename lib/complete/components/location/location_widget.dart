@@ -77,7 +77,9 @@ class _LocationWidgetState extends State<LocationWidget> {
               onSelect: (place) async {
                 setState(() => _model.placePickerValue = place);
               },
-              defaultText: 'Select Location',
+              defaultText: FFLocalizations.of(context).getText(
+                'pr1tnfwk' /* Select Location */,
+              ),
               icon: Icon(
                 Icons.place,
                 color: FlutterFlowTheme.of(context).info,
@@ -143,7 +145,9 @@ class _LocationWidgetState extends State<LocationWidget> {
                   ));
                                   context.pop();
                 },
-                text: 'Done',
+                text: FFLocalizations.of(context).getText(
+                  '2mjjggk4' /* Done */,
+                ),
                 options: FFButtonOptions(
                   width: double.infinity,
                   height: 60.0,

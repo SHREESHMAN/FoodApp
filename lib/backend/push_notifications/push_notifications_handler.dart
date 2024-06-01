@@ -75,7 +75,7 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
       ? Container(
           color: Colors.transparent,
           child: Image.asset(
-            'assets/images/image_2024-03-17_231702477.png',
+            'assets/images/kindbite-ezgif.com-video-to-gif-converter.gif',
             fit: BoxFit.cover,
           ),
         )
@@ -158,6 +158,7 @@ final parametersBuilderMap =
         },
       ),
   'tests': ParameterData.none(),
+  'tttt': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

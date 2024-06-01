@@ -30,7 +30,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     _model.passwordTextController ??= TextEditingController();
     _model.textFieldFocusNode2 ??= FocusNode();
 
-    _model.forgorController ??= TextEditingController();
+    _model.forgorTextController ??= TextEditingController();
     _model.forgorFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -64,7 +64,9 @@ class _LoginWidgetState extends State<LoginWidget> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Welcome Back!',
+                  FFLocalizations.of(context).getText(
+                    'vsosa0mz' /* Welcome Back! */,
+                  ),
                   style: FlutterFlowTheme.of(context).displayLarge.override(
                         fontFamily: 'Sora',
                         color: FlutterFlowTheme.of(context).primaryText,
@@ -75,7 +77,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 8.0),
                   child: Text(
-                    'Please sign in to continue.',
+                    FFLocalizations.of(context).getText(
+                      '1y3d7snv' /* Please sign in to continue. */,
+                    ),
                     style: FlutterFlowTheme.of(context).titleMedium.override(
                           fontFamily: 'Inter',
                           color: FlutterFlowTheme.of(context).secondaryText,
@@ -91,8 +95,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                     autofocus: false,
                     obscureText: false,
                     decoration: InputDecoration(
-                      labelText: 'Email',
-                      hintText: 'Enter your email',
+                      labelText: FFLocalizations.of(context).getText(
+                        '6jv1nrvb' /* Email */,
+                      ),
+                      hintText: FFLocalizations.of(context).getText(
+                        'bbrtkaws' /* Enter your email */,
+                      ),
                       hintStyle:
                           FlutterFlowTheme.of(context).bodyLarge.override(
                                 fontFamily: 'Inter',
@@ -144,8 +152,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                     autofocus: false,
                     obscureText: !_model.passwordVisibility,
                     decoration: InputDecoration(
-                      labelText: 'Password',
-                      hintText: 'Enter your password',
+                      labelText: FFLocalizations.of(context).getText(
+                        '8j8wyajw' /* Password */,
+                      ),
+                      hintText: FFLocalizations.of(context).getText(
+                        'o9a0iwbw' /* Enter your password */,
+                      ),
                       hintStyle:
                           FlutterFlowTheme.of(context).bodyLarge.override(
                                 fontFamily: 'Inter',
@@ -221,7 +233,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                         context.pushNamedAuth('homescreen', context.mounted);
                       }
                     },
-                    text: 'Sign In',
+                    text: FFLocalizations.of(context).getText(
+                      'm7u4zl02' /* Sign In */,
+                    ),
                     options: FFButtonOptions(
                       width: double.infinity,
                       height: 50.0,
@@ -271,7 +285,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                         );
                       }
                     },
-                    text: 'Google Sign in',
+                    text: FFLocalizations.of(context).getText(
+                      'abzq2tlp' /* Google Sign in */,
+                    ),
                     options: FFButtonOptions(
                       height: 40.0,
                       padding:
@@ -307,12 +323,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          setState(() {
-                            FFAppState().visible = 1.0;
-                          });
+                          FFAppState().visible = 1.0;
+                          setState(() {});
                         },
                         child: Text(
-                          'Forgot Password?',
+                          FFLocalizations.of(context).getText(
+                            '36l1cien' /* Forgot Password? */,
+                          ),
                           style:
                               FlutterFlowTheme.of(context).labelMedium.override(
                                     fontFamily: 'Inter',
@@ -331,12 +348,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 8.0, 0.0, 8.0, 0.0),
                             child: TextFormField(
-                              controller: _model.forgorController,
+                              controller: _model.forgorTextController,
                               focusNode: _model.forgorFocusNode,
                               autofocus: true,
                               obscureText: false,
                               decoration: InputDecoration(
-                                labelText: 'Email',
+                                labelText: FFLocalizations.of(context).getText(
+                                  'tnzpzxno' /* Email */,
+                                ),
                                 labelStyle: FlutterFlowTheme.of(context)
                                     .labelMedium
                                     .override(
@@ -385,7 +404,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     fontFamily: 'Inter',
                                     letterSpacing: 0.0,
                                   ),
-                              validator: _model.forgorControllerValidator
+                              validator: _model.forgorTextControllerValidator
                                   .asValidator(context),
                             ),
                           ),
@@ -396,7 +415,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       opacity: FFAppState().visible,
                       child: FFButtonWidget(
                         onPressed: () async {
-                          if (_model.forgorController.text.isEmpty) {
+                          if (_model.forgorTextController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text(
@@ -407,11 +426,13 @@ class _LoginWidgetState extends State<LoginWidget> {
                             return;
                           }
                           await authManager.resetPassword(
-                            email: _model.forgorController.text,
+                            email: _model.forgorTextController.text,
                             context: context,
                           );
                         },
-                        text: 'Send Link',
+                        text: FFLocalizations.of(context).getText(
+                          'u1r3f5t0' /* Send Link */,
+                        ),
                         options: FFButtonOptions(
                           height: 40.0,
                           padding: const EdgeInsetsDirectional.fromSTEB(
@@ -440,7 +461,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      'Don\'t have an account?',
+                      FFLocalizations.of(context).getText(
+                        'g9r5yur5' /* Don't have an account? */,
+                      ),
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Inter',
                             color: FlutterFlowTheme.of(context).secondaryText,
@@ -467,7 +490,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                           );
                         },
                         child: Text(
-                          'Sign Up',
+                          FFLocalizations.of(context).getText(
+                            'p1uzjbwe' /* Sign Up */,
+                          ),
                           textAlign: TextAlign.start,
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(

@@ -62,9 +62,8 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
             'Please accept my Donation:',
           );
         });
-        setState(() {
-          _model.addToUploadedImages(FFAppState().foodItem[widget.item!].img);
-        });
+        _model.addToUploadedImages(FFAppState().foodItem[widget.item!].img);
+        setState(() {});
         // newChatMessage
 
         var chatMessagesRecordReference = ChatMessagesRecord.collection.doc();
@@ -103,11 +102,13 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
             ),
             chatMessagesRecordReference);
         // clearUsers
+
         setState(() {});
         // In order to add a single user reference to a list of user references we are adding our current user reference to a page state.
         //
         // We will then set the value of the user reference list from this page state.
         // addMyUserToList
+
         setState(() {});
         // updateChatDocument
 
@@ -119,6 +120,7 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
         setState(() {
           _model.chatThreadComponentModel.textController?.clear();
         });
+
         setState(() {});
       }
     });
@@ -491,7 +493,9 @@ class _Chat2DetailsWidgetState extends State<Chat2DetailsWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Group Chat',
+                                FFLocalizations.of(context).getText(
+                                  'zgxwicf3' /* Group Chat */,
+                                ),
                                 style: FlutterFlowTheme.of(context)
                                     .bodyLarge
                                     .override(

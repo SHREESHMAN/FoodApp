@@ -44,9 +44,8 @@ class _FoodcartWidgetState extends State<FoodcartWidget> {
         safeSetState(
             () => _model.secondController = createPageWalkthrough(context));
         _model.secondController?.show(context: context);
-        setState(() {
-          FFAppState().addToTutorialsdone(2);
-        });
+        FFAppState().addToTutorialsdone(2);
+        setState(() {});
       }
     });
 
@@ -110,7 +109,9 @@ class _FoodcartWidgetState extends State<FoodcartWidget> {
             title: Align(
               alignment: const AlignmentDirectional(0.0, 1.0),
               child: Text(
-                'Your Cart',
+                FFLocalizations.of(context).getText(
+                  'gktrcwbb' /* Your Cart */,
+                ),
                 style: FlutterFlowTheme.of(context).displaySmall.override(
                       fontFamily: 'Sora',
                       letterSpacing: 0.0,
@@ -136,7 +137,9 @@ class _FoodcartWidgetState extends State<FoodcartWidget> {
                       child: Padding(
                         padding: const EdgeInsets.all(6.0),
                         child: Text(
-                          'Here are your added Items. Click to edit details, Long press to delete, double tap to duplicate',
+                          FFLocalizations.of(context).getText(
+                            'q9dvicne' /* Here are your added Items. Cli... */,
+                          ),
                           style:
                               FlutterFlowTheme.of(context).labelMedium.override(
                                     fontFamily: 'Inter',
@@ -274,14 +277,12 @@ class _FoodcartWidgetState extends State<FoodcartWidget> {
                             setState(() {});
                           },
                           onDoubleTap: () async {
-                            setState(() {
-                              FFAppState().addToFoodItem(fooditemsItem);
-                            });
+                            FFAppState().addToFoodItem(fooditemsItem);
+                            setState(() {});
                           },
                           onLongPress: () async {
-                            setState(() {
-                              FFAppState().removeFromFoodItem(fooditemsItem);
-                            });
+                            FFAppState().removeFromFoodItem(fooditemsItem);
+                            setState(() {});
                           },
                           child: Material(
                             color: Colors.transparent,

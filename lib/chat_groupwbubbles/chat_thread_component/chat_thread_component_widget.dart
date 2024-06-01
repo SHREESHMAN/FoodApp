@@ -351,10 +351,9 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                             }
 
                             if (_model.uploadedFileUrl != '') {
-                              setState(() {
-                                _model.addToImagesUploaded(
-                                    _model.uploadedFileUrl);
-                              });
+                              _model
+                                  .addToImagesUploaded(_model.uploadedFileUrl);
+                              setState(() {});
                             }
                           },
                         ),
@@ -472,9 +471,8 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                         _model.uploadedFileUrl = '';
                                       });
 
-                                      setState(() {
-                                        _model.imagesUploaded = [];
-                                      });
+                                      _model.imagesUploaded = [];
+                                      setState(() {});
 
                                       setState(() {});
                                     },
@@ -490,7 +488,10 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                             fontFamily: 'Inter',
                                             letterSpacing: 0.0,
                                           ),
-                                      hintText: 'Start typing here...',
+                                      hintText:
+                                          FFLocalizations.of(context).getText(
+                                        'gufbyfur' /* Start typing here... */,
+                                      ),
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .labelSmall
                                           .override(
@@ -659,9 +660,8 @@ class _ChatThreadComponentWidgetState extends State<ChatThreadComponentWidget> {
                                           _model.uploadedFileUrl = '';
                                         });
 
-                                        setState(() {
-                                          _model.imagesUploaded = [];
-                                        });
+                                        _model.imagesUploaded = [];
+                                        setState(() {});
                                       } finally {
                                         await firestoreBatch.commit();
                                       }

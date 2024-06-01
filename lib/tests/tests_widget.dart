@@ -66,7 +66,9 @@ class _TestsWidgetState extends State<TestsWidget> {
             },
           ),
           title: Text(
-            'Rewards',
+            FFLocalizations.of(context).getText(
+              'c56habyu' /* Rewards */,
+            ),
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Sora',
                   color: Colors.white,
@@ -84,7 +86,9 @@ class _TestsWidgetState extends State<TestsWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Text(
-                'Disclaimer: This app is built as a demonstration of an idea, no actual rewards are set yet.',
+                FFLocalizations.of(context).getText(
+                  'lvn0ah0e' /* Disclaimer: This app is built ... */,
+                ),
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Inter',
@@ -100,7 +104,9 @@ class _TestsWidgetState extends State<TestsWidget> {
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: AutoSizeText(
-                        'Redeem your points here for exciting rewards!',
+                        FFLocalizations.of(context).getText(
+                          'rvu0h7b3' /* Redeem your points here for ex... */,
+                        ),
                         textAlign: TextAlign.center,
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Inter',
@@ -335,8 +341,8 @@ class _TestsWidgetState extends State<TestsWidget> {
                             carouselController: _model.carouselController ??=
                                 CarouselController(),
                             options: CarouselOptions(
-                              initialPage:
-                                  min(1, carouselRewardsRecordList.length - 1),
+                              initialPage: max(0,
+                                  min(1, carouselRewardsRecordList.length - 1)),
                               viewportFraction: 0.7,
                               disableCenter: true,
                               enlargeCenterPage: true,
@@ -370,7 +376,9 @@ class _TestsWidgetState extends State<TestsWidget> {
                         onPressed: () {
                           print('Button pressed ...');
                         },
-                        text: 'Claim',
+                        text: FFLocalizations.of(context).getText(
+                          'lmla92kp' /* Claim */,
+                        ),
                         options: FFButtonOptions(
                           width: double.infinity,
                           height: 50.0,

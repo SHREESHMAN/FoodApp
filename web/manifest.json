@@ -1,6 +1,6 @@
 {
-    "name": "Food Rescue",
-    "short_name": "Food Rescue",
+    "name": "KindBite",
+    "short_name": "KindBite",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

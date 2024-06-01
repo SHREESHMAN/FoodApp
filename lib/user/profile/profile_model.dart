@@ -12,6 +12,8 @@ class ProfileModel extends FlutterFlowModel<ProfileWidget> {
       FFUploadedFile(bytes: Uint8List.fromList([]));
   String uploadedFileUrl = '';
 
+  // State field(s) for Switch widget.
+  bool? switchValue;
   // Model for DarkLightSwitchSmall component.
   late DarkLightSwitchSmallModel darkLightSwitchSmallModel;
   // State field(s) for TabBar widget.

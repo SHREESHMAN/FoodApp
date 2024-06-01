@@ -32,6 +32,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
     super.initState();
     _model = createModel(context, () => ProfileModel());
 
+    _model.switchValue = false;
     _model.tabBarController = TabController(
       vsync: this,
       length: 1,
@@ -81,9 +82,9 @@ class _ProfileWidgetState extends State<ProfileWidget>
                               type: PageTransitionType.fade,
                               child: FlutterFlowExpandedImageView(
                                 image: Image.asset(
-                                  'assets/images/usericon.png',
+                                  'assets/images/pfp2.png',
                                   fit: BoxFit.contain,
-                                  alignment: const Alignment(0.0, 1.0),
+                                  alignment: const Alignment(0.0, -1.0),
                                 ),
                                 allowRotation: false,
                                 tag: currentUserPhoto,
@@ -96,11 +97,11 @@ class _ProfileWidgetState extends State<ProfileWidget>
                           tag: currentUserPhoto,
                           transitionOnUserGestures: true,
                           child: Image.asset(
-                            'assets/images/usericon.png',
+                            'assets/images/pfp2.png',
                             width: double.infinity,
                             height: 440.0,
-                            fit: BoxFit.cover,
-                            alignment: const Alignment(0.0, 1.0),
+                            fit: BoxFit.fitWidth,
+                            alignment: const Alignment(0.0, -1.0),
                           ),
                         ),
                       ),
@@ -408,7 +409,10 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                             context.goNamedAuth(
                                                 'SIgnuppage', context.mounted);
                                           },
-                                          text: 'Log Out',
+                                          text: FFLocalizations.of(context)
+                                              .getText(
+                                            'q7iyngfb' /* Log Out */,
+                                          ),
                                           options: FFButtonOptions(
                                             height: 40.0,
                                             padding:
@@ -512,7 +516,7 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.start,
                                       children: [
                                         Align(
                                           alignment:
@@ -567,6 +571,70 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                           child: Align(
                                             alignment:
                                                 const AlignmentDirectional(1.0, 0.0),
+                                            child: Text(
+                                              FFLocalizations.of(context)
+                                                  .getText(
+                                                'ljbwqhds' /* English */,
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Switch.adaptive(
+                                            value: _model.switchValue!,
+                                            onChanged: (newValue) async {
+                                              setState(() => _model
+                                                  .switchValue = newValue);
+                                              if (newValue) {
+                                                setAppLanguage(context, 'ar');
+                                              } else {
+                                                setAppLanguage(context, 'en');
+                                              }
+                                            },
+                                            activeColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primary,
+                                            activeTrackColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .accent1,
+                                            inactiveTrackColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .alternate,
+                                            inactiveThumbColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryText,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Align(
+                                            alignment:
+                                                const AlignmentDirectional(-1.0, 0.0),
+                                            child: Text(
+                                              FFLocalizations.of(context)
+                                                  .getText(
+                                                'euz5f020' /* Arabic */,
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily: 'Inter',
+                                                        letterSpacing: 0.0,
+                                                      ),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Align(
+                                            alignment:
+                                                const AlignmentDirectional(1.0, 0.0),
                                             child: wrapWithModel(
                                               model: _model
                                                   .darkLightSwitchSmallModel,
@@ -607,9 +675,13 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                             indicatorColor:
                                                 FlutterFlowTheme.of(context)
                                                     .primaryText,
-                                            tabs: const [
+                                            tabs: [
                                               Tab(
-                                                text: 'Recent Donations',
+                                                text:
+                                                    FFLocalizations.of(context)
+                                                        .getText(
+                                                  'mzm0n0uq' /* Recent Donations */,
+                                                ),
                                               ),
                                             ],
                                             controller: _model.tabBarController,
@@ -622,180 +694,191 @@ class _ProfileWidgetState extends State<ProfileWidget>
                                           child: TabBarView(
                                             controller: _model.tabBarController,
                                             children: [
-                                              Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  if (FFAppState()
-                                                          .foodItem
-                                                          .where(
-                                                              (e) => e.donated)
-                                                          .toList().isEmpty)
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .alternate,
+                                                ),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    if (FFAppState()
+                                                            .foodItem
+                                                            .where((e) =>
+                                                                e.donated)
+                                                            .toList().isEmpty)
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(
+                                                            24.0),
+                                                        child: Text(
+                                                          FFLocalizations.of(
+                                                                  context)
+                                                              .getText(
+                                                            '0fcodqsy' /* You havent made any donations ... */,
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Inter',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                        ),
+                                                      ),
                                                     Padding(
                                                       padding:
-                                                          const EdgeInsets.all(24.0),
-                                                      child: Text(
-                                                        'You havent made any donations yet',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Inter',
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                0.0, 24.0),
-                                                    child: Builder(
-                                                      builder: (context) {
-                                                        final addedItems =
-                                                            FFAppState()
-                                                                .foodItem
-                                                                .where((e) =>
-                                                                    e.donated)
-                                                                .toList();
-                                                        return ListView.builder(
-                                                          padding:
-                                                              EdgeInsets.zero,
-                                                          primary: false,
-                                                          shrinkWrap: true,
-                                                          scrollDirection:
-                                                              Axis.vertical,
-                                                          itemCount:
-                                                              addedItems.length,
-                                                          itemBuilder: (context,
-                                                              addedItemsIndex) {
-                                                            final addedItemsItem =
-                                                                addedItems[
-                                                                    addedItemsIndex];
-                                                            return Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          16.0,
-                                                                          0.0,
-                                                                          16.0,
-                                                                          8.0),
-                                                              child: InkWell(
-                                                                splashColor: Colors
-                                                                    .transparent,
-                                                                focusColor: Colors
-                                                                    .transparent,
-                                                                hoverColor: Colors
-                                                                    .transparent,
-                                                                highlightColor:
-                                                                    Colors
-                                                                        .transparent,
-                                                                onTap:
-                                                                    () async {
-                                                                  setState(() {
+                                                          const EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  24.0),
+                                                      child: Builder(
+                                                        builder: (context) {
+                                                          final addedItems =
+                                                              FFAppState()
+                                                                  .foodItem
+                                                                  .where((e) =>
+                                                                      e.donated)
+                                                                  .toList();
+                                                          return ListView
+                                                              .builder(
+                                                            padding:
+                                                                EdgeInsets.zero,
+                                                            primary: false,
+                                                            shrinkWrap: true,
+                                                            scrollDirection:
+                                                                Axis.vertical,
+                                                            itemCount:
+                                                                addedItems
+                                                                    .length,
+                                                            itemBuilder: (context,
+                                                                addedItemsIndex) {
+                                                              final addedItemsItem =
+                                                                  addedItems[
+                                                                      addedItemsIndex];
+                                                              return Padding(
+                                                                padding: const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        16.0,
+                                                                        0.0,
+                                                                        16.0,
+                                                                        8.0),
+                                                                child: InkWell(
+                                                                  splashColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  focusColor: Colors
+                                                                      .transparent,
+                                                                  hoverColor: Colors
+                                                                      .transparent,
+                                                                  highlightColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  onTap:
+                                                                      () async {
                                                                     FFAppState()
                                                                         .removeFromFoodItem(
                                                                             addedItemsItem);
-                                                                  });
-                                                                },
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  children: [
-                                                                    Expanded(
-                                                                      child:
-                                                                          Column(
-                                                                        mainAxisSize:
-                                                                            MainAxisSize.max,
-                                                                        crossAxisAlignment:
-                                                                            CrossAxisAlignment.start,
-                                                                        children: [
-                                                                          Text(
-                                                                            dateTimeFormat(
-                                                                              'relative',
-                                                                              addedItemsItem.expiry!,
-                                                                              locale: FFLocalizations.of(context).languageCode,
+                                                                    setState(
+                                                                        () {});
+                                                                  },
+                                                                  child: Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Expanded(
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            Text(
+                                                                              dateTimeFormat(
+                                                                                'relative',
+                                                                                addedItemsItem.expiry!,
+                                                                                locale: FFLocalizations.of(context).languageCode,
+                                                                              ),
+                                                                              style: FlutterFlowTheme.of(context).bodySmall.override(
+                                                                                    fontFamily: 'Inter',
+                                                                                    color: FlutterFlowTheme.of(context).primary,
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                  ),
                                                                             ),
-                                                                            style: FlutterFlowTheme.of(context).bodySmall.override(
-                                                                                  fontFamily: 'Inter',
-                                                                                  color: FlutterFlowTheme.of(context).primary,
-                                                                                  letterSpacing: 0.0,
-                                                                                ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                                0.0,
-                                                                                4.0,
-                                                                                0.0,
-                                                                                8.0),
-                                                                            child:
-                                                                                Text(
-                                                                              addedItemsItem.name,
-                                                                              style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                            Padding(
+                                                                              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 8.0),
+                                                                              child: Text(
+                                                                                addedItemsItem.name,
+                                                                                style: FlutterFlowTheme.of(context).headlineSmall.override(
+                                                                                      fontFamily: 'Sora',
+                                                                                      letterSpacing: 0.0,
+                                                                                    ),
+                                                                              ),
+                                                                            ),
+                                                                            Text(
+                                                                              'AED${addedItemsItem.price.toString()} | ${addedItemsItem.category} | ${addedItemsItem.quantity.toString()}pc/kg',
+                                                                              style: FlutterFlowTheme.of(context).headlineMedium.override(
                                                                                     fontFamily: 'Sora',
+                                                                                    fontSize: 16.0,
                                                                                     letterSpacing: 0.0,
                                                                                   ),
                                                                             ),
-                                                                          ),
-                                                                          Text(
-                                                                            'AED${addedItemsItem.price.toString()} | ${addedItemsItem.category} | ${addedItemsItem.quantity.toString()}pc/kg',
-                                                                            style: FlutterFlowTheme.of(context).headlineMedium.override(
-                                                                                  fontFamily: 'Sora',
-                                                                                  fontSize: 16.0,
-                                                                                  letterSpacing: 0.0,
-                                                                                ),
-                                                                          ),
-                                                                          Text(
-                                                                            addedItemsItem.description,
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: 'Inter',
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                  fontStyle: FontStyle.italic,
-                                                                                ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                    Padding(
-                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                          8.0,
-                                                                          8.0,
-                                                                          0.0,
-                                                                          8.0),
-                                                                      child:
-                                                                          ClipRRect(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(12.0),
-                                                                        child: Image
-                                                                            .network(
-                                                                          addedItemsItem
-                                                                              .img,
-                                                                          width:
-                                                                              100.0,
-                                                                          height:
-                                                                              100.0,
-                                                                          fit: BoxFit
-                                                                              .cover,
+                                                                            Text(
+                                                                              addedItemsItem.description,
+                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                    fontFamily: 'Inter',
+                                                                                    letterSpacing: 0.0,
+                                                                                    fontWeight: FontWeight.w600,
+                                                                                    fontStyle: FontStyle.italic,
+                                                                                  ),
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                       ),
-                                                                    ),
-                                                                  ],
+                                                                      Padding(
+                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                            8.0,
+                                                                            8.0,
+                                                                            0.0,
+                                                                            8.0),
+                                                                        child:
+                                                                            ClipRRect(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(12.0),
+                                                                          child:
+                                                                              Image.network(
+                                                                            addedItemsItem.img,
+                                                                            width:
+                                                                                100.0,
+                                                                            height:
+                                                                                100.0,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                            );
-                                                          },
-                                                        );
-                                                      },
+                                                              );
+                                                            },
+                                                          );
+                                                        },
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),

@@ -86,7 +86,9 @@ class _ChatDetailsOverlayWidgetState extends State<ChatDetailsOverlayWidget> {
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               16.0, 0.0, 0.0, 0.0),
                           child: Text(
-                            'Chat Details',
+                            FFLocalizations.of(context).getText(
+                              'g5bny9px' /* Chat Details */,
+                            ),
                             style: FlutterFlowTheme.of(context)
                                 .headlineSmall
                                 .override(
@@ -123,9 +125,11 @@ class _ChatDetailsOverlayWidgetState extends State<ChatDetailsOverlayWidget> {
                         textScaler: MediaQuery.of(context).textScaler,
                         text: TextSpan(
                           children: [
-                            const TextSpan(
-                              text: 'Group Chat ID: ',
-                              style: TextStyle(),
+                            TextSpan(
+                              text: FFLocalizations.of(context).getText(
+                                '9a7oz1d2' /* Group Chat ID:  */,
+                              ),
+                              style: const TextStyle(),
                             ),
                             TextSpan(
                               text: valueOrDefault<String>(
@@ -150,7 +154,9 @@ class _ChatDetailsOverlayWidgetState extends State<ChatDetailsOverlayWidget> {
                       padding:
                           const EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 0.0, 0.0),
                       child: Text(
-                        'In this chat',
+                        FFLocalizations.of(context).getText(
+                          '3x8woxi6' /* In this chat */,
+                        ),
                         style:
                             FlutterFlowTheme.of(context).labelMedium.override(
                                   fontFamily: 'Inter',
@@ -309,7 +315,9 @@ class _ChatDetailsOverlayWidgetState extends State<ChatDetailsOverlayWidget> {
                         onPressed: () async {
                           Navigator.pop(context);
                         },
-                        text: 'Close',
+                        text: FFLocalizations.of(context).getText(
+                          'y1qfr386' /* Close */,
+                        ),
                         options: FFButtonOptions(
                           width: double.infinity,
                           height: 52.0,

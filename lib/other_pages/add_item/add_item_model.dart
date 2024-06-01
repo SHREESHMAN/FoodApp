@@ -1,5 +1,5 @@
 import '/backend/backend.dart';
-import '/complete/components/helpful_tip/helpful_tip_widget.dart';
+import '/complete/helpful_tip/helpful_tip_widget.dart';
 import '/flutter_flow/flutter_flow_calendar.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
@@ -14,7 +14,7 @@ class AddItemModel extends FlutterFlowModel<AddItemWidget> {
   TutorialCoachMark? thirdController;
   final unfocusNode = FocusNode();
   // State field(s) for Column widget.
-  ScrollController? columnController1;
+  ScrollController? columnController;
   // Model for HelpfulTip component.
   late HelpfulTipModel helpfulTipModel;
   // State field(s) for TextField widget.
@@ -28,6 +28,7 @@ class AddItemModel extends FlutterFlowModel<AddItemWidget> {
   // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;
+  var bar = '';
   bool isDataUploading1 = false;
   FFUploadedFile uploadedLocalFile1 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
@@ -73,8 +74,6 @@ class AddItemModel extends FlutterFlowModel<AddItemWidget> {
   int get tabBarCurrentIndex =>
       tabBarController != null ? tabBarController!.index : 0;
 
-  // State field(s) for Column widget.
-  ScrollController? columnController2;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode8;
   TextEditingController? textController8;
@@ -92,13 +91,12 @@ class AddItemModel extends FlutterFlowModel<AddItemWidget> {
 
   @override
   void initState(BuildContext context) {
-    columnController1 = ScrollController();
+    columnController = ScrollController();
     helpfulTipModel = createModel(context, () => HelpfulTipModel());
     calendarSelectedDay = DateTimeRange(
       start: DateTime.now().startOfDay,
       end: DateTime.now().endOfDay,
     );
-    columnController2 = ScrollController();
     listViewController1 = ScrollController();
     listViewController2 = ScrollController();
   }
@@ -107,7 +105,7 @@ class AddItemModel extends FlutterFlowModel<AddItemWidget> {
   void dispose() {
     thirdController?.finish();
     unfocusNode.dispose();
-    columnController1?.dispose();
+    columnController?.dispose();
     helpfulTipModel.dispose();
     textFieldFocusNode1?.dispose();
     textController1?.dispose();
@@ -130,7 +128,6 @@ class AddItemModel extends FlutterFlowModel<AddItemWidget> {
     textFieldFocusNode7?.dispose();
 
     tabBarController?.dispose();
-    columnController2?.dispose();
     textFieldFocusNode8?.dispose();
     textController8?.dispose();
 

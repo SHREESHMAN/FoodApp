@@ -81,7 +81,9 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
           backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
           automaticallyImplyLeading: false,
           title: Text(
-            'My Chats',
+            FFLocalizations.of(context).getText(
+              'rp6omzss' /* My Chats */,
+            ),
             style: FlutterFlowTheme.of(context).headlineLarge.override(
                   fontFamily: 'Sora',
                   letterSpacing: 0.0,
@@ -158,7 +160,9 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
                 child: Text(
-                  'To report any offences please contact shreeshcreates@gmail.com',
+                  FFLocalizations.of(context).getText(
+                    '44xpinu3' /* To report any offences please ... */,
+                  ),
                   style: FlutterFlowTheme.of(context).labelMedium.override(
                         fontFamily: 'Inter',
                         letterSpacing: 0.0,
@@ -846,7 +850,11 @@ class _Chat2MainWidgetState extends State<Chat2MainWidget> {
                                                                             12.0,
                                                                             0.0),
                                                                 child: Text(
-                                                                  'Group Chat',
+                                                                  FFLocalizations.of(
+                                                                          context)
+                                                                      .getText(
+                                                                    'no4uuslc' /* Group Chat */,
+                                                                  ),
                                                                   textAlign:
                                                                       TextAlign
                                                                           .start,

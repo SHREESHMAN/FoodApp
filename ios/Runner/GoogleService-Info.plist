@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>353756899661-ufg4r8ig8ckl593loi5oaiprvda13agq.apps.googleusercontent.com</string>
+	<string>353756899661-4p75dumvl3e46eeuqhv4k7vcesbr8urg.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.353756899661-ufg4r8ig8ckl593loi5oaiprvda13agq</string>
+	<string>com.googleusercontent.apps.353756899661-4p75dumvl3e46eeuqhv4k7vcesbr8urg</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>353756899661-39cruc2vr7md17sbk3dqagajoug6lna5.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.shreesh.foodrescue</string>
+	<string>com.shreesh.kindbite</string>
 	<key>PROJECT_ID</key>
 	<string>ieee-y95v7t</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:353756899661:ios:fa4058b72c8fedd9f82f04</string>
+	<string>1:353756899661:ios:78366fbd5c2af1f7f82f04</string>
 </dict>
 </plist>

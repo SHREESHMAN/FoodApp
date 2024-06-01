@@ -2,8 +2,9 @@ import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/backend/gemini/gemini.dart';
 import '/complete/components/add_new_category/add_new_category_widget.dart';
+import '/complete/components/blocked/blocked_widget.dart';
 import '/complete/components/empty/empty_widget.dart';
-import '/complete/components/helpful_tip/helpful_tip_widget.dart';
+import '/complete/helpful_tip/helpful_tip_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_autocomplete_options_list.dart';
 import '/flutter_flow/flutter_flow_calendar.dart';
@@ -21,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -40,118 +42,7 @@ class _AddItemWidgetState extends State<AddItemWidget>
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final animationsMap = {
-    'iconOnActionTriggerAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: true,
-      effects: [
-        ShimmerEffect(
-          curve: Curves.linear,
-          delay: 0.ms,
-          duration: 1000.ms,
-          color: const Color(0xFF00F4FF),
-          angle: 0.785,
-        ),
-      ],
-    ),
-    'textFieldOnActionTriggerAnimation1': AnimationInfo(
-      trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: true,
-      effects: [
-        TintEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          color: const Color(0xFF00ACBA),
-          begin: 0.0,
-          end: 1.0,
-        ),
-      ],
-    ),
-    'dropDownOnActionTriggerAnimation': AnimationInfo(
-      trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: true,
-      effects: [
-        TintEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          color: const Color(0xFF00ACBA),
-          begin: 0.0,
-          end: 1.0,
-        ),
-      ],
-    ),
-    'textFieldOnActionTriggerAnimation2': AnimationInfo(
-      trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: true,
-      effects: [
-        TintEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          color: const Color(0xFF00ACBA),
-          begin: 0.0,
-          end: 1.0,
-        ),
-      ],
-    ),
-    'textFieldOnActionTriggerAnimation3': AnimationInfo(
-      trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: true,
-      effects: [
-        TintEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          color: Colors.black,
-          begin: 0.0,
-          end: 1.0,
-        ),
-      ],
-    ),
-    'textFieldOnActionTriggerAnimation4': AnimationInfo(
-      trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: true,
-      effects: [
-        TintEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          color: const Color(0xFF00ACBA),
-          begin: 0.0,
-          end: 1.0,
-        ),
-      ],
-    ),
-    'textFieldOnActionTriggerAnimation5': AnimationInfo(
-      trigger: AnimationTrigger.onActionTrigger,
-      applyInitialState: true,
-      effects: [
-        TintEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          color: const Color(0xFF00ACBA),
-          begin: 0.0,
-          end: 1.0,
-        ),
-      ],
-    ),
-    'floatingActionButtonOnPageLoadAnimation': AnimationInfo(
-      reverse: true,
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        RotateEffect(
-          curve: Curves.easeInOut,
-          delay: 580.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 0.5,
-        ),
-      ],
-    ),
-  };
+  final animationsMap = <String, AnimationInfo>{};
 
   @override
   void initState() {
@@ -164,9 +55,8 @@ class _AddItemWidgetState extends State<AddItemWidget>
         safeSetState(
             () => _model.thirdController = createPageWalkthrough(context));
         _model.thirdController?.show(context: context);
-        setState(() {
-          FFAppState().addToTutorialsdone(3);
-        });
+        FFAppState().addToTutorialsdone(3);
+        setState(() {});
       }
     });
 
@@ -198,6 +88,118 @@ class _AddItemWidgetState extends State<AddItemWidget>
     _model.textController8 ??= TextEditingController();
     _model.textFieldFocusNode8 ??= FocusNode();
 
+    animationsMap.addAll({
+      'iconOnActionTriggerAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onActionTrigger,
+        applyInitialState: true,
+        effectsBuilder: () => [
+          ShimmerEffect(
+            curve: Curves.linear,
+            delay: 0.0.ms,
+            duration: 1000.0.ms,
+            color: const Color(0xFF00F4FF),
+            angle: 0.785,
+          ),
+        ],
+      ),
+      'textFieldOnActionTriggerAnimation1': AnimationInfo(
+        trigger: AnimationTrigger.onActionTrigger,
+        applyInitialState: true,
+        effectsBuilder: () => [
+          TintEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            color: const Color(0xFF00ACBA),
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+      'dropDownOnActionTriggerAnimation': AnimationInfo(
+        trigger: AnimationTrigger.onActionTrigger,
+        applyInitialState: true,
+        effectsBuilder: () => [
+          TintEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            color: const Color(0xFF00ACBA),
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+      'textFieldOnActionTriggerAnimation2': AnimationInfo(
+        trigger: AnimationTrigger.onActionTrigger,
+        applyInitialState: true,
+        effectsBuilder: () => [
+          TintEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            color: const Color(0xFF00ACBA),
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+      'textFieldOnActionTriggerAnimation3': AnimationInfo(
+        trigger: AnimationTrigger.onActionTrigger,
+        applyInitialState: true,
+        effectsBuilder: () => [
+          TintEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            color: Colors.black,
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+      'textFieldOnActionTriggerAnimation4': AnimationInfo(
+        trigger: AnimationTrigger.onActionTrigger,
+        applyInitialState: true,
+        effectsBuilder: () => [
+          TintEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            color: const Color(0xFF00ACBA),
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+      'textFieldOnActionTriggerAnimation5': AnimationInfo(
+        trigger: AnimationTrigger.onActionTrigger,
+        applyInitialState: true,
+        effectsBuilder: () => [
+          TintEffect(
+            curve: Curves.easeInOut,
+            delay: 0.0.ms,
+            duration: 600.0.ms,
+            color: const Color(0xFF00ACBA),
+            begin: 0.0,
+            end: 1.0,
+          ),
+        ],
+      ),
+      'floatingActionButtonOnPageLoadAnimation': AnimationInfo(
+        reverse: true,
+        trigger: AnimationTrigger.onPageLoad,
+        effectsBuilder: () => [
+          RotateEffect(
+            curve: Curves.easeInOut,
+            delay: 580.0.ms,
+            duration: 600.0.ms,
+            begin: 0.0,
+            end: 0.5,
+          ),
+        ],
+      ),
+    });
     setupAnimations(
       animationsMap.values.where((anim) =>
           anim.trigger == AnimationTrigger.onActionTrigger ||
@@ -232,9 +234,8 @@ class _AddItemWidgetState extends State<AddItemWidget>
             padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 6.0),
             child: FloatingActionButton(
               onPressed: () async {
-                setState(() {
-                  FFAppState().helptext = 'Adding food item please wait';
-                });
+                FFAppState().helptext = 'Adding food item please wait';
+                setState(() {});
                 if ((_model.dropDownValue == null ||
                         _model.dropDownValue == '') ||
                     (_model.textController3.text == '') ||
@@ -294,21 +295,20 @@ class _AddItemWidgetState extends State<AddItemWidget>
                     }
                   }
 
-                  setState(() {
-                    FFAppState().addToFoodItem(FoodItemStruct(
-                      img: _model.uploadedFileUrl3,
-                      name: _model.textController1.text,
-                      category: _model.dropDownValue,
-                      description: _model.textController7.text,
-                      expiry: functions.getdate(
-                          _model.textController3.text,
-                          _model.textController4.text,
-                          _model.textController5.text),
-                      quantity: double.tryParse(_model.textController6.text),
-                      donated: false,
-                      price: double.tryParse(_model.textController2.text),
-                    ));
-                  });
+                  FFAppState().addToFoodItem(FoodItemStruct(
+                    img: _model.uploadedFileUrl3,
+                    name: _model.textController1.text,
+                    category: _model.dropDownValue,
+                    description: _model.textController7.text,
+                    expiry: functions.getdate(
+                        _model.textController3.text,
+                        _model.textController4.text,
+                        _model.textController5.text),
+                    quantity: double.tryParse(_model.textController6.text),
+                    donated: false,
+                    price: double.tryParse(_model.textController2.text),
+                  ));
+                  setState(() {});
                   setState(() {
                     _model.textController2?.clear();
                     _model.textController3?.clear();
@@ -347,9 +347,8 @@ class _AddItemWidgetState extends State<AddItemWidget>
                   duration: const Duration(milliseconds: 250),
                   curve: Curves.ease,
                 );
-                setState(() {
-                  FFAppState().helptext = 'Help Text';
-                });
+                FFAppState().helptext = 'Help Text';
+                setState(() {});
               },
               backgroundColor: FlutterFlowTheme.of(context).primary,
               elevation: 8.0,
@@ -373,7 +372,7 @@ class _AddItemWidgetState extends State<AddItemWidget>
             padding: const EdgeInsetsDirectional.fromSTEB(7.0, 0.0, 7.0, 0.0),
             child: SingleChildScrollView(
               primary: false,
-              controller: _model.columnController1,
+              controller: _model.columnController,
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -401,7 +400,9 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                   ));
                             },
                             child: GradientText(
-                              'Add New Item',
+                              FFLocalizations.of(context).getText(
+                                'om6l2w34' /* Add New Item */,
+                              ),
                               textAlign: TextAlign.center,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -431,7 +432,7 @@ class _AddItemWidgetState extends State<AddItemWidget>
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(16.0),
                           child: Image.asset(
-                            'assets/images/foodplaceholder.jpg',
+                            'assets/images/img_placeholder.png',
                             width: 300.0,
                             height: 250.0,
                             fit: BoxFit.cover,
@@ -462,9 +463,8 @@ class _AddItemWidgetState extends State<AddItemWidget>
                     alignment: const AlignmentDirectional(0.0, 0.0),
                     child: Container(
                       width: double.infinity,
-                      height: 800.0,
+                      height: MediaQuery.sizeOf(context).height * 1.35,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
                         boxShadow: const [
                           BoxShadow(
                             blurRadius: 4.0,
@@ -475,6 +475,16 @@ class _AddItemWidgetState extends State<AddItemWidget>
                             ),
                           )
                         ],
+                        gradient: LinearGradient(
+                          colors: [
+                            FlutterFlowTheme.of(context).customColor1,
+                            FlutterFlowTheme.of(context).secondary,
+                            FlutterFlowTheme.of(context).accent3
+                          ],
+                          stops: const [0.0, 1.0, 1.0],
+                          begin: const AlignmentDirectional(0.0, -1.0),
+                          end: const AlignmentDirectional(0, 1.0),
+                        ),
                         borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(0.0),
                           bottomRight: Radius.circular(0.0),
@@ -486,7 +496,7 @@ class _AddItemWidgetState extends State<AddItemWidget>
                         padding:
                             const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                         child: Column(
-                          mainAxisSize: MainAxisSize.max,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Flexible(
                               child: wrapWithModel(
@@ -551,7 +561,10 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                       autofocus: true,
                                       obscureText: false,
                                       decoration: InputDecoration(
-                                        labelText: 'Name',
+                                        labelText:
+                                            FFLocalizations.of(context).getText(
+                                          'e92pnt5z' /* Name */,
+                                        ),
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
@@ -631,7 +644,10 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                           TextCapitalization.none,
                                       obscureText: false,
                                       decoration: InputDecoration(
-                                        labelText: 'Cost',
+                                        labelText:
+                                            FFLocalizations.of(context).getText(
+                                          'shmfx7lt' /* Cost */,
+                                        ),
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
@@ -733,8 +749,14 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                           fontFamily: 'Inter',
                                           letterSpacing: 0.0,
                                         ),
-                                    hintText: 'Category*',
-                                    searchHintText: 'Search for categories',
+                                    hintText:
+                                        FFLocalizations.of(context).getText(
+                                      '92bg8d3z' /* Category* */,
+                                    ),
+                                    searchHintText:
+                                        FFLocalizations.of(context).getText(
+                                      'b7pnoexn' /* Search for categories */,
+                                    ),
                                     icon: Icon(
                                       Icons.keyboard_arrow_down_rounded,
                                       color: FlutterFlowTheme.of(context)
@@ -742,7 +764,7 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                       size: 24.0,
                                     ),
                                     fillColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                                        .customColor1,
                                     elevation: 2.0,
                                     borderColor:
                                         FlutterFlowTheme.of(context).alternate,
@@ -758,6 +780,167 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                     animationsMap[
                                         'dropDownOnActionTriggerAnimation']!,
                                   ),
+                                ),
+                                FlutterFlowIconButton(
+                                  borderColor: const Color(0xFF0B0101),
+                                  borderRadius: 20.0,
+                                  borderWidth: 1.0,
+                                  buttonSize: 40.0,
+                                  fillColor: const Color(0x5DABA1A1),
+                                  icon: FaIcon(
+                                    FontAwesomeIcons.barcode,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    size: 24.0,
+                                  ),
+                                  onPressed: () async {
+                                    var shouldSetState = false;
+                                    _model.bar =
+                                        await FlutterBarcodeScanner.scanBarcode(
+                                      '#C62828', // scanning line color
+                                      FFLocalizations.of(context).getText(
+                                        'm6yh3acj' /* Cancel */,
+                                      ), // cancel button text
+                                      true, // whether to show the flash icon
+                                      ScanMode.QR,
+                                    );
+
+                                    shouldSetState = true;
+                                    if (_model.bar == 'KindBIte') {
+                                      FFAppState().addToFoodItem(FoodItemStruct(
+                                        img:
+                                            'https://www.foodandwine.com/thmb/IuZPWAXBp4YaT9hn1YLHhuijT3k=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/FAW-recipes-big-italian-salad-hero-83e6ea846722478f8feb1eea33158b00.jpg',
+                                        name: 'Salad bowl',
+                                        category: 'Vegetable',
+                                        description:
+                                            'Salad with extra cabbage, Expires: in 3 days',
+                                        expiry:
+                                            DateTime.fromMicrosecondsSinceEpoch(
+                                                1717444800000000),
+                                        quantity: 1.0,
+                                        donated: false,
+                                        price: 40.0,
+                                      ));
+                                      setState(() {});
+                                    } else {
+                                      if (_model.bar == 'IEEEDAY') {
+                                        FFAppState()
+                                            .addToFoodItem(FoodItemStruct(
+                                          img:
+                                              'https://cdn.sprinklebakes.com/media/2023/08/Death-By-Chocolate-Cake-2-500x500.jpg',
+                                          name: 'Chocolate Cake',
+                                          category: 'Dairy',
+                                          description:
+                                              'Chocolate Cake, Eggless, Bought from LuLu, Expiry: 10 days after unpacking',
+                                          expiry: DateTime
+                                              .fromMicrosecondsSinceEpoch(
+                                                  1717963200000000),
+                                          quantity: 1.0,
+                                          donated: false,
+                                          price: 200.0,
+                                        ));
+                                        setState(() {});
+                                      } else {
+                                        if (_model.bar == 'IEEEDAY') {
+                                          FFAppState()
+                                              .addToFoodItem(FoodItemStruct(
+                                            img:
+                                                'https://cdn.sprinklebakes.com/media/2023/08/Death-By-Chocolate-Cake-2-500x500.jpg',
+                                            name: 'Chocolate Cake',
+                                            category: 'Dairy',
+                                            description:
+                                                'Chocolate Cake, Eggless, Bought from LuLu, Expiry: 10 days after unpacking',
+                                            expiry: DateTime
+                                                .fromMicrosecondsSinceEpoch(
+                                                    1717963200000000),
+                                            quantity: 1.0,
+                                            donated: false,
+                                            price: 200.0,
+                                          ));
+                                          setState(() {});
+                                        } else {
+                                          FFAppState()
+                                              .addToFoodItem(FoodItemStruct(
+                                            img:
+                                                'https://cdn.sprinklebakes.com/media/2023/08/Death-By-Chocolate-Cake-2-500x500.jpg',
+                                            name: 'Chocolate Cake',
+                                            category: 'Dairy',
+                                            description:
+                                                'Chocolate Cake, Eggless, Bought from LuLu, Expiry: 10 days after unpacking',
+                                            expiry: DateTime
+                                                .fromMicrosecondsSinceEpoch(
+                                                    1717963200000000),
+                                            quantity: 1.0,
+                                            donated: false,
+                                            price: 200.0,
+                                          ));
+                                          setState(() {});
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            enableDrag: false,
+                                            context: context,
+                                            builder: (context) {
+                                              return GestureDetector(
+                                                onTap: () => _model.unfocusNode
+                                                        .canRequestFocus
+                                                    ? FocusScope.of(context)
+                                                        .requestFocus(
+                                                            _model.unfocusNode)
+                                                    : FocusScope.of(context)
+                                                        .unfocus(),
+                                                child: Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child: BlockedWidget(
+                                                    display: FFLocalizations.of(
+                                                            context)
+                                                        .getText(
+                                                      'foltrgyr' /* Item Code Invalid */,
+                                                    ),
+                                                    subtext: FFLocalizations.of(
+                                                            context)
+                                                        .getText(
+                                                      '6hntmh35' /* Try Scanning Again. */,
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ).then(
+                                              (value) => safeSetState(() {}));
+
+                                          if (shouldSetState) setState(() {});
+                                          return;
+                                        }
+                                      }
+                                    }
+
+                                    FFAppState().helptext =
+                                        'Adding food item please wait';
+                                    setState(() {});
+                                    setState(() {
+                                      _model.tabBarController!.animateTo(
+                                        _model.tabBarController!.length - 1,
+                                        duration: const Duration(milliseconds: 300),
+                                        curve: Curves.ease,
+                                      );
+                                    });
+
+                                    await _model.listViewController2?.animateTo(
+                                      _model.listViewController2!.position
+                                          .maxScrollExtent,
+                                      duration: const Duration(milliseconds: 250),
+                                      curve: Curves.ease,
+                                    );
+                                    FFAppState().helptext = 'Help Text';
+                                    setState(() {});
+                                    if (shouldSetState) setState(() {});
+                                  },
+                                ).addWalkthrough(
+                                  iconButton41s4acvl,
+                                  _model.thirdController,
                                 ),
                                 FlutterFlowIconButton(
                                   borderColor:
@@ -845,10 +1028,9 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                           () => _model.gemdesc = generatedText);
                                     });
 
-                                    setState(() {
-                                      FFAppState().helptext =
-                                          'Analyzing Image Please Wait';
-                                    });
+                                    FFAppState().helptext =
+                                        'Analyzing Image Please Wait';
+                                    setState(() {});
                                     await geminiTextFromImage(
                                       context,
                                       'Classify the image into one of these given categories and return only the category and nothing else as response  (return exact category string, dont change capitalization) if no category matches return that Detected Category with quotes eg: \" ... \" in 1-2 words. ${functions.combineall(FFAppState().categories.toList())}',
@@ -861,10 +1043,9 @@ class _AddItemWidgetState extends State<AddItemWidget>
 
                                     if (_model.image == null ||
                                         _model.image == '') {
-                                      setState(() {
-                                        FFAppState().helptext =
-                                            'Try Image Uploading Again';
-                                      });
+                                      FFAppState().helptext =
+                                          'Try Image Uploading Again';
+                                      setState(() {});
                                     } else {
                                       if (!functions.checkIfPresent(
                                           _model.image!,
@@ -910,10 +1091,9 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                               'Other',
                                             );
                                           });
-                                          setState(() {
-                                            FFAppState().helptext =
-                                                'Help will appear here';
-                                          });
+                                          FFAppState().helptext =
+                                              'Help will appear here';
+                                          setState(() {});
                                           setState(() {
                                             _model.textController7?.text =
                                                 _model.gemdesc!;
@@ -923,10 +1103,9 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                                 _model.dropDownValue!;
                                           });
                                         } else {
-                                          setState(() {
-                                            FFAppState().helptext =
-                                                'Your Item doesn\'t match any Category. Create a new Category or upload a new Image.';
-                                          });
+                                          FFAppState().helptext =
+                                              'Your Item doesn\'t match any Category. Create a new Category or upload a new Image.';
+                                          setState(() {});
                                         }
 
                                         if (animationsMap[
@@ -963,10 +1142,9 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                                       .toList(),
                                                   '${_model.image}');
                                         });
-                                        setState(() {
-                                          FFAppState().helptext =
-                                              'Help will appear here';
-                                        });
+                                        FFAppState().helptext =
+                                            'Help will appear here';
+                                        setState(() {});
                                         if (_model.gemdesc != null &&
                                             _model.gemdesc != '') {
                                           setState(() {
@@ -1048,9 +1226,6 @@ class _AddItemWidgetState extends State<AddItemWidget>
 
                                     setState(() {});
                                   },
-                                ).addWalkthrough(
-                                  iconButton41s4acvl,
-                                  _model.thirdController,
                                 ),
                                 FlutterFlowIconButton(
                                   borderColor:
@@ -1098,7 +1273,9 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                   Expanded(
                                     flex: 6,
                                     child: Text(
-                                      'Expiry Date*',
+                                      FFLocalizations.of(context).getText(
+                                        'vds7t1kb' /* Expiry Date* */,
+                                      ),
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
@@ -1123,7 +1300,10 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                         autofocus: true,
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'DD',
+                                          labelText: FFLocalizations.of(context)
+                                              .getText(
+                                            '51u58u79' /* DD */,
+                                          ),
                                           labelStyle:
                                               FlutterFlowTheme.of(context)
                                                   .labelMedium
@@ -1213,7 +1393,10 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                         autofocus: true,
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'MM',
+                                          labelText: FFLocalizations.of(context)
+                                              .getText(
+                                            'r4830i3x' /* MM */,
+                                          ),
                                           labelStyle:
                                               FlutterFlowTheme.of(context)
                                                   .labelMedium
@@ -1303,7 +1486,10 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                         autofocus: true,
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelText: 'YYYY',
+                                          labelText: FFLocalizations.of(context)
+                                              .getText(
+                                            '3g85pv2w' /* YYYY */,
+                                          ),
                                           labelStyle:
                                               FlutterFlowTheme.of(context)
                                                   .labelMedium
@@ -1575,14 +1761,12 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                       ),
                                       onPressed: () async {
                                         if (FFAppState().datepick == 1.0) {
-                                          setState(() {
-                                            FFAppState().datepick = 0.0;
-                                          });
+                                          FFAppState().datepick = 0.0;
+                                          setState(() {});
                                           return;
                                         } else {
-                                          setState(() {
-                                            FFAppState().datepick = 1.0;
-                                          });
+                                          FFAppState().datepick = 1.0;
+                                          setState(() {});
                                           return;
                                         }
                                       },
@@ -1635,9 +1819,8 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                           .languageCode,
                                     );
                                   });
-                                  setState(() {
-                                    FFAppState().datepick = 0.0;
-                                  });
+                                  FFAppState().datepick = 0.0;
+                                  setState(() {});
                                   setState(() {});
                                 },
                                 titleStyle: FlutterFlowTheme.of(context)
@@ -1688,7 +1871,10 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                       autofocus: true,
                                       obscureText: false,
                                       decoration: InputDecoration(
-                                        labelText: 'Quantity(pc/kg)',
+                                        labelText:
+                                            FFLocalizations.of(context).getText(
+                                          '7pdff22v' /* Quantity(pc/kg) */,
+                                        ),
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
@@ -1770,12 +1956,24 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                           return const Iterable<String>.empty();
                                         }
                                         return [
-                                          'New',
-                                          'Old',
-                                          'About to Expire',
-                                          'Expired',
-                                          'Preserved',
-                                          'Original Packing'
+                                          FFLocalizations.of(context).getText(
+                                            'l4znbr2w' /* New */,
+                                          ),
+                                          FFLocalizations.of(context).getText(
+                                            'p3nykppu' /* Old */,
+                                          ),
+                                          FFLocalizations.of(context).getText(
+                                            'aj2cg8xc' /* About to Expire */,
+                                          ),
+                                          FFLocalizations.of(context).getText(
+                                            'ri9i55ny' /* Expired */,
+                                          ),
+                                          FFLocalizations.of(context).getText(
+                                            '99nk8gkb' /* Preserved */,
+                                          ),
+                                          FFLocalizations.of(context).getText(
+                                            'n25zp9pa' /* Original Packing */,
+                                          )
                                         ].where((option) {
                                           final lowercaseOption =
                                               option.toLowerCase();
@@ -1834,7 +2032,11 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                           autofocus: true,
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Description/Condition*',
+                                            labelText:
+                                                FFLocalizations.of(context)
+                                                    .getText(
+                                              'ybzwgi0n' /* Description/Condition* */,
+                                            ),
                                             labelStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .labelMedium
@@ -1935,12 +2137,18 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                         indicatorColor:
                                             FlutterFlowTheme.of(context)
                                                 .primaryText,
-                                        tabs: const [
+                                        tabs: [
                                           Tab(
-                                            text: 'Categories',
+                                            text: FFLocalizations.of(context)
+                                                .getText(
+                                              'b36vn7a0' /* Categories */,
+                                            ),
                                           ),
                                           Tab(
-                                            text: 'Added Items',
+                                            text: FFLocalizations.of(context)
+                                                .getText(
+                                              '0bs9303u' /* Added Items */,
+                                            ),
                                           ),
                                         ],
                                         controller: _model.tabBarController,
@@ -1953,673 +2161,658 @@ class _AddItemWidgetState extends State<AddItemWidget>
                                       child: TabBarView(
                                         controller: _model.tabBarController,
                                         children: [
-                                          SingleChildScrollView(
-                                            controller:
-                                                _model.columnController2,
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 10,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    8.0,
-                                                                    0.0,
-                                                                    8.0,
-                                                                    0.0),
-                                                        child: TextFormField(
-                                                          controller: _model
-                                                              .textController8,
-                                                          focusNode: _model
-                                                              .textFieldFocusNode8,
-                                                          autofocus: true,
-                                                          obscureText: false,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            labelText:
-                                                                'Enter Custom Category Here...',
-                                                            labelStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Inter',
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                    ),
-                                                            hintStyle:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMedium
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Inter',
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                    ),
-                                                            enabledBorder:
-                                                                UnderlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                                width: 2.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                            focusedBorder:
-                                                                UnderlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary,
-                                                                width: 2.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                            errorBorder:
-                                                                UnderlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .error,
-                                                                width: 2.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                            focusedErrorBorder:
-                                                                UnderlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .error,
-                                                                width: 2.0,
-                                                              ),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                          ),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Inter',
-                                                                letterSpacing:
-                                                                    0.0,
-                                                              ),
-                                                          validator: _model
-                                                              .textController8Validator
-                                                              .asValidator(
-                                                                  context),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    FlutterFlowIconButton(
-                                                      borderColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      borderRadius: 20.0,
-                                                      borderWidth: 1.0,
-                                                      buttonSize: 40.0,
-                                                      fillColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .accent1,
-                                                      icon: Icon(
-                                                        Icons.add,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        size: 24.0,
-                                                      ),
-                                                      onPressed: () async {
-                                                        if (_model.textController8
-                                                                    .text !=
-                                                                '') {
-                                                          setState(() {
-                                                            FFAppState()
-                                                                .addToCategories(
-                                                                    _model
-                                                                        .textController8
-                                                                        .text);
-                                                          });
-                                                          setState(() {
-                                                            _model
-                                                                .textController8
-                                                                ?.clear();
-                                                          });
-                                                          setState(() {
-                                                            _model
-                                                                .tabBarController!
-                                                                .animateTo(
-                                                              0,
-                                                              duration: const Duration(
-                                                                  milliseconds:
-                                                                      300),
-                                                              curve:
-                                                                  Curves.ease,
-                                                            );
-                                                          });
-
-                                                          await _model
-                                                              .listViewController1
-                                                              ?.animateTo(
-                                                            _model
-                                                                .listViewController1!
-                                                                .position
-                                                                .maxScrollExtent,
-                                                            duration: const Duration(
-                                                                milliseconds:
-                                                                    500),
-                                                            curve: Curves.ease,
-                                                          );
-                                                        } else {
-                                                          return;
-                                                        }
-                                                      },
-                                                    ),
-                                                  ],
-                                                ).addWalkthrough(
-                                                  rowI9oaqab4,
-                                                  _model.thirdController,
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 0.0, 0.0, 24.0),
-                                                  child: Builder(
-                                                    builder: (context) {
-                                                      final categoryimg =
-                                                          FFAppState()
-                                                              .categories
-                                                              .toList();
-                                                      return ListView.builder(
-                                                        padding:
-                                                            EdgeInsets.zero,
-                                                        shrinkWrap: true,
-                                                        scrollDirection:
-                                                            Axis.vertical,
-                                                        itemCount:
-                                                            categoryimg.length,
-                                                        itemBuilder: (context,
-                                                            categoryimgIndex) {
-                                                          final categoryimgItem =
-                                                              categoryimg[
-                                                                  categoryimgIndex];
-                                                          return Padding(
-                                                            padding:
-                                                                const EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        16.0,
-                                                                        12.0,
-                                                                        16.0,
-                                                                        8.0),
-                                                            child: InkWell(
-                                                              splashColor: Colors
-                                                                  .transparent,
-                                                              focusColor: Colors
-                                                                  .transparent,
-                                                              hoverColor: Colors
-                                                                  .transparent,
-                                                              highlightColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              onLongPress:
-                                                                  () async {
-                                                                setState(() {
-                                                                  FFAppState()
-                                                                      .removeAtIndexFromCategories(
-                                                                          categoryimgIndex);
-                                                                });
-                                                              },
-                                                              child: Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Expanded(
-                                                                    child:
-                                                                        Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .start,
-                                                                      children: [
-                                                                        Text(
-                                                                          'User Added Category',
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodySmall
-                                                                              .override(
-                                                                                fontFamily: 'Inter',
-                                                                                color: FlutterFlowTheme.of(context).primary,
-                                                                                letterSpacing: 0.0,
-                                                                              ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              4.0,
-                                                                              0.0,
-                                                                              8.0),
-                                                                          child:
-                                                                              Text(
-                                                                            categoryimgItem,
-                                                                            style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                                                                  fontFamily: 'Sora',
-                                                                                  letterSpacing: 0.0,
-                                                                                ),
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                  Stack(
-                                                                    alignment:
-                                                                        const AlignmentDirectional(
-                                                                            0.0,
-                                                                            0.0),
-                                                                    children: [
-                                                                      Padding(
-                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                            8.0,
-                                                                            8.0,
-                                                                            0.0,
-                                                                            8.0),
-                                                                        child:
-                                                                            ClipRRect(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(24.0),
-                                                                          child:
-                                                                              Image.asset(
-                                                                            'assets/images/foodcat.png',
-                                                                            width:
-                                                                                100.0,
-                                                                            height:
-                                                                                100.0,
-                                                                            fit:
-                                                                                BoxFit.cover,
-                                                                            alignment:
-                                                                                const Alignment(0.0, 0.0),
-                                                                            errorBuilder: (context, error, stackTrace) =>
-                                                                                Image.asset(
-                                                                              'assets/images/error_image.png',
-                                                                              width: 100.0,
-                                                                              height: 100.0,
-                                                                              fit: BoxFit.cover,
-                                                                              alignment: const Alignment(0.0, 0.0),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      ClipRRect(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(18.0),
-                                                                        child: Image
-                                                                            .network(
-                                                                          valueOrDefault<
-                                                                              String>(
-                                                                            functions.getDefaultImage(categoryimgItem),
-                                                                            '.',
-                                                                          ),
-                                                                          width:
-                                                                              109.0,
-                                                                          height:
-                                                                              109.0,
-                                                                          fit: BoxFit
-                                                                              .cover,
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          );
-                                                        },
-                                                        controller: _model
-                                                            .listViewController1,
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 24.0),
-                                            child: Builder(
-                                              builder: (context) {
-                                                final addedItems = FFAppState()
-                                                    .foodItem
-                                                    .sortedList(
-                                                        (e) => e.expiry!)
-                                                    .toList();
-                                                if (addedItems.isEmpty) {
-                                                  return const EmptyWidget();
-                                                }
-                                                return ListView.builder(
-                                                  padding: EdgeInsets.zero,
-                                                  primary: false,
-                                                  shrinkWrap: true,
-                                                  scrollDirection:
-                                                      Axis.vertical,
-                                                  itemCount: addedItems.length,
-                                                  itemBuilder: (context,
-                                                      addedItemsIndex) {
-                                                    final addedItemsItem =
-                                                        addedItems[
-                                                            addedItemsIndex];
-                                                    return Padding(
+                                          Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Expanded(
+                                                    flex: 10,
+                                                    child: Padding(
                                                       padding:
                                                           const EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  16.0,
+                                                                  8.0,
                                                                   0.0,
-                                                                  16.0,
-                                                                  8.0),
-                                                      child: InkWell(
-                                                        splashColor:
-                                                            Colors.transparent,
-                                                        focusColor:
-                                                            Colors.transparent,
-                                                        hoverColor:
-                                                            Colors.transparent,
-                                                        highlightColor:
-                                                            Colors.transparent,
-                                                        onTap: () async {
-                                                          var foodItemsRecordReference =
-                                                              FoodItemsRecord
-                                                                  .collection
-                                                                  .doc();
-                                                          await foodItemsRecordReference
-                                                              .set(
-                                                                  createFoodItemsRecordData(
-                                                            name: addedItemsItem
-                                                                .name,
-                                                            description:
-                                                                valueOrDefault<
-                                                                    String>(
-                                                              addedItemsItem
-                                                                  .description,
-                                                              'Empty Description',
-                                                            ),
-                                                            price:
-                                                                valueOrDefault<
-                                                                    double>(
-                                                              addedItemsItem
-                                                                  .price,
-                                                              0.0,
-                                                            ),
-                                                            category:
-                                                                addedItemsItem
-                                                                    .category,
-                                                            expiry:
-                                                                addedItemsItem
-                                                                    .expiry,
-                                                            donated:
-                                                                addedItemsItem
-                                                                    .donated,
-                                                            quantity:
-                                                                valueOrDefault<
-                                                                    double>(
-                                                              addedItemsItem
-                                                                  .quantity,
-                                                              1.0,
-                                                            ),
-                                                            image:
-                                                                addedItemsItem
-                                                                    .img,
-                                                          ));
-                                                          _model.uploadedentry =
-                                                              FoodItemsRecord
-                                                                  .getDocumentFromData(
-                                                                      createFoodItemsRecordData(
-                                                                        name: addedItemsItem
-                                                                            .name,
-                                                                        description:
-                                                                            valueOrDefault<String>(
-                                                                          addedItemsItem
-                                                                              .description,
-                                                                          'Empty Description',
-                                                                        ),
-                                                                        price: valueOrDefault<
-                                                                            double>(
-                                                                          addedItemsItem
-                                                                              .price,
-                                                                          0.0,
-                                                                        ),
-                                                                        category:
-                                                                            addedItemsItem.category,
-                                                                        expiry:
-                                                                            addedItemsItem.expiry,
-                                                                        donated:
-                                                                            addedItemsItem.donated,
-                                                                        quantity:
-                                                                            valueOrDefault<double>(
-                                                                          addedItemsItem
-                                                                              .quantity,
-                                                                          1.0,
-                                                                        ),
-                                                                        image: addedItemsItem
-                                                                            .img,
-                                                                      ),
-                                                                      foodItemsRecordReference);
-
-                                                          context.pushNamed(
-                                                            'ItemDetail',
-                                                            queryParameters: {
-                                                              'currentItem':
-                                                                  serializeParam(
-                                                                _model
-                                                                    .uploadedentry,
-                                                                ParamType
-                                                                    .Document,
-                                                              ),
-                                                              'index':
-                                                                  serializeParam(
-                                                                addedItemsIndex,
-                                                                ParamType.int,
-                                                              ),
-                                                            }.withoutNulls,
-                                                            extra: <String,
-                                                                dynamic>{
-                                                              'currentItem': _model
-                                                                  .uploadedentry,
-                                                              kTransitionInfoKey:
-                                                                  const TransitionInfo(
-                                                                hasTransition:
-                                                                    true,
-                                                                transitionType:
-                                                                    PageTransitionType
-                                                                        .scale,
-                                                                alignment: Alignment
-                                                                    .bottomCenter,
-                                                              ),
-                                                            },
-                                                          );
-
-                                                          setState(() {});
-                                                        },
-                                                        onLongPress: () async {
-                                                          setState(() {
-                                                            FFAppState()
-                                                                .removeFromFoodItem(
-                                                                    addedItemsItem);
-                                                          });
-                                                        },
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Expanded(
-                                                              child: Column(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Text(
-                                                                    valueOrDefault<
-                                                                        String>(
-                                                                      dateTimeFormat(
-                                                                        'relative',
-                                                                        addedItemsItem
-                                                                            .expiry,
-                                                                        locale:
-                                                                            FFLocalizations.of(context).languageCode,
-                                                                      ),
-                                                                      'expiry',
-                                                                    ),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodySmall
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Inter',
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).primary,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                        ),
+                                                                  8.0,
+                                                                  0.0),
+                                                      child: TextFormField(
+                                                        controller: _model
+                                                            .textController8,
+                                                        focusNode: _model
+                                                            .textFieldFocusNode8,
+                                                        autofocus: true,
+                                                        obscureText: false,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          labelText:
+                                                              FFLocalizations.of(
+                                                                      context)
+                                                                  .getText(
+                                                            'ux2v4026' /* Enter Custom Category Here... */,
+                                                          ),
+                                                          labelStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .labelMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Inter',
+                                                                    letterSpacing:
+                                                                        0.0,
                                                                   ),
-                                                                  Padding(
-                                                                    padding: const EdgeInsetsDirectional
-                                                                        .fromSTEB(
+                                                          hintStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .labelMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Inter',
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                  ),
+                                                          enabledBorder:
+                                                              UnderlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .alternate,
+                                                              width: 2.0,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8.0),
+                                                          ),
+                                                          focusedBorder:
+                                                              UnderlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primary,
+                                                              width: 2.0,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8.0),
+                                                          ),
+                                                          errorBorder:
+                                                              UnderlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .error,
+                                                              width: 2.0,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8.0),
+                                                          ),
+                                                          focusedErrorBorder:
+                                                              UnderlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .error,
+                                                              width: 2.0,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8.0),
+                                                          ),
+                                                        ),
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Inter',
+                                                                  letterSpacing:
+                                                                      0.0,
+                                                                ),
+                                                        validator: _model
+                                                            .textController8Validator
+                                                            .asValidator(
+                                                                context),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  FlutterFlowIconButton(
+                                                    borderColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primary,
+                                                    borderRadius: 20.0,
+                                                    borderWidth: 1.0,
+                                                    buttonSize: 40.0,
+                                                    fillColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .accent1,
+                                                    icon: Icon(
+                                                      Icons.add,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      size: 24.0,
+                                                    ),
+                                                    onPressed: () async {
+                                                      if (_model.textController8
+                                                                  .text !=
+                                                              '') {
+                                                        FFAppState()
+                                                            .addToCategories(_model
+                                                                .textController8
+                                                                .text);
+                                                        setState(() {});
+                                                        setState(() {
+                                                          _model.textController8
+                                                              ?.clear();
+                                                        });
+                                                        setState(() {
+                                                          _model
+                                                              .tabBarController!
+                                                              .animateTo(
+                                                            0,
+                                                            duration: const Duration(
+                                                                milliseconds:
+                                                                    300),
+                                                            curve: Curves.ease,
+                                                          );
+                                                        });
+
+                                                        await _model
+                                                            .listViewController1
+                                                            ?.animateTo(
+                                                          _model
+                                                              .listViewController1!
+                                                              .position
+                                                              .maxScrollExtent,
+                                                          duration: const Duration(
+                                                              milliseconds:
+                                                                  500),
+                                                          curve: Curves.ease,
+                                                        );
+                                                      } else {
+                                                        return;
+                                                      }
+                                                    },
+                                                  ),
+                                                ],
+                                              ).addWalkthrough(
+                                                rowI9oaqab4,
+                                                _model.thirdController,
+                                              ),
+                                              Expanded(
+                                                child: Builder(
+                                                  builder: (context) {
+                                                    final categoryimg =
+                                                        FFAppState()
+                                                            .categories
+                                                            .toList();
+                                                    if (categoryimg.isEmpty) {
+                                                      return const EmptyWidget();
+                                                    }
+                                                    return ListView.builder(
+                                                      padding: EdgeInsets.zero,
+                                                      scrollDirection:
+                                                          Axis.vertical,
+                                                      itemCount:
+                                                          categoryimg.length,
+                                                      itemBuilder: (context,
+                                                          categoryimgIndex) {
+                                                        final categoryimgItem =
+                                                            categoryimg[
+                                                                categoryimgIndex];
+                                                        return Padding(
+                                                          padding:
+                                                              const EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      16.0,
+                                                                      12.0,
+                                                                      16.0,
+                                                                      8.0),
+                                                          child: InkWell(
+                                                            splashColor: Colors
+                                                                .transparent,
+                                                            focusColor: Colors
+                                                                .transparent,
+                                                            hoverColor: Colors
+                                                                .transparent,
+                                                            highlightColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            onLongPress:
+                                                                () async {
+                                                              FFAppState()
+                                                                  .removeAtIndexFromCategories(
+                                                                      categoryimgIndex);
+                                                              setState(() {});
+                                                            },
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Expanded(
+                                                                  child: Column(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Text(
+                                                                        FFLocalizations.of(context)
+                                                                            .getText(
+                                                                          'o0quzewv' /* User Added Category */,
+                                                                        ),
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodySmall
+                                                                            .override(
+                                                                              fontFamily: 'Inter',
+                                                                              color: FlutterFlowTheme.of(context).primary,
+                                                                              letterSpacing: 0.0,
+                                                                            ),
+                                                                      ),
+                                                                      Padding(
+                                                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                                                             0.0,
                                                                             4.0,
                                                                             0.0,
                                                                             8.0),
-                                                                    child: Text(
-                                                                      valueOrDefault<
-                                                                          String>(
-                                                                        addedItemsItem
-                                                                            .name,
-                                                                        'name',
+                                                                        child:
+                                                                            Text(
+                                                                          categoryimgItem,
+                                                                          style: FlutterFlowTheme.of(context)
+                                                                              .headlineSmall
+                                                                              .override(
+                                                                                fontFamily: 'Sora',
+                                                                                letterSpacing: 0.0,
+                                                                              ),
+                                                                        ),
                                                                       ),
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .headlineSmall
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Sora',
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                          ),
-                                                                    ),
+                                                                    ],
                                                                   ),
-                                                                  Text(
-                                                                    valueOrDefault<
-                                                                        String>(
-                                                                      'AED${addedItemsItem.price.toString()} | ${addedItemsItem.category} | ${addedItemsItem.quantity.toString()}pc/kg',
-                                                                      'price | category | quantity',
-                                                                    ),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .headlineMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Sora',
-                                                                          fontSize:
-                                                                              16.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                        ),
-                                                                  ),
-                                                                  Text(
-                                                                    valueOrDefault<
-                                                                        String>(
-                                                                      addedItemsItem
-                                                                          .description,
-                                                                      'description',
-                                                                    ),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Inter',
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.w600,
-                                                                          fontStyle:
-                                                                              FontStyle.italic,
-                                                                        ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsetsDirectional
-                                                                      .fromSTEB(
+                                                                ),
+                                                                Stack(
+                                                                  alignment:
+                                                                      const AlignmentDirectional(
+                                                                          0.0,
+                                                                          0.0),
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
                                                                           8.0,
                                                                           8.0,
                                                                           0.0,
                                                                           8.0),
-                                                              child: ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            12.0),
-                                                                child: Image
-                                                                    .network(
-                                                                  addedItemsItem
-                                                                      .img,
-                                                                  width: 100.0,
-                                                                  height: 100.0,
-                                                                  fit: BoxFit
-                                                                      .cover,
+                                                                      child:
+                                                                          ClipRRect(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(24.0),
+                                                                        child: Image
+                                                                            .asset(
+                                                                          'assets/images/new_category.png',
+                                                                          width:
+                                                                              100.0,
+                                                                          height:
+                                                                              100.0,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                          alignment: const Alignment(
+                                                                              0.0,
+                                                                              0.0),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    ClipRRect(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              24.0),
+                                                                      child: Image
+                                                                          .network(
+                                                                        valueOrDefault<
+                                                                            String>(
+                                                                          functions
+                                                                              .getDefaultImage(categoryimgItem),
+                                                                          '.',
+                                                                        ),
+                                                                        width:
+                                                                            109.0,
+                                                                        height:
+                                                                            109.0,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      ),
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                              ),
+                                                              ],
                                                             ),
-                                                          ],
-                                                        ),
-                                                      ),
+                                                          ),
+                                                        );
+                                                      },
+                                                      controller: _model
+                                                          .listViewController1,
                                                     );
                                                   },
-                                                  controller: _model
-                                                      .listViewController2,
-                                                );
-                                              },
-                                            ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Builder(
+                                            builder: (context) {
+                                              final addedItems = FFAppState()
+                                                  .foodItem
+                                                  .sortedList((e) => e.expiry!)
+                                                  .toList();
+                                              if (addedItems.isEmpty) {
+                                                return const EmptyWidget();
+                                              }
+                                              return ListView.builder(
+                                                padding: EdgeInsets.zero,
+                                                primary: false,
+                                                shrinkWrap: true,
+                                                scrollDirection: Axis.vertical,
+                                                itemCount: addedItems.length,
+                                                itemBuilder:
+                                                    (context, addedItemsIndex) {
+                                                  final addedItemsItem =
+                                                      addedItems[
+                                                          addedItemsIndex];
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .fromSTEB(16.0, 0.0,
+                                                                16.0, 8.0),
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        var foodItemsRecordReference =
+                                                            FoodItemsRecord
+                                                                .collection
+                                                                .doc();
+                                                        await foodItemsRecordReference
+                                                            .set(
+                                                                createFoodItemsRecordData(
+                                                          name: addedItemsItem
+                                                              .name,
+                                                          description:
+                                                              valueOrDefault<
+                                                                  String>(
+                                                            addedItemsItem
+                                                                .description,
+                                                            'Empty Description',
+                                                          ),
+                                                          price: valueOrDefault<
+                                                              double>(
+                                                            addedItemsItem
+                                                                .price,
+                                                            0.0,
+                                                          ),
+                                                          category:
+                                                              addedItemsItem
+                                                                  .category,
+                                                          expiry: addedItemsItem
+                                                              .expiry,
+                                                          donated:
+                                                              addedItemsItem
+                                                                  .donated,
+                                                          quantity:
+                                                              valueOrDefault<
+                                                                  double>(
+                                                            addedItemsItem
+                                                                .quantity,
+                                                            1.0,
+                                                          ),
+                                                          image: addedItemsItem
+                                                              .img,
+                                                        ));
+                                                        _model.uploadedentry =
+                                                            FoodItemsRecord
+                                                                .getDocumentFromData(
+                                                                    createFoodItemsRecordData(
+                                                                      name: addedItemsItem
+                                                                          .name,
+                                                                      description:
+                                                                          valueOrDefault<
+                                                                              String>(
+                                                                        addedItemsItem
+                                                                            .description,
+                                                                        'Empty Description',
+                                                                      ),
+                                                                      price: valueOrDefault<
+                                                                          double>(
+                                                                        addedItemsItem
+                                                                            .price,
+                                                                        0.0,
+                                                                      ),
+                                                                      category:
+                                                                          addedItemsItem
+                                                                              .category,
+                                                                      expiry: addedItemsItem
+                                                                          .expiry,
+                                                                      donated:
+                                                                          addedItemsItem
+                                                                              .donated,
+                                                                      quantity:
+                                                                          valueOrDefault<
+                                                                              double>(
+                                                                        addedItemsItem
+                                                                            .quantity,
+                                                                        1.0,
+                                                                      ),
+                                                                      image: addedItemsItem
+                                                                          .img,
+                                                                    ),
+                                                                    foodItemsRecordReference);
+
+                                                        context.pushNamed(
+                                                          'ItemDetail',
+                                                          queryParameters: {
+                                                            'currentItem':
+                                                                serializeParam(
+                                                              _model
+                                                                  .uploadedentry,
+                                                              ParamType
+                                                                  .Document,
+                                                            ),
+                                                            'index':
+                                                                serializeParam(
+                                                              addedItemsIndex,
+                                                              ParamType.int,
+                                                            ),
+                                                          }.withoutNulls,
+                                                          extra: <String,
+                                                              dynamic>{
+                                                            'currentItem': _model
+                                                                .uploadedentry,
+                                                            kTransitionInfoKey:
+                                                                const TransitionInfo(
+                                                              hasTransition:
+                                                                  true,
+                                                              transitionType:
+                                                                  PageTransitionType
+                                                                      .scale,
+                                                              alignment: Alignment
+                                                                  .bottomCenter,
+                                                            ),
+                                                          },
+                                                        );
+
+                                                        setState(() {});
+                                                      },
+                                                      onLongPress: () async {
+                                                        FFAppState()
+                                                            .removeFromFoodItem(
+                                                                addedItemsItem);
+                                                        setState(() {});
+                                                      },
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  valueOrDefault<
+                                                                      String>(
+                                                                    dateTimeFormat(
+                                                                      'relative',
+                                                                      addedItemsItem
+                                                                          .expiry,
+                                                                      locale: FFLocalizations.of(
+                                                                              context)
+                                                                          .languageCode,
+                                                                    ),
+                                                                    'expiry',
+                                                                  ),
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodySmall
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Inter',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                ),
+                                                                Padding(
+                                                                  padding: const EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          4.0,
+                                                                          0.0,
+                                                                          8.0),
+                                                                  child: Text(
+                                                                    valueOrDefault<
+                                                                        String>(
+                                                                      addedItemsItem
+                                                                          .name,
+                                                                      'name',
+                                                                    ),
+                                                                    style: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .headlineSmall
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              'Sora',
+                                                                          letterSpacing:
+                                                                              0.0,
+                                                                        ),
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  valueOrDefault<
+                                                                      String>(
+                                                                    'AED${addedItemsItem.price.toString()} | ${addedItemsItem.category} | ${addedItemsItem.quantity.toString()}pc/kg',
+                                                                    'price | category | quantity',
+                                                                  ),
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .headlineMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Sora',
+                                                                        fontSize:
+                                                                            16.0,
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                      ),
+                                                                ),
+                                                                Text(
+                                                                  valueOrDefault<
+                                                                      String>(
+                                                                    addedItemsItem
+                                                                        .description,
+                                                                    'description',
+                                                                  ),
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Inter',
+                                                                        letterSpacing:
+                                                                            0.0,
+                                                                        fontWeight:
+                                                                            FontWeight.w600,
+                                                                        fontStyle:
+                                                                            FontStyle.italic,
+                                                                      ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        8.0,
+                                                                        8.0,
+                                                                        0.0,
+                                                                        8.0),
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          12.0),
+                                                              child:
+                                                                  Image.network(
+                                                                addedItemsItem
+                                                                    .img,
+                                                                width: 100.0,
+                                                                height: 100.0,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                controller:
+                                                    _model.listViewController2,
+                                              );
+                                            },
                                           ),
                                         ],
                                       ),

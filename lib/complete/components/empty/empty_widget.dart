@@ -58,7 +58,9 @@ class _EmptyWidgetState extends State<EmptyWidget> {
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                 child: Text(
-                  'No Items to show',
+                  FFLocalizations.of(context).getText(
+                    'rl5i6z18' /* No Items to show */,
+                  ),
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).headlineMedium.override(
                         fontFamily: 'Sora',
@@ -72,7 +74,9 @@ class _EmptyWidgetState extends State<EmptyWidget> {
               child: Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                 child: Text(
-                  'Add eligible items to see this page',
+                  FFLocalizations.of(context).getText(
+                    '9hq7ap8u' /* Add eligible items to see this... */,
+                  ),
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).labelMedium.override(
                         fontFamily: 'Inter',

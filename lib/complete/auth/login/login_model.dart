@@ -17,8 +17,8 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
   String? Function(BuildContext, String?)? passwordTextControllerValidator;
   // State field(s) for forgor widget.
   FocusNode? forgorFocusNode;
-  TextEditingController? forgorController;
-  String? Function(BuildContext, String?)? forgorControllerValidator;
+  TextEditingController? forgorTextController;
+  String? Function(BuildContext, String?)? forgorTextControllerValidator;
 
   @override
   void initState(BuildContext context) {
@@ -35,6 +35,6 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
     passwordTextController?.dispose();
 
     forgorFocusNode?.dispose();
-    forgorController?.dispose();
+    forgorTextController?.dispose();
   }
 }
